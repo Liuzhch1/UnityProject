@@ -2,7 +2,7 @@
 
 12.13 night taks distribute schedule:
 
-连奕航: UI
+连奕航: UI&Inventory
 
 吕钧霆: Map
 
@@ -12,7 +12,7 @@
 
 
 
-## Player Feature Design
+## Player Features
 
 - Model
 - Advanced animation
@@ -30,3 +30,13 @@
     - crouch
 - ammo
 - health
+
+
+
+## Inventory Features
+
+- Interactive/collectable objects
+  - +health
+  - +ammo
+- Weapons
+  - weapon
