@@ -1,3 +1,11 @@
+# Project temps
+Final Project/Library/
+Final Project/obj/
+Final Project/Temp/
+
+# Logs
+*.log
+
 # Prerequisites
 *.d
 
