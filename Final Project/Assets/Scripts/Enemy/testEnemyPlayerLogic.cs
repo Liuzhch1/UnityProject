@@ -6,13 +6,18 @@ public class testEnemyPlayerLogic : MonoBehaviour
 {
     CharacterController m_characterController;
 
-    const float SPEED = 5.0f;
+    const float SPEED = 10.0f;
 
     float m_horzontalInput;
     float m_verticalInput;
 
     Vector3 m_movementInput;
     Vector3 m_movement;
+
+    [SerializeField]
+    GameObject m_bulletPrefab;
+    [SerializeField]
+    Transform m_spawnPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +32,12 @@ public class testEnemyPlayerLogic : MonoBehaviour
         m_verticalInput = Input.GetAxisRaw("Vertical");
 
         m_movementInput = new Vector3(m_horzontalInput, 0, m_verticalInput);
+
+        if ((Input.GetAxis("Fire1") != 0))
+        {
+            GameObject bullet = Instantiate(m_bulletPrefab, m_spawnPoint.position, transform.rotation * m_bulletPrefab.transform.rotation);
+            bullet.transform.forward = m_spawnPoint.transform.forward;
+        }
     }
 
     void FixedUpdate()
