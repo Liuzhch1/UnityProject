@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerLogic : MonoBehaviour
+public class testEnemyPlayerLogic : MonoBehaviour
 {
     CharacterController m_characterController;
 

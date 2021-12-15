@@ -16,7 +16,7 @@ public class FireRobGunLogic : MonoBehaviour
     float m_fire_cooldown = 0.0f;
     const int MAX_BULLET_NUM = 20;
     int m_bullet_num = MAX_BULLET_NUM;
-    const float MAX_RELOAD_TIME = 2.0f;
+    const float MAX_RELOAD_TIME = 2.66f;
     float m_reloadTime = MAX_RELOAD_TIME;
 
     bool m_isReloading = false;
@@ -55,11 +55,18 @@ public class FireRobGunLogic : MonoBehaviour
 
     public void Fire()
     {
-        if (m_fire_cooldown <= 0.0f)
+        if (m_fire_cooldown <= 0.0f && m_bullet_num>0 && !m_isReloading)
         {
-            m_bullet_num -= 1;
-            GameObject bullet = Instantiate(m_bulletPrefab, m_bulletSpawnPoint.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
+            m_animator.SetTrigger("Shoot");
             m_fire_cooldown = MAX_FIRE_COOLDOWN;
         }
+    }
+
+    public void SpawnBullet()
+    {
+        Debug.Log("num:"+m_bullet_num);
+        GameObject bullet = Instantiate(m_bulletPrefab, m_bulletSpawnPoint.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
+        m_bullet_num -= 1;
+        bullet.transform.forward = m_bulletSpawnPoint.transform.forward;
     }
 }
