@@ -22,8 +22,6 @@ public class FireRobLogic : MonoBehaviour
 
     // 射击的夹角，大于这个夹角就不射击
     const float FIRE_ANGLE = 6.0f;
-    const float MAX_BULLET_NUM = 20;
-    float bullet_num = MAX_BULLET_NUM;
 
     const float WALKBACK_SPEED = 2.5f;
     //the speed Rob turn to player
@@ -57,10 +55,6 @@ public class FireRobLogic : MonoBehaviour
         if (!m_player)
         {
             return;
-        }
-        if (fire_cooldown > 0)
-        {
-            fire_cooldown -= Time.deltaTime;
         }
         switch (m_fireRobState)
         {
@@ -128,7 +122,7 @@ public class FireRobLogic : MonoBehaviour
             Debug.Log("isStop: "+m_navMeshAgent.isStopped);
             //Be running into Player state
             m_animator.SetFloat("State", 1.8f);
-            Fire();
+            TryFire();
         }
         else
         {
@@ -152,7 +146,7 @@ public class FireRobLogic : MonoBehaviour
         {
             // stand state, shoot
             m_animator.SetFloat("State", 4.0f);
-            Fire();
+            TryFire();
         }
     }
     void UpdateBackState()
@@ -176,10 +170,10 @@ public class FireRobLogic : MonoBehaviour
             Debug.DrawLine(transform.position, transform.position + new Vector3(2*direction.x, 0, 2*direction.z), Color.black);
             Debug.DrawLine(transform.position, transform.position + new Vector3(0, 0, 2*direction.z), Color.blue);
             Debug.DrawLine(transform.position, transform.position + new Vector3(2*direction.x, 0, 0), Color.red);
-            Fire();
+            TryFire();
         }
     }
-    void Fire()
+    void TryFire()
     {
         Vector3 playerDir = m_player.transform.position - transform.position;
         //slowly trun to player
@@ -187,11 +181,7 @@ public class FireRobLogic : MonoBehaviour
 
         if (Vector3.Angle(transform.forward, playerDir) <= FIRE_ANGLE)
         {
-            if (fire_cooldown <= 0.0f)
-            {
-                Instantiate(m_bullet, m_bulletSpawnPoint.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
-                fire_cooldown = MAX_FIRE_COOLDOWN;
-            }
+            m_gunLogic.Fire();
         }
     }
 }
