@@ -549,15 +549,8 @@ ModelImporter:
           postInfinity: 3
           rotationOrder: 4
       events:
-      - time: 0.7478006
-        functionName: OnAnimationEndedReload
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.5644172
-        functionName: OnAmmunitionFill
+      - time: 0.73181856
+        functionName: endReload
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -672,8 +665,7 @@ ModelImporter:
     - name: lowerarm_twist_01_l
       parentName: lowerarm_l
       position: {x: -0.0014000016, y: -2.9802322e-10, z: -0.0000000020209698}
-      rotation: {x: -0.000000026077032, y: -0.0000000055879354, z: 0.00000002607703,
-        w: 1}
+      rotation: {x: -0.000000026077032, y: -0.0000000055879354, z: 0.00000002607703, w: 1}
       scale: {x: 1.0000001, y: 1, z: 1}
     - name: hand_l
       parentName: lowerarm_l
@@ -758,8 +750,7 @@ ModelImporter:
     - name: upperarm_twist_01_l
       parentName: upperarm_l
       position: {x: -0.000049999937, y: 4.0046869e-10, z: 1.6065314e-10}
-      rotation: {x: 0.00000008754432, y: -0.000000042724427, z: 0.00000008055941,
-        w: 1}
+      rotation: {x: 0.00000008754432, y: -0.000000042724427, z: 0.00000008055941, w: 1}
       scale: {x: 0.99999994, y: 0.99999994, z: 1}
     - name: clavicle_r
       parentName: spine_03
@@ -969,8 +960,7 @@ ModelImporter:
     - name: ik_hand_r
       parentName: ik_hand_gun
       position: {x: -0.0000000011059456, y: -4.5736667e-10, z: -5.2852556e-10}
-      rotation: {x: 0.000000063329935, y: -0.000000055879354, z: 0.0000000027939677,
-        w: 1}
+      rotation: {x: 0.000000063329935, y: -0.000000055879354, z: 0.0000000027939677, w: 1}
       scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
@@ -984,8 +974,7 @@ ModelImporter:
     hasTranslationDoF: 1
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: b0299d1388028864e9874bcacb6c2123,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: b0299d1388028864e9874bcacb6c2123, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1

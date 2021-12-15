@@ -54,10 +54,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Enemy\FireRobGunLogic.cs" />
-    <Compile Include="Assets\Scripts\Enemy\PlayerLogic.cs" />
-    <Compile Include="Assets\Scripts\Enemy\FireRobLogic.cs" />
-    <Compile Include="Assets\Scripts\Player\FPSplayerLogic.cs" />
+    <Compile Include="Assets\Scripts\Enemy\testEnemyPlayerLogic.cs" />
     <Compile Include="Assets\Scripts\Player\FPCameraLogic.cs" />
+    <Compile Include="Assets\Scripts\Enemy\BulletLogic.cs" />
+    <Compile Include="Assets\Scripts\Player\FPSplayerLogic.cs" />
+    <Compile Include="Assets\Scripts\Enemy\FireRobLogic.cs" />
+    <Compile Include="Assets\Scripts\Player\WeaponLogic.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAnimEvents.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -288,8 +291,8 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.24f1c2\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>Library\PackageCache\com.unity.analytics@3.6.11\AnalyticsStandardEvents\Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
       <HintPath>Library\PackageCache\com.unity.analytics@3.6.11\Unity.Analytics.Editor.dll</HintPath>
@@ -297,23 +300,23 @@
     <Reference Include="Unity.Burst.Unsafe">
       <HintPath>Library\PackageCache\com.unity.burst@1.6.1\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>Library\PackageCache\com.unity.analytics@3.6.11\Unity.Analytics.Tracker.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Cecil">
-      <HintPath>Library\PackageCache\com.unity.burst@1.6.1\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
+    <Reference Include="Unity.Burst.Cecil.Mdb">
+      <HintPath>Library\PackageCache\com.unity.burst@1.6.1\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Cecil.Pdb">
       <HintPath>Library\PackageCache\com.unity.burst@1.6.1\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Burst.Cecil.Mdb">
-      <HintPath>Library\PackageCache\com.unity.burst@1.6.1\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
+    <Reference Include="Unity.Burst.Cecil">
+      <HintPath>Library\PackageCache\com.unity.burst@1.6.1\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Cecil.Rocks">
       <HintPath>Library\PackageCache\com.unity.burst@1.6.1\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>Library\PackageCache\com.unity.analytics@3.6.11\AnalyticsStandardEvents\Unity.Analytics.StandardEvents.dll</HintPath>
+    <Reference Include="Unity.Analytics.Tracker">
+      <HintPath>Library\PackageCache\com.unity.analytics@3.6.11\Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.24f1c2\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -666,6 +669,10 @@
       <Project>{4C2CD33D-01DE-D1FE-4636-54280F0C595C}</Project>
       <Name>Unity.VSCode.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.2D.Tilemap.Editor.csproj">
+      <Project>{6285EC58-EEAF-4B1D-E9F3-E1B1446F924F}</Project>
+      <Name>Unity.2D.Tilemap.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.Editor.csproj">
       <Project>{D02FCFD6-4D5E-E359-FDBD-CAC0C255EB06}</Project>
       <Name>Unity.TextMeshPro.Editor</Name>
@@ -673,10 +680,6 @@
     <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
       <Project>{92BF4305-1CDA-52BC-FDC4-0842C7D4BEFD}</Project>
       <Name>Unity.VisualStudio.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Timeline.Editor.csproj">
-      <Project>{7B1843DA-4F7C-F26A-530B-73ED444B0F64}</Project>
-      <Name>Unity.Timeline.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Timeline.csproj">
       <Project>{DD534F14-BE9E-2F7D-2D9B-38EEBFD97D5B}</Project>
@@ -686,54 +689,6 @@
       <Project>{45449171-9F8E-0E47-6B2B-DEFBF87053AD}</Project>
       <Name>Unity.TextMeshPro</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{549BD746-91A0-6B6C-087D-8479DC644C87}</Project>
-      <Name>UnityEditor.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
-      <Project>{7DF49269-ADBE-57D0-C0C4-F2AB2E8122C9}</Project>
-      <Name>Unity.PlasticSCM.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Rider.Editor.csproj">
-      <Project>{F649B110-4B4F-0893-8064-1F30577C07A7}</Project>
-      <Name>Unity.Rider.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{EE892C11-6D75-6A24-4F1A-C176769C4C6F}</Project>
-      <Name>UnityEngine.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.2D.Tilemap.Editor.csproj">
-      <Project>{6285EC58-EEAF-4B1D-E9F3-E1B1446F924F}</Project>
-      <Name>Unity.2D.Tilemap.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.Editor.csproj">
-      <Project>{2A744D17-B298-615B-04AC-5DFB9C436E8A}</Project>
-      <Name>Unity.Mathematics.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.csproj">
-      <Project>{93A8C600-68AD-FEE5-8BBF-C66EC26AACD6}</Project>
-      <Name>Unity.Mathematics</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.InputSystem.csproj">
-      <Project>{BCE0C317-A534-84E8-C489-6C07D7B1796A}</Project>
-      <Name>Unity.InputSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
-      <Project>{A36CCCEF-9FFF-207D-9508-D8C751A3D63C}</Project>
-      <Name>Unity.Postprocessing.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.csproj">
-      <Project>{A29C4E82-DE45-BDEC-7EE7-81A6ADDA6F08}</Project>
-      <Name>Unity.Burst</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Analytics.DataPrivacy.csproj">
-      <Project>{2AB629D7-F405-3E5F-9187-D396FB40C35B}</Project>
-      <Name>Unity.Analytics.DataPrivacy</Name>
-    </ProjectReference>
-    <ProjectReference Include="Analytics.csproj">
-      <Project>{BB09FF0F-9DEB-37F7-1788-FB7B6F20DE40}</Project>
-      <Name>Analytics</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Burst.Editor.csproj">
       <Project>{C7A2B662-4317-EF08-4638-B599C9AE2DCE}</Project>
       <Name>Unity.Burst.Editor</Name>
@@ -742,9 +697,57 @@
       <Project>{D24397CF-BD28-120B-3CAA-11D6BFDF6B1B}</Project>
       <Name>Unity.2D.Sprite.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
+      <Project>{A36CCCEF-9FFF-207D-9508-D8C751A3D63C}</Project>
+      <Name>Unity.Postprocessing.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEditor.UI.csproj">
+      <Project>{549BD746-91A0-6B6C-087D-8479DC644C87}</Project>
+      <Name>UnityEditor.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.InputSystem.csproj">
+      <Project>{BCE0C317-A534-84E8-C489-6C07D7B1796A}</Project>
+      <Name>Unity.InputSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Rider.Editor.csproj">
+      <Project>{F649B110-4B4F-0893-8064-1F30577C07A7}</Project>
+      <Name>Unity.Rider.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
+      <Project>{7DF49269-ADBE-57D0-C0C4-F2AB2E8122C9}</Project>
+      <Name>Unity.PlasticSCM.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Analytics.csproj">
+      <Project>{BB09FF0F-9DEB-37F7-1788-FB7B6F20DE40}</Project>
+      <Name>Analytics</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.csproj">
+      <Project>{EE892C11-6D75-6A24-4F1A-C176769C4C6F}</Project>
+      <Name>UnityEngine.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Analytics.DataPrivacy.csproj">
+      <Project>{2AB629D7-F405-3E5F-9187-D396FB40C35B}</Project>
+      <Name>Unity.Analytics.DataPrivacy</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.csproj">
+      <Project>{93A8C600-68AD-FEE5-8BBF-C66EC26AACD6}</Project>
+      <Name>Unity.Mathematics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{A29C4E82-DE45-BDEC-7EE7-81A6ADDA6F08}</Project>
+      <Name>Unity.Burst</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
       <Project>{9FF077BD-91B5-F7AE-0DB0-119B414D8EE9}</Project>
       <Name>Unity.Postprocessing.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Timeline.Editor.csproj">
+      <Project>{7B1843DA-4F7C-F26A-530B-73ED444B0F64}</Project>
+      <Name>Unity.Timeline.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.Editor.csproj">
+      <Project>{2A744D17-B298-615B-04AC-5DFB9C436E8A}</Project>
+      <Name>Unity.Mathematics.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

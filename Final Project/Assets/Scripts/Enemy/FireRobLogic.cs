@@ -27,8 +27,16 @@ public class FireRobLogic : MonoBehaviour
     //the speed Rob turn to player
     const float ROTATION_SPEED = 3.0f;
 
+    //检测Player的视野
+    //最大检测距离
+    const float VIEW_RADIUS = READY_RADIUS;
+    //检测密度
+    const int VIEW_ANGLE_STEP = 100;
+    //检测的视野高度
+    const float VIEW_HEIGHT = 2.0f;
+
     NavMeshAgent m_navMeshAgent;
-    PlayerLogic m_playerLogic;
+    testEnemyPlayerLogic m_playerLogic;
     GameObject m_player;
     Animator m_animator;
     FireRobGunLogic m_gunLogic;
@@ -44,7 +52,7 @@ public class FireRobLogic : MonoBehaviour
         m_gunLogic = GetComponentInChildren<FireRobGunLogic>();
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         m_player = GameObject.FindGameObjectWithTag("Player");
-        m_playerLogic = m_player.GetComponent<PlayerLogic>();
+        m_playerLogic = m_player.GetComponent<testEnemyPlayerLogic>();
         m_animator = GetComponent<Animator>();
         m_animator.SetFloat("State", 0.0f);
         m_fireRobState = FireRobState.Idel;
@@ -52,6 +60,9 @@ public class FireRobLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DetectPlayer();
+        Debug.Log("Is alert: " + isAlert);
+        Debug.Log("Now State: " + m_fireRobState);
         if (!m_player)
         {
             return;
@@ -59,23 +70,18 @@ public class FireRobLogic : MonoBehaviour
         switch (m_fireRobState)
         {
             case (FireRobState.Idel):
-                Debug.Log("Idel");
                 UpdateIdelState();
                 break;
             case (FireRobState.Ready):
-                Debug.Log("Ready");
                 UpdateReadyState();
                 break;
             case (FireRobState.Run):
-                Debug.Log("Run");
                 UpdateRunState();
                 break;
             case (FireRobState.Stand):
-                Debug.Log("Stand");
                 UpdateStandState();
                 break;
             case (FireRobState.Back):
-                Debug.Log("Back");
                 UpdateBackState();
                 break;
         }
@@ -116,10 +122,7 @@ public class FireRobLogic : MonoBehaviour
         }
         else if(Vector3.Distance(transform.position, m_player.transform.position) > STAND_RADIUS)
         {
-            Debug.Log("SetDes");
             m_navMeshAgent.SetDestination(m_player.transform.position);
-            Debug.Log(m_navMeshAgent.isOnNavMesh);
-            Debug.Log("isStop: "+m_navMeshAgent.isStopped);
             //Be running into Player state
             m_animator.SetFloat("State", 1.8f);
             TryFire();
@@ -134,11 +137,11 @@ public class FireRobLogic : MonoBehaviour
     }
     void UpdateStandState()
     {
-        if (Vector3.Distance(transform.position, m_player.transform.position) < BACK_RADIUS)
+        if (Vector3.Distance(transform.position, m_player.transform.position) < BACK_RADIUS && isAlert)
         {
             m_fireRobState = FireRobState.Back;
         }
-        else if(Vector3.Distance(transform.position, m_player.transform.position) > STAND_RADIUS)
+        else if(Vector3.Distance(transform.position, m_player.transform.position) > STAND_RADIUS && isAlert)
         {
             m_fireRobState = FireRobState.Run;
         }
@@ -175,13 +178,53 @@ public class FireRobLogic : MonoBehaviour
     }
     void TryFire()
     {
+        if (!isAlert)
+        {
+            return;
+        }
         Vector3 playerDir = m_player.transform.position - transform.position;
         //slowly trun to player
         transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(playerDir), ROTATION_SPEED * Time.deltaTime);
 
-        if (Vector3.Angle(transform.forward, playerDir) <= FIRE_ANGLE)
+        //m_gunLogic.Fire();
+        if (Vector3.Angle(transform.forward, playerDir) <= FIRE_ANGLE || m_fireRobState == FireRobState.Back)
         {
             m_gunLogic.Fire();
         }
+    }
+    public void SpawnBullet()
+    {
+        m_gunLogic.SpawnBullet();
+    }
+    void DetectPlayer()
+    {
+        isAlert = false;
+        Vector3 forward_left = Quaternion.Euler(0, -70, 0) * transform.forward * VIEW_RADIUS;
+        for(int i = 0; i <= VIEW_ANGLE_STEP; i++)
+        {
+            Vector3 v = Quaternion.Euler(0, (140.0f / VIEW_ANGLE_STEP) * i, 0) * forward_left;
+
+            Vector3 rayFrom = new Vector3(transform.position.x, VIEW_HEIGHT, transform.position.z);
+            Ray ray = new Ray(rayFrom, v);
+            RaycastHit hit = new RaycastHit();
+            Physics.Raycast(ray, out hit, VIEW_RADIUS);
+            
+            Vector3 pos = transform.position + v;
+            if (hit.transform != null)
+            {
+                pos = hit.point;
+            }
+            Debug.DrawLine(rayFrom, pos, Color.green);
+
+            if (hit.transform != null && hit.transform.gameObject.tag == "Player")
+            {
+                Debug.Log("ray hit player");
+                isAlert = true;
+            }
+        }
+    }
+    public void TakeDamage()
+    {
+        isAlert = true;
     }
 }

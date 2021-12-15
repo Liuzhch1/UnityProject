@@ -62,6 +62,7 @@ public class FPSplayerLogic : MonoBehaviour
 
         m_camera = GetComponentInChildren<Camera>();
         m_cameraLogic = GetComponentInChildren<FPCameraLogic>();
+        
     }
 
     // Update is called once per frame
@@ -129,6 +130,7 @@ public class FPSplayerLogic : MonoBehaviour
 
         // Set animator parameters
         m_animator.SetFloat("VerticalInput", m_verticalMovementInput);
+        m_animator.SetFloat("HorizontalInput", m_horizontalMovementInput);
     }
 
 
@@ -203,4 +205,6 @@ public class FPSplayerLogic : MonoBehaviour
         }
     }
     #endregion
+
+    
 }

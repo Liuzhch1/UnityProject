@@ -18,6 +18,11 @@ public class FPCameraLogic : MonoBehaviour
     float m_rotationY;
     public float MouseSensitivity;
 
+    bool m_recoilAnim = false;
+    float m_recoilProgress = 0.0f;
+    float m_startRotationX = 0.0f;
+    float m_targetRotationX = 0.0f;
+
     #endregion
 
     #region Fields Serialized
@@ -27,6 +32,9 @@ public class FPCameraLogic : MonoBehaviour
     #region Unity
     void Start()
     {
+        // Disable mouse cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -39,12 +47,31 @@ public class FPCameraLogic : MonoBehaviour
         m_rotationX -= MouseY_Input * MouseSensitivity;
         m_rotationX = Mathf.Clamp(m_rotationX, MIN_X, MAX_X);
 
+        // If player moves the mouse stop auto-retarget
+        if (MouseX_Input != 0.0f || MouseY_Input != 0.0f)
+        {
+            m_recoilAnim = false;
+        }
+
+        // Animate aim position back to original position
+        if (m_recoilAnim)
+        {
+            m_recoilProgress += Time.deltaTime;
+            m_rotationX = Mathf.Lerp(m_startRotationX, m_targetRotationX, m_recoilProgress);
+
+            // Last part of Lerp can snap to target destination
+            if (Mathf.Abs(m_rotationX - m_targetRotationX) < 0.1f)
+            {
+                m_rotationX = m_targetRotationX;
+                m_recoilAnim = false;
+                m_recoilProgress = 0.0f;
+            }
+        }
     }
 
     void LateUpdate()
     {
         transform.rotation = Quaternion.Euler(m_rotationX, m_rotationY, 0);
-        //m_playerLogic.transform.rotation = Quaternion.Euler(0, m_rotationY, 0);
     }
     #endregion
 
@@ -52,6 +79,21 @@ public class FPCameraLogic : MonoBehaviour
     public float GetRotationY()
     {
         return m_rotationY;
+    }
+
+    public void AddRecoil()
+    {
+        if (!m_recoilAnim)
+        {
+            m_targetRotationX = m_rotationX;
+        }
+
+        m_recoilProgress = 0.0f;
+        m_rotationX -= 4.0f;
+        m_rotationY += Random.Range(-1.0f, 1.0f);
+        m_startRotationX = m_rotationX;
+
+        m_recoilAnim = true;
     }
     #endregion
 }
