@@ -31,6 +31,25 @@
 - ammo
 - health
 
+## Log
+
+### 12.14
+
+#### Player
+
+- player logic
+  - move
+  - rotate
+  - jump
+  - crouch/stand up
+- model import
+  - player
+  - weapon
+- simple move animation
+  - hand gun idle
+  - walk forward
+  - run forward
+  - walk backward
 
 
 ## Inventory Features
