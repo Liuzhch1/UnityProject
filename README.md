@@ -27,7 +27,7 @@
     - die
   - Top body layer
     - shoot
-    - crouch
+    - reload
 - ammo
 - health
 
@@ -51,6 +51,11 @@
   - run forward
   - walk backward
 
+### 12.15
+
+#### Player
+- shoot(logic&animation)
+- reload(logic&animation)
 
 ## Inventory Features
 
