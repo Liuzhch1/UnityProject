@@ -15,26 +15,35 @@ public enum FireRobState
 
 public class FireRobLogic : MonoBehaviour
 {
-    const float READY_RADIUS = 20.0f;
+    const float READY_RADIUS = 30.0f;
     const float RUN_RADIUS = READY_RADIUS-2.0f;
     const float STAND_RADIUS = 2 * READY_RADIUS / 3;
-    const float BACK_RADIUS = READY_RADIUS / 2;
+    const float BACK_RADIUS = READY_RADIUS / 3;
 
-    const float WALKBACK_SPEED = 4.0f;
-    const float ROTATION_SPEED = 2.0f;
+    // 射击的夹角，大于这个夹角就不射击
+    const float FIRE_ANGLE = 6.0f;
+    const float MAX_BULLET_NUM = 20;
+    float bullet_num = MAX_BULLET_NUM;
+
+    const float WALKBACK_SPEED = 2.5f;
+    //the speed Rob turn to player
+    const float ROTATION_SPEED = 3.0f;
 
     NavMeshAgent m_navMeshAgent;
     PlayerLogic m_playerLogic;
     GameObject m_player;
     Animator m_animator;
+    FireRobGunLogic m_gunLogic;
 
     FireRobState m_fireRobState;
 
     int health = 100;
+    bool isAlert = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        m_gunLogic = GetComponentInChildren<FireRobGunLogic>();
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         m_player = GameObject.FindGameObjectWithTag("Player");
         m_playerLogic = m_player.GetComponent<PlayerLogic>();
@@ -48,6 +57,10 @@ public class FireRobLogic : MonoBehaviour
         if (!m_player)
         {
             return;
+        }
+        if (fire_cooldown > 0)
+        {
+            fire_cooldown -= Time.deltaTime;
         }
         switch (m_fireRobState)
         {
@@ -168,11 +181,17 @@ public class FireRobLogic : MonoBehaviour
     }
     void Fire()
     {
-        //transform.LookAt(m_player.transform.position);
-        //return;
-        //2021.12.14 Stop here, I need to change slowing LookAt
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_player.transform.position - transform.position), ROTATION_SPEED * Time.deltaTime);
+        Vector3 playerDir = m_player.transform.position - transform.position;
+        //slowly trun to player
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(playerDir), ROTATION_SPEED * Time.deltaTime);
 
-        transform.position += transform.forward * WALKBACK_SPEED * Time.deltaTime;
+        if (Vector3.Angle(transform.forward, playerDir) <= FIRE_ANGLE)
+        {
+            if (fire_cooldown <= 0.0f)
+            {
+                Instantiate(m_bullet, m_bulletSpawnPoint.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
+                fire_cooldown = MAX_FIRE_COOLDOWN;
+            }
+        }
     }
 }
