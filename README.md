@@ -14,6 +14,7 @@
 
 ## Player Features
 
+- Movement & Rotation
 - Model
 - Advanced animation
   - base layer
@@ -21,7 +22,6 @@
     - walk forward
     - walk backward
     - run forward 
-    - turn left/right
     - turn back
     - jump
     - die
