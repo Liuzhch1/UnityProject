@@ -36,9 +36,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Inventory\ItemData_SO.cs" />
      <Compile Include="Assets\Scripts\Enemy\FireRobGunLogic.cs" />
      <Compile Include="Assets\Scripts\Enemy\testEnemyPlayerLogic.cs" />
      <Compile Include="Assets\Scripts\Player\FPCameraLogic.cs" />
+     <Compile Include="Assets\Scripts\Inventory\ItemLogic.cs" />
      <Compile Include="Assets\Scripts\Enemy\FireRobBulletLogic.cs" />
      <Compile Include="Assets\Scripts\Player\FPSplayerLogic.cs" />
      <Compile Include="Assets\Scripts\Player\WeaponLogic.cs" />

@@ -59,8 +59,37 @@
 
 ## Inventory Features
 
-- Interactive/collectable objects
+- Interactive/collectable items
   - +health
-  - +ammo
-- Weapons
+  - ammo
   - weapon
+  - scope
+  
+- Item Inventory UI
+
+  - collectable items
+  - scopes
+
+- Weapon Inventory UI (Radial Panel)
+
+- Player Status UI
+
+  - health
+
+  - weapon ammo
+
+    
+
+### Instructions
+
+To create a new collectable item:
+
+- Prepare your item prefab under `Assets/Prefabs/YOUR_WORK_FOLDER`
+  - Add a `item` tag 
+  - Add a `collider` and set it as trigger
+  - Add `CollectableItem.cs` to it
+
+- Under `Assets/Item Data`, create an item SO by click `Create/Inventory/Item Data`
+  - Fill in `itemType`, `itemName`, `itemIcon`
+  - 
+
