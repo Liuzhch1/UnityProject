@@ -158,7 +158,7 @@ public class FireRobLogic : MonoBehaviour
         else
         {
             // stand state, shoot
-            m_animator.SetFloat("State", 4.0f);
+            m_animator.SetFloat("State", 3.5f);
             TryFire();
         }
     }
