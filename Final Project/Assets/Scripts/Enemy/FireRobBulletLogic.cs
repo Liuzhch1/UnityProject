@@ -18,7 +18,14 @@ public class FireRobBulletLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (m_bulletLifeTime >= 0)
+        {
+            m_bulletLifeTime -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter(Collider other)

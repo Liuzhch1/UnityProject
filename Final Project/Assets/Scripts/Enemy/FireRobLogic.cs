@@ -28,6 +28,8 @@ public class FireRobLogic : MonoBehaviour
     const float ROTATION_SPEED = 3.0f;
 
     //检测Player的视野
+    //最远能够看到的距离
+    const float MAX_VIEWDISTANCE = 3*READY_RADIUS;
     //检测角度
     const float VIEW_ANGLE = 140.0f;
     //最大检测距离
@@ -36,6 +38,9 @@ public class FireRobLogic : MonoBehaviour
     const int VIEW_ANGLE_STEP = 100;
     //检测的视野高度
     const float VIEW_HEIGHT = 2.0f;
+
+    [SerializeField]
+    Transform rayCastPoint;
 
     NavMeshAgent m_navMeshAgent;
     testEnemyPlayerLogic m_playerLogic;
@@ -63,7 +68,7 @@ public class FireRobLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DetectPlayer();
+        EfficientDetectPlayer();
         Debug.Log("Is alert: " + isAlert);
         Debug.Log("Now State: " + m_fireRobState);
         if (!m_player || isDead)
@@ -202,6 +207,31 @@ public class FireRobLogic : MonoBehaviour
     public void SpawnBullet()
     {
         m_gunLogic.SpawnBullet();
+    }
+    void EfficientDetectPlayer()
+    {
+        if(!m_player || Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
+        {
+            return;
+        }
+        isAlert = false;
+        Vector3 dir = m_player.transform.position - transform.position;
+        dir.y = 0;
+        float toPlayerAngle = Vector3.Angle(transform.forward, dir);
+        Vector3 normal = Vector3.Cross(transform.forward, dir);
+        toPlayerAngle = Mathf.Abs(toPlayerAngle*Mathf.Sign(Vector3.Dot(normal, transform.up)));
+
+        Ray ray = new Ray(rayCastPoint.position, m_player.transform.position - rayCastPoint.position);
+        RaycastHit hit;
+        if(Physics.Raycast(ray,out hit, MAX_VIEWDISTANCE) && toPlayerAngle <= VIEW_ANGLE / 2)
+        {
+            Debug.DrawLine(rayCastPoint.position, hit.transform.position,Color.red);
+            if (hit.transform.gameObject.tag == "Player")
+            {
+                isAlert = true;
+            }
+        }
+        Debug.DrawLine(transform.position, m_player.transform.position);
     }
     void DetectPlayer()
     {

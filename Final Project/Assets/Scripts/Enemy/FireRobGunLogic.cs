@@ -70,9 +70,10 @@ public class FireRobGunLogic : MonoBehaviour
 
     public void SpawnBullet()
     {
-        Debug.Log("num:" + m_bullet_num);
         GameObject bullet = Instantiate(m_bulletPrefab, m_bulletSpawnPoint.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
         m_bullet_num -= 1;
+        Debug.Log(m_bulletSpawnPoint.transform.forward);
+        Debug.Log((m_player.transform.position - m_bulletSpawnPoint.position).normalized);
         bullet.transform.forward = -m_bulletSpawnPoint.transform.forward;
         GameObject emptyBullet = Instantiate(m_emptyBulletPrefab, m_emptySpawnPoint.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
         emptyBullet.transform.forward = -m_emptySpawnPoint.transform.forward;
