@@ -787,6 +787,7 @@ GameObject:
   - component: {fileID: 3435532005723917566}
   - component: {fileID: 3435532005723917567}
   - component: {fileID: 3435532005723917565}
+  - component: {fileID: 736814082850326824}
   m_Layer: 0
   m_Name: Polyart_Mesh
   m_TagString: Untagged
@@ -883,6 +884,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rayCastPoint: {fileID: 3435532007012346087}
+--- !u!65 &736814082850326824
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3435532006609624099}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.94, z: 1.6}
+  m_Center: {x: 0, y: 1, z: 0.33}
 --- !u!1 &3435532006609624101
 GameObject:
   m_ObjectHideFlags: 0

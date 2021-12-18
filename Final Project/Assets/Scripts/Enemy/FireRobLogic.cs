@@ -27,6 +27,7 @@ public class FireRobLogic : MonoBehaviour
     //the speed Rob turn to player
     const float ROTATION_SPEED = 3.0f;
 
+    #region View Parameter
     //检测Player的视野
     //最远能够看到的距离
     const float MAX_VIEWDISTANCE = 3*READY_RADIUS;
@@ -38,9 +39,23 @@ public class FireRobLogic : MonoBehaviour
     const int VIEW_ANGLE_STEP = 100;
     //检测的视野高度
     const float VIEW_HEIGHT = 2.0f;
+    // head up and down angle
+    float m_viewRotationX = 0.0f;
+    float m_viewRotationY = 0.0f;
+    #endregion
+
+    
 
     [SerializeField]
     Transform rayCastPoint;
+    [SerializeField]
+    Transform m_neckBone;
+    [SerializeField]
+    Transform m_rightShoulderBone;
+    [SerializeField]
+    Transform m_leftShoulderBone;
+    [SerializeField]
+    Transform m_hips;
 
     NavMeshAgent m_navMeshAgent;
     testEnemyPlayerLogic m_playerLogic;
@@ -94,6 +109,9 @@ public class FireRobLogic : MonoBehaviour
                 UpdateBackState();
                 break;
         }
+
+        // calculate y-axis increse of view(head up/down to player)
+
     }
 
     #region UpdateState
@@ -164,12 +182,17 @@ public class FireRobLogic : MonoBehaviour
     }
     void UpdateBackState()
     {
-        if (Vector3.Distance(transform.position, m_player.transform.position) > BACK_RADIUS)
+        if (Vector3.Distance(transform.position, m_player.transform.position) > BACK_RADIUS || !isAlert)
         {
             m_fireRobState = FireRobState.Stand;
         }
         else
         {
+            // LookAt player so that FireRob can turn quickly
+            Vector3 lookAtPlayer = m_player.transform.position;
+            lookAtPlayer.y = transform.position.y;
+            transform.LookAt(lookAtPlayer);
+
             //go back
             m_animator.SetFloat("State", 2.8f);
             Vector3 direction = m_player.transform.position - transform.position;
@@ -208,6 +231,15 @@ public class FireRobLogic : MonoBehaviour
     {
         m_gunLogic.SpawnBullet();
     }
+
+    #region Head down and head up
+    void LateUpdate()
+    {
+        
+    }
+    #endregion
+
+    #region Detect
     void EfficientDetectPlayer()
     {
         if(!m_player || Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
@@ -225,6 +257,7 @@ public class FireRobLogic : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(ray,out hit, MAX_VIEWDISTANCE) && toPlayerAngle <= VIEW_ANGLE / 2)
         {
+            Debug.Log("What is angle: " + toPlayerAngle);
             Debug.DrawLine(rayCastPoint.position, hit.transform.position,Color.red);
             if (hit.transform.gameObject.tag == "Player")
             {
@@ -260,6 +293,7 @@ public class FireRobLogic : MonoBehaviour
             }
         }
     }
+    #endregion
     public void TakeDamage(int damage)
     {
         if (isDead)
