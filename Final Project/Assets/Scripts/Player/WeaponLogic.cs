@@ -31,7 +31,7 @@ public class WeaponLogic : MonoBehaviour
     #region Unity
     void Start()
     {
-        m_FPCameraLogic = GetComponentInParent<FPCameraLogic>();
+        m_FPCameraLogic = FindObjectOfType<FPCameraLogic>();
         m_animator = GetComponentInParent<Animator>();
     }
 
@@ -84,6 +84,12 @@ public class WeaponLogic : MonoBehaviour
             {
                 // reload empty
             }
+        }
+
+        // Aim
+        if (Input.GetButtonDown("Fire2")&& !m_isReloading)
+        {
+            m_animator.SetTrigger("isAiming");
         }
     }
 
