@@ -20,12 +20,19 @@ public class WeaponLogic : MonoBehaviour
     int m_mag = 4;
 
     bool m_isReloading = false;
+    bool m_isAiming = false;
+
+    float not_aimY;
+    float aimY = 1.0f;
 
     #endregion
 
     #region Serialized Fields
     [SerializeField]
     GameObject m_bulletImpactObj;
+
+    [SerializeField]
+    GameObject m_arms;
     #endregion
 
     #region Unity
@@ -89,7 +96,8 @@ public class WeaponLogic : MonoBehaviour
         // Aim
         if (Input.GetButtonDown("Fire2")&& !m_isReloading)
         {
-            m_animator.SetTrigger("isAiming");
+            m_isAiming = !m_isAiming;
+            m_animator.SetBool("isAiming", m_isAiming);
         }
     }
 

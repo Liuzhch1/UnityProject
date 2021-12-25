@@ -61,6 +61,14 @@ public class FPSplayerLogic : MonoBehaviour
 
     [SerializeField]
     GameObject Wp_handgun;
+
+    [SerializeField]
+    RuntimeAnimatorController ARController;
+
+    [SerializeField]
+    RuntimeAnimatorController handGunController;
+
+
     #endregion
 
     #region Unity
@@ -105,7 +113,14 @@ public class FPSplayerLogic : MonoBehaviour
 
             if (Input.GetButtonDown("Weapon"))
             {
-                changeWeapon(1);
+                if(currentWeapon == Weapon.AR)
+                {
+                    changeWeapon(1);
+                }
+                else
+                {
+                    changeWeapon(0);
+                }
             }
         }
         
@@ -220,17 +235,34 @@ public class FPSplayerLogic : MonoBehaviour
         if(type == 0)
         {
             currentWeapon = Weapon.AR;
-            Wp_AR.SetActive(true);
-            Wp_handgun.SetActive(false);
+            
+            m_animator.SetTrigger("Holster");
+            
         }
         else if(type == 1)
         {
             currentWeapon = Weapon.handgun;
+           
+            m_animator.SetTrigger("Holster");
+        }
+    }
+
+    public void setController()
+    {
+        if(currentWeapon == Weapon.AR){
+            Wp_AR.SetActive(true);
+            Wp_handgun.SetActive(false);
+            m_animator.runtimeAnimatorController = ARController;
+        }
+        else if(currentWeapon == Weapon.handgun)
+        {
             Wp_AR.SetActive(false);
             Wp_handgun.SetActive(true);
+            m_animator.runtimeAnimatorController = handGunController;
 
         }
     }
+
     #endregion
 
 
