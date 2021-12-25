@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum Weapon
+{
+    AR,
+    handgun
+}
+
 public class FPSplayerLogic : MonoBehaviour
 {
     #region Constants
@@ -42,13 +48,26 @@ public class FPSplayerLogic : MonoBehaviour
     Camera m_camera;
     FPCameraLogic m_cameraLogic;
 
-    int currentWeapon = 0;
+    Weapon currentWeapon = Weapon.AR;
     #endregion
 
     #region Fields Serialized
 
     //[SerializeField]
     //List<AudioClip> m_runStoneSounds = new List<AudioClip>();
+
+    [SerializeField]
+    GameObject Wp_AR;
+
+    [SerializeField]
+    GameObject Wp_handgun;
+
+    [SerializeField]
+    RuntimeAnimatorController ARController;
+
+    [SerializeField]
+    RuntimeAnimatorController handGunController;
+
 
     #endregion
 
@@ -94,9 +113,14 @@ public class FPSplayerLogic : MonoBehaviour
 
             if (Input.GetButtonDown("Weapon"))
             {
-                // change current weapon: 0 = hand, 1 = gun, 2 = handgun
-                currentWeapon += 1;
-                currentWeapon %= 3;
+                if(currentWeapon == Weapon.AR)
+                {
+                    changeWeapon(1);
+                }
+                else
+                {
+                    changeWeapon(0);
+                }
             }
         }
         
@@ -204,7 +228,42 @@ public class FPSplayerLogic : MonoBehaviour
             m_audioSource.PlayOneShot(sound);
         }
     }
+
+    public void changeWeapon(int type)
+    {
+        //type 0 => AR, type 1 => handgun
+        if(type == 0)
+        {
+            currentWeapon = Weapon.AR;
+            
+            m_animator.SetTrigger("Holster");
+            
+        }
+        else if(type == 1)
+        {
+            currentWeapon = Weapon.handgun;
+           
+            m_animator.SetTrigger("Holster");
+        }
+    }
+
+    public void setController()
+    {
+        if(currentWeapon == Weapon.AR){
+            Wp_AR.SetActive(true);
+            Wp_handgun.SetActive(false);
+            m_animator.runtimeAnimatorController = ARController;
+        }
+        else if(currentWeapon == Weapon.handgun)
+        {
+            Wp_AR.SetActive(false);
+            Wp_handgun.SetActive(true);
+            m_animator.runtimeAnimatorController = handGunController;
+
+        }
+    }
+
     #endregion
 
-    
+
 }

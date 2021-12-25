@@ -57,6 +57,34 @@
 - shoot(logic&animation)
 - reload(logic&animation)
 
+### 12.25
+
+#### Player
+
+##### done
+
+- change weapon
+  - <FPSplayerlogic.cs>
+  - `public void changeWeapon(int type) `
+  - type 0 => AR, type 1 => handgun
+- weapon handgun animations
+  - movement
+  - take out
+  - holster
+  - reload
+  - fire
+- weapon AR animations
+  - aim
+  - fix reload
+- player prefab
+
+##### future work
+
+- wepon handgun
+  - aim
+- add aim UI
+- fix aim angle
+
 ## Inventory Features
 
 - Interactive/collectable items
