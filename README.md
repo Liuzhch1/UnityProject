@@ -78,7 +78,11 @@
 
   - weapon ammo
 
-    
+### 12.19
+
+### Map
+- nav mesh 
+- door animations 
 
 ### Instructions
 
