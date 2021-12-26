@@ -6,11 +6,13 @@ public class PlayerAnimEvents : MonoBehaviour
 {
     WeaponLogic m_weaponLogic;
     FPSplayerLogic m_playerLogic;
+    FPCameraLogic m_cameraLogic;
 
     private void Start()
     {
         m_weaponLogic = GetComponentInChildren<WeaponLogic>();
         m_playerLogic = GetComponentInParent<FPSplayerLogic>();
+        m_cameraLogic = GetComponent<FPCameraLogic>();
     }
 
     #region Events Function
@@ -22,6 +24,11 @@ public class PlayerAnimEvents : MonoBehaviour
     public void endHolster()
     {
         m_playerLogic.setController();
+    }
+
+    public void endAim()
+    {
+        m_weaponLogic.cameraAim();
     }
     #endregion
 }

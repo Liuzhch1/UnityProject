@@ -10,6 +10,8 @@ public class FPCameraLogic : MonoBehaviour
     const float MIN_X = -50.0f;
     const float MAX_X = 50.0f;
 
+    const float originFOV = 56.0f;
+
     #endregion
 
     #region Fields
@@ -23,10 +25,15 @@ public class FPCameraLogic : MonoBehaviour
     float m_startRotationX = 0.0f;
     float m_targetRotationX = 0.0f;
 
+    float aimFOV = 23.0f;
+
+    Camera m_camera;
+
     #endregion
 
     #region Fields Serialized
-
+    [SerializeField]
+    GameObject m_cameraObj;
     #endregion
 
     #region Unity
@@ -35,6 +42,8 @@ public class FPCameraLogic : MonoBehaviour
         // Disable mouse cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        //m_camera = GetComponent<Camera>();
+        m_camera = GetComponentInChildren<Camera>();
     }
 
     // Update is called once per frame
@@ -94,6 +103,24 @@ public class FPCameraLogic : MonoBehaviour
         m_startRotationX = m_rotationX;
 
         m_recoilAnim = true;
+    }
+
+    public void aim(int target)
+    {
+        aimFOV = originFOV / target;
+        m_camera.fieldOfView = aimFOV;
+
+        if(target == 1)
+        {
+            Vector3 tmp = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            m_cameraObj.transform.position = tmp;
+        }
+        else if(target == 2)
+        {
+            Vector3 tmp = new Vector3(transform.position.x, transform.position.y + 0.07f, transform.position.z);
+            m_cameraObj.transform.position = tmp;
+        }
+        
     }
     #endregion
 }

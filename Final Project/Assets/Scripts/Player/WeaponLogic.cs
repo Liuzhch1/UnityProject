@@ -32,7 +32,7 @@ public class WeaponLogic : MonoBehaviour
     GameObject m_bulletImpactObj;
 
     [SerializeField]
-    GameObject m_arms;
+    GameObject m_ironSight;
     #endregion
 
     #region Unity
@@ -136,6 +136,18 @@ public class WeaponLogic : MonoBehaviour
         m_ammo = MAX_AMMO;
         m_mag -= 1;
         m_isReloading = false;
+    }
+
+    public void cameraAim()
+    {
+        if (m_isAiming)
+        {
+            m_FPCameraLogic.aim(2);
+        }
+        else
+        {
+            m_FPCameraLogic.aim(1);
+        }
     }
     #endregion
 }
