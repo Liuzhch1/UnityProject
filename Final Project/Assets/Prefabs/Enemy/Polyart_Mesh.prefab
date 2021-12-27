@@ -792,7 +792,7 @@ GameObject:
   - component: {fileID: 44452922945119625}
   m_Layer: 0
   m_Name: Polyart_Mesh
-  m_TagString: Untagged
+  m_TagString: Enemy01
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
