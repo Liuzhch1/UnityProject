@@ -89,10 +89,10 @@ public class WeaponLogic : MonoBehaviour
         {
             if (m_shotCooldown <= 0.0f)
             {
-                m_animator.SetTrigger("Shoot");
-
                 if (m_ammo > 0)
                 {
+                    m_animator.SetTrigger("Shoot");
+
                     Shoot();
 
                     --m_ammo;
@@ -157,12 +157,17 @@ public class WeaponLogic : MonoBehaviour
         // Log which object we hit
         if (Physics.Raycast(ray, out rayHit, 100.0f))
         {
-            Debug.Log("Bullet Hit Object: " + rayHit.collider.gameObject.name);
-            Debug.Log(m_bulletImpactObj);
+            string hitTag = rayHit.collider.gameObject.tag;
+            Debug.Log("Bullet Hit Object: " + hitTag);
+            if (hitTag == "Enemy01")
+            {
+                rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(10);
+            }
 
             // Spawn Bullet Impact VFX
             Debug.Log("shoot");
             GameObject.Instantiate(m_bulletImpactObj, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, 0, 0));
+
         }
 
         // Play Shoot Sound

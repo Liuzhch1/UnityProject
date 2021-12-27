@@ -38,6 +38,8 @@ public class FPSplayerLogic : MonoBehaviour
     float m_crouchHeight = 1.0f;
     float m_standHeight = 2.4f;
 
+    int m_health = 100;
+
     Camera m_camera;
     FPCameraLogic m_cameraLogic;
     WeaponLogic m_weaponLogic;
@@ -169,6 +171,12 @@ public class FPSplayerLogic : MonoBehaviour
         }
     }
 
+
+    public void TakeDamage(int damage)
+    {
+        m_health -= damage;
+        Debug.Log(m_health);
+    }
     #endregion
 
     #region Sounds Methods
