@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 268060353}
   - component: {fileID: 268060356}
   - component: {fileID: 268060355}
-  - component: {fileID: 268060354}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -156,20 +155,6 @@ Transform:
   m_Father: {fileID: 1078934772}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &268060354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 268060352}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa7162e2a39f364ab6729eaf0f2f8d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MouseSensitivity: 2.71
-  m_cameraObj: {fileID: 0}
 --- !u!81 &268060355
 AudioListener:
   m_ObjectHideFlags: 0
@@ -221,6 +206,69 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &422021528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 422021529}
+  m_Layer: 0
+  m_Name: AimPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &422021529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422021528}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 730519414}
+  - {fileID: 968413059}
+  - {fileID: 1044252257}
+  m_Father: {fileID: 1078934772}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &730519413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 730519414}
+  m_Layer: 0
+  m_Name: AR_AimPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &730519414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730519413}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.063, z: -0.099}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 422021529}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &936275472
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +362,66 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &968413058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 968413059}
+  m_Layer: 0
+  m_Name: 'Handgun_AimPoint '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &968413059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968413058}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.09899998, z: -0.099}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 422021529}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1044252256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1044252257}
+  m_Layer: 0
+  m_Name: OriginPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1044252257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044252256}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.039000034, z: -0.099}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 422021529}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1078934771
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,6 +452,7 @@ Transform:
   m_Children:
   - {fileID: 2246339886357771991}
   - {fileID: 268060353}
+  - {fileID: 422021529}
   m_Father: {fileID: 2248397798487588077}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12672,10 +12781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed8e83d5895e284da2e8c9ce65606b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Wp_AR: {fileID: 2249616697116855213}
-  Wp_handgun: {fileID: 6688811355374513054}
-  ARController: {fileID: 9100000, guid: 3fe143ba8a02b1d4ab60722d79653427, type: 2}
-  handGunController: {fileID: 9100000, guid: 97e4573aff14c564ba85455054643afb, type: 2}
 --- !u!143 &2249614321042290909
 CharacterController:
   m_ObjectHideFlags: 0
@@ -12704,7 +12809,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2248141458487264669}
   - component: {fileID: 2221423345415430739}
-  - component: {fileID: 2249616697116855214}
   m_Layer: 8
   m_Name: assault_rifle_01
   m_TagString: Untagged
@@ -12712,20 +12816,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2249616697116855214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2249616697116855213}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328e8be5a7f7ec84fa849d786aced021, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_bulletImpactObj: {fileID: 1067471869909948, guid: 5e02303289b3c494e8e185be0fbbd405, type: 3}
-  m_ironSight: {fileID: 2249955174060765639}
 --- !u!1 &2249630345366511591
 GameObject:
   m_ObjectHideFlags: 0
@@ -13367,8 +13457,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328e8be5a7f7ec84fa849d786aced021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Wp_AR: {fileID: 2249616697116855213}
+  Wp_handgun: {fileID: 6688811355374513054}
+  ARController: {fileID: 9100000, guid: 3fe143ba8a02b1d4ab60722d79653427, type: 2}
+  handGunController: {fileID: 9100000, guid: 97e4573aff14c564ba85455054643afb, type: 2}
   m_bulletImpactObj: {fileID: 1067471869909948, guid: 5e02303289b3c494e8e185be0fbbd405, type: 3}
   m_ironSight: {fileID: 2249955174060765639}
+  m_ARscope: {fileID: 2249699151908480611}
+  ARAimPoint: {fileID: 730519414}
+  OriginAimPoint: {fileID: 1044252257}
+  HandgunAimPoint: {fileID: 968413059}
 --- !u!1 &2250278662385197651
 GameObject:
   m_ObjectHideFlags: 0

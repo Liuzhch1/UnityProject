@@ -23,12 +23,12 @@ public class PlayerAnimEvents : MonoBehaviour
 
     public void endHolster()
     {
-        m_playerLogic.setController();
+        m_weaponLogic.setController();
     }
 
     public void endAim()
     {
-        m_weaponLogic.cameraAim();
+        m_weaponLogic.Aim();
     }
     #endregion
 }

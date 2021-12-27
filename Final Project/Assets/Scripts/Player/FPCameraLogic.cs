@@ -10,11 +10,10 @@ public class FPCameraLogic : MonoBehaviour
     const float MIN_X = -50.0f;
     const float MAX_X = 50.0f;
 
-    const float originFOV = 56.0f;
-
     #endregion
 
     #region Fields
+    Camera m_camera;
 
     float m_rotationX;
     float m_rotationY;
@@ -25,15 +24,13 @@ public class FPCameraLogic : MonoBehaviour
     float m_startRotationX = 0.0f;
     float m_targetRotationX = 0.0f;
 
-    float aimFOV = 23.0f;
-
-    Camera m_camera;
-
     #endregion
 
     #region Fields Serialized
+
     [SerializeField]
     GameObject m_cameraObj;
+
     #endregion
 
     #region Unity
@@ -42,8 +39,8 @@ public class FPCameraLogic : MonoBehaviour
         // Disable mouse cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        //m_camera = GetComponent<Camera>();
-        m_camera = GetComponentInChildren<Camera>();
+
+        m_camera = m_cameraObj.GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -84,7 +81,7 @@ public class FPCameraLogic : MonoBehaviour
     }
     #endregion
 
-    #region Help Methods
+    #region Movement Methods
     public float GetRotationY()
     {
         return m_rotationY;
@@ -105,22 +102,15 @@ public class FPCameraLogic : MonoBehaviour
         m_recoilAnim = true;
     }
 
-    public void aim(int target)
+    public void changeFOVto(float aimFOV)
     {
-        aimFOV = originFOV / target;
         m_camera.fieldOfView = aimFOV;
+    }
 
-        if(target == 1)
-        {
-            Vector3 tmp = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-            m_cameraObj.transform.position = tmp;
-        }
-        else if(target == 2)
-        {
-            Vector3 tmp = new Vector3(transform.position.x, transform.position.y + 0.07f, transform.position.z);
-            m_cameraObj.transform.position = tmp;
-        }
-        
+    public void changePositionTo(Vector3 target)
+    {
+        m_cameraObj.transform.position = target;
     }
     #endregion
+
 }
