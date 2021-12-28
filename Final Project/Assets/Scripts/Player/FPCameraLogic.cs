@@ -13,6 +13,7 @@ public class FPCameraLogic : MonoBehaviour
     #endregion
 
     #region Fields
+    Camera m_camera;
 
     float m_rotationX;
     float m_rotationY;
@@ -27,6 +28,9 @@ public class FPCameraLogic : MonoBehaviour
 
     #region Fields Serialized
 
+    [SerializeField]
+    GameObject m_cameraObj;
+
     #endregion
 
     #region Unity
@@ -35,6 +39,8 @@ public class FPCameraLogic : MonoBehaviour
         // Disable mouse cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        m_camera = m_cameraObj.GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -75,7 +81,7 @@ public class FPCameraLogic : MonoBehaviour
     }
     #endregion
 
-    #region Help Methods
+    #region Movement Methods
     public float GetRotationY()
     {
         return m_rotationY;
@@ -95,5 +101,16 @@ public class FPCameraLogic : MonoBehaviour
 
         m_recoilAnim = true;
     }
+
+    public void changeFOVto(float aimFOV)
+    {
+        m_camera.fieldOfView = aimFOV;
+    }
+
+    public void changePositionTo(Vector3 target)
+    {
+        m_cameraObj.transform.position = target;
+    }
     #endregion
+
 }

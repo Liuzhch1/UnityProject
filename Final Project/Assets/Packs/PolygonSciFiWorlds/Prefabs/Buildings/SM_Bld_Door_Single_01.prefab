@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33140064098611062}
   - component: {fileID: 23067022427617744}
   - component: {fileID: 64763508546890178}
-  - component: {fileID: 6073636695208218216}
+  - component: {fileID: 2768582092895745341}
   m_Layer: 0
   m_Name: SM_Bld_Door_Single_01_Door_01
   m_TagString: Untagged
@@ -97,25 +97,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43597491670652954, guid: 4f566d38fed87b9409be8adac475f731, type: 2}
---- !u!95 &6073636695208218216
-Animator:
-  serializedVersion: 3
+--- !u!208 &2768582092895745341
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693001601741006}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 80ffc7c6fb1170442b5115206b492d35, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.83900005, y: 1.246, z: 0.18400002}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.689, y: 1.2540001, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1798201885975840
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,6 +125,8 @@ GameObject:
   - component: {fileID: 33400168529504376}
   - component: {fileID: 23151993212292188}
   - component: {fileID: 64178353836449298}
+  - component: {fileID: 1113193060908033624}
+  - component: {fileID: 3462179099406965358}
   m_Layer: 0
   m_Name: SM_Bld_Door_Single_01
   m_TagString: Untagged
@@ -213,3 +212,34 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: cd6596217b30da844b2dedda8fc6ec84, type: 3}
+--- !u!114 &1113193060908033624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798201885975840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ebebae654dfb945b98de815483829e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &3462179099406965358
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798201885975840}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 58ac82d325431a54483f84bb37e35ec2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

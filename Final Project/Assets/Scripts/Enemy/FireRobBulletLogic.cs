@@ -6,7 +6,7 @@ public class FireRobBulletLogic : MonoBehaviour
 {
     float m_bulletLifeTime = 2.0f;
 
-    float m_bulletSpeed = 20.0f;
+    float m_bulletSpeed = 40.0f;
 
 
     // Start is called before the first frame update
@@ -30,9 +30,9 @@ public class FireRobBulletLogic : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Target")
+        if (other.tag == "Player")
         {
-            other.GetComponent<FireRobLogic>().TakeDamage(30);
+            other.GetComponent<FPSplayerLogic>().TakeDamage(10);
             Destroy(gameObject);
         }
     }

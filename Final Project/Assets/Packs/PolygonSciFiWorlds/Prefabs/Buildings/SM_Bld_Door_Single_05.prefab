@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33432958007954958}
   - component: {fileID: 23378805805240888}
   - component: {fileID: 64532487878886446}
+  - component: {fileID: 1561961166537368025}
   m_Layer: 0
   m_Name: SM_Bld_Door_Single_05_Door_01
   m_TagString: Untagged
@@ -97,6 +98,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43964134374012282, guid: 6e1b5af7cb988024fab175505f8a3a8f, type: 2}
+--- !u!208 &1561961166537368025
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539330073454240}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.84200007, y: 1.273, z: 0.083000004}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.90300006, y: 1.273, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1570718142878824
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,6 +208,7 @@ GameObject:
   - component: {fileID: 23297626764906912}
   - component: {fileID: 64089352455311814}
   - component: {fileID: 3889669606650623006}
+  - component: {fileID: 1132511335753444480}
   m_Layer: 0
   m_Name: SM_Bld_Door_Single_05
   m_TagString: Untagged
@@ -295,3 +313,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1132511335753444480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902886239797318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ebebae654dfb945b98de815483829e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

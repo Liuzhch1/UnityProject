@@ -2,11 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum Weapon
-{
-    AR,
-    handgun
-}
 
 public class FPSplayerLogic : MonoBehaviour
 {
@@ -22,7 +17,6 @@ public class FPSplayerLogic : MonoBehaviour
 
     float m_horizontalMovementInput;
     float m_verticalMovementInput;
-    Vector3 m_movementInput;
 
     Vector3 m_verticalMovement;
     Vector3 m_horizontalMovement;
@@ -45,29 +39,18 @@ public class FPSplayerLogic : MonoBehaviour
     float m_crouchHeight = 1.0f;
     float m_standHeight = 2.4f;
 
+    int m_health = 100;
+
     Camera m_camera;
     FPCameraLogic m_cameraLogic;
+    WeaponLogic m_weaponLogic;
 
-    Weapon currentWeapon = Weapon.AR;
     #endregion
 
     #region Fields Serialized
 
-    //[SerializeField]
-    //List<AudioClip> m_runStoneSounds = new List<AudioClip>();
-
     [SerializeField]
-    GameObject Wp_AR;
-
-    [SerializeField]
-    GameObject Wp_handgun;
-
-    [SerializeField]
-    RuntimeAnimatorController ARController;
-
-    [SerializeField]
-    RuntimeAnimatorController handGunController;
-
+    AudioClip m_moveSound;
 
     #endregion
 
@@ -81,7 +64,7 @@ public class FPSplayerLogic : MonoBehaviour
 
         m_camera = GetComponentInChildren<Camera>();
         m_cameraLogic = GetComponentInChildren<FPCameraLogic>();
-        
+        m_weaponLogic = FindObjectOfType<WeaponLogic>();
     }
 
     // Update is called once per frame
@@ -90,36 +73,39 @@ public class FPSplayerLogic : MonoBehaviour
         // Movement input
         m_horizontalMovementInput = Input.GetAxis("Horizontal");
         m_verticalMovementInput = Input.GetAxis("Vertical");
-        m_movementInput = new Vector3(m_horizontalMovementInput, 0, m_verticalMovementInput);
 
         //Apply camera rotation
         m_rotationY += Input.GetAxis("Mouse X") * m_cameraLogic.MouseSensitivity;
         transform.rotation = Quaternion.Euler(0, m_rotationY, 0);
 
-        // input
+        // Input
         if ( m_characterController.isGrounded)
         {
             if (Input.GetButtonDown("Jump") && !m_crouch)
             {
                 m_jump = true;
+                m_audioSource.PlayOneShot(m_moveSound);
             }
 
-            if (Input.GetButtonDown("Crouch"))
+            // Crouch or Stand up
+            if (Input.GetButtonDown("Crouch")) 
             {
                 float targetHeight = m_isCrouching ? m_standHeight : m_crouchHeight;
                 StartCoroutine(doCrouch(targetHeight));
                 m_isCrouching = !m_isCrouching;
+                m_audioSource.PlayOneShot(m_moveSound);
             }
 
+            // Change Weapon
             if (Input.GetButtonDown("Weapon"))
             {
-                if(currentWeapon == Weapon.AR)
+                if(m_weaponLogic.GetCurrentWeapon() == Weapon.AR)
                 {
-                    changeWeapon(1);
+                    m_weaponLogic.changeWeapon(Weapon.handgun);
                 }
                 else
                 {
-                    changeWeapon(0);
+                    m_weaponLogic.changeWeapon(Weapon.AR);
                 }
             }
         }
@@ -128,6 +114,14 @@ public class FPSplayerLogic : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if( m_verticalMovementInput == 1)
+        {
+            m_weaponLogic.disanbleRunFire();
+        }
+        else
+        {
+            m_weaponLogic.enableRunFire();
+        }
 
         // Apply jump
         if (m_jump)
@@ -160,7 +154,7 @@ public class FPSplayerLogic : MonoBehaviour
 
     #endregion
 
-    #region Help Methods
+    #region Movement Methods
     float GetMovementSpeed()
     {
         if (m_isCrouching)
@@ -188,6 +182,15 @@ public class FPSplayerLogic : MonoBehaviour
         }
     }
 
+
+    public void TakeDamage(int damage)
+    {
+        m_health -= damage;
+        Debug.Log(m_health);
+    }
+    #endregion
+
+    #region Sounds Methods
     //public void PlayFootStepSound(int index)
     //{
     //    if (index == 0)
@@ -214,7 +217,6 @@ public class FPSplayerLogic : MonoBehaviour
     //        }
     //    }
     //}
-
     void PlayRandomSound(List<AudioClip> sounds)
     {
         PlaySound(sounds[Random.Range(0, sounds.Count - 1)]);
@@ -228,42 +230,5 @@ public class FPSplayerLogic : MonoBehaviour
             m_audioSource.PlayOneShot(sound);
         }
     }
-
-    public void changeWeapon(int type)
-    {
-        //type 0 => AR, type 1 => handgun
-        if(type == 0)
-        {
-            currentWeapon = Weapon.AR;
-            
-            m_animator.SetTrigger("Holster");
-            
-        }
-        else if(type == 1)
-        {
-            currentWeapon = Weapon.handgun;
-           
-            m_animator.SetTrigger("Holster");
-        }
-    }
-
-    public void setController()
-    {
-        if(currentWeapon == Weapon.AR){
-            Wp_AR.SetActive(true);
-            Wp_handgun.SetActive(false);
-            m_animator.runtimeAnimatorController = ARController;
-        }
-        else if(currentWeapon == Weapon.handgun)
-        {
-            Wp_AR.SetActive(false);
-            Wp_handgun.SetActive(true);
-            m_animator.runtimeAnimatorController = handGunController;
-
-        }
-    }
-
     #endregion
-
-
 }

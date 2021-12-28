@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23215244550119532}
   - component: {fileID: 64255948877648424}
   - component: {fileID: 4597750680723878314}
+  - component: {fileID: 5890923684446485001}
   m_Layer: 0
   m_Name: SM_Bld_Door_Double_01
   m_TagString: Untagged
@@ -119,6 +120,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5890923684446485001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227230719497102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ebebae654dfb945b98de815483829e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1367488208319420
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,6 +144,7 @@ GameObject:
   - component: {fileID: 33158096233807086}
   - component: {fileID: 23303456204034364}
   - component: {fileID: 64554410512834190}
+  - component: {fileID: 3651806288521778344}
   m_Layer: 0
   m_Name: SM_Bld_Door_Double_01_Door_02
   m_TagString: Untagged
@@ -215,6 +229,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43429564803086160, guid: 81655096ee2bf18478930830cfaf6fd6, type: 2}
+--- !u!208 &3651806288521778344
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367488208319420}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.82900006, y: 1.5070001, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.9710001, y: 1.5070001, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1524046379021534
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +257,7 @@ GameObject:
   - component: {fileID: 33124406746120848}
   - component: {fileID: 23483615293909396}
   - component: {fileID: 64474849868166674}
+  - component: {fileID: 7306839751468446061}
   m_Layer: 0
   m_Name: SM_Bld_Door_Double_01_Door_01
   m_TagString: Untagged
@@ -311,6 +342,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43596335624296696, guid: ed5f333cce122544dafcaf73ba53b651, type: 2}
+--- !u!208 &7306839751468446061
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524046379021534}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.82900006, y: 1.5070001, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.9710001, y: 1.5070001, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1879960889642614
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,6 +370,7 @@ GameObject:
   - component: {fileID: 33587307562943744}
   - component: {fileID: 23282808464471578}
   - component: {fileID: 64382557335479274}
+  - component: {fileID: 6928719186728551795}
   m_Layer: 0
   m_Name: SM_Bld_Door_Double_01_Door_03
   m_TagString: Untagged
@@ -407,3 +455,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43961445593348130, guid: 8f3f1236d01371b44aecb9e97528f54c, type: 2}
+--- !u!208 &6928719186728551795
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879960889642614}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.371, y: 0.49600002, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.64100003, z: 0}
+  m_TimeToStationary: 0.5

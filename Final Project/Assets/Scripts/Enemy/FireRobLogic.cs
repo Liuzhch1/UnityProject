@@ -15,7 +15,7 @@ public enum FireRobState
 
 public class FireRobLogic : MonoBehaviour
 {
-    const float READY_RADIUS = 30.0f;
+    const float READY_RADIUS = 10.0f;
     const float RUN_RADIUS = READY_RADIUS - 2.0f;
     const float STAND_RADIUS = 2 * READY_RADIUS / 3;
     const float BACK_RADIUS = READY_RADIUS / 3;
@@ -110,8 +110,12 @@ public class FireRobLogic : MonoBehaviour
                 break;
         }
 
-        // calculate y-axis increse of view(head up/down to player)
-
+        OnDrawGizmos();
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1, 0, 0, 0.25f);
+        //Gizmos.DrawSphere(transform.position, READY_RADIUS);
     }
 
     #region UpdateState
