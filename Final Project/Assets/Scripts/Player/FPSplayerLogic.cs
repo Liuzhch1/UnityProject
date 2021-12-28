@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class FPSplayerLogic : MonoBehaviour
 {
     #region Constants
@@ -43,13 +44,13 @@ public class FPSplayerLogic : MonoBehaviour
     Camera m_camera;
     FPCameraLogic m_cameraLogic;
     WeaponLogic m_weaponLogic;
-    
+
     #endregion
 
     #region Fields Serialized
 
-    //[SerializeField]
-    //List<AudioClip> m_runStoneSounds = new List<AudioClip>();
+    [SerializeField]
+    AudioClip m_moveSound;
 
     #endregion
 
@@ -83,6 +84,7 @@ public class FPSplayerLogic : MonoBehaviour
             if (Input.GetButtonDown("Jump") && !m_crouch)
             {
                 m_jump = true;
+                m_audioSource.PlayOneShot(m_moveSound);
             }
 
             // Crouch or Stand up
@@ -91,6 +93,7 @@ public class FPSplayerLogic : MonoBehaviour
                 float targetHeight = m_isCrouching ? m_standHeight : m_crouchHeight;
                 StartCoroutine(doCrouch(targetHeight));
                 m_isCrouching = !m_isCrouching;
+                m_audioSource.PlayOneShot(m_moveSound);
             }
 
             // Change Weapon
@@ -113,11 +116,11 @@ public class FPSplayerLogic : MonoBehaviour
     {
         if( m_verticalMovementInput == 1)
         {
-            m_weaponLogic.disanbleFire();
+            m_weaponLogic.disanbleRunFire();
         }
         else
         {
-            m_weaponLogic.enableFire();
+            m_weaponLogic.enableRunFire();
         }
 
         // Apply jump
