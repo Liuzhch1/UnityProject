@@ -20,7 +20,7 @@ public class FireRobLogic : MonoBehaviour
     const float STAND_RADIUS = 2 * READY_RADIUS / 3;
     const float BACK_RADIUS = READY_RADIUS / 3;
 
-    // Éä»÷µÄ¼Ð½Ç£¬´óÓÚÕâ¸ö¼Ð½Ç¾Í²»Éä»÷
+    // ï¿½ï¿½ï¿½ï¿½Ä¼Ð½Ç£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½Ç¾Í²ï¿½ï¿½ï¿½ï¿½
     const float FIRE_ANGLE = 6.0f;
 
     const float WALKBACK_SPEED = 2.5f;
@@ -28,16 +28,16 @@ public class FireRobLogic : MonoBehaviour
     const float ROTATION_SPEED = 3.0f;
 
     #region View Parameter
-    //¼ì²âPlayerµÄÊÓÒ°
-    //×îÔ¶ÄÜ¹»¿´µ½µÄ¾àÀë
+    //ï¿½ï¿½ï¿½Playerï¿½ï¿½ï¿½ï¿½Ò°
+    //ï¿½ï¿½Ô¶ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
     const float MAX_VIEWDISTANCE = 3*READY_RADIUS;
-    //¼ì²â½Ç¶È
+    //ï¿½ï¿½ï¿½Ç¶ï¿½
     const float VIEW_ANGLE = 140.0f;
-    //×î´ó¼ì²â¾àÀë
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     const float VIEW_RADIUS = READY_RADIUS;
-    //¼ì²âÃÜ¶È
+    //ï¿½ï¿½ï¿½ï¿½Ü¶ï¿½
     const int VIEW_ANGLE_STEP = 100;
-    //¼ì²âµÄÊÓÒ°¸ß¶È
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò°ï¿½ß¶ï¿½
     const float VIEW_HEIGHT = 2.0f;
     // head up and down angle
     float m_viewRotationX = 0.0f;
@@ -48,17 +48,8 @@ public class FireRobLogic : MonoBehaviour
 
     [SerializeField]
     Transform rayCastPoint;
-    [SerializeField]
-    Transform m_neckBone;
-    [SerializeField]
-    Transform m_rightShoulderBone;
-    [SerializeField]
-    Transform m_leftShoulderBone;
-    [SerializeField]
-    Transform m_hips;
 
     NavMeshAgent m_navMeshAgent;
-    testEnemyPlayerLogic m_playerLogic;
     GameObject m_player;
     Animator m_animator;
     FireRobGunLogic m_gunLogic;
@@ -75,7 +66,6 @@ public class FireRobLogic : MonoBehaviour
         m_gunLogic = GetComponentInChildren<FireRobGunLogic>();
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         m_player = GameObject.FindGameObjectWithTag("Player");
-        m_playerLogic = m_player.GetComponent<testEnemyPlayerLogic>();
         m_animator = GetComponent<Animator>();
         m_animator.SetFloat("State", 0.0f);
         m_fireRobState = FireRobState.Idel;
@@ -84,8 +74,6 @@ public class FireRobLogic : MonoBehaviour
     void Update()
     {
         EfficientDetectPlayer();
-        Debug.Log("Is alert: " + isAlert);
-        Debug.Log("Now State: " + m_fireRobState);
         if (!m_player || isDead)
         {
             Debug.Log("This FireRob is dead!");
@@ -222,11 +210,12 @@ public class FireRobLogic : MonoBehaviour
             return;
         }
         Vector3 playerDir = m_player.transform.position - transform.position;
+        Vector3 playerDirPlane = new Vector3(playerDir.x, 0, playerDir.z);
         //slowly trun to player
         transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(playerDir), ROTATION_SPEED * Time.deltaTime);
 
-        //m_gunLogic.Fire();
-        if (Vector3.Angle(transform.forward, playerDir) <= FIRE_ANGLE || m_fireRobState == FireRobState.Back)
+        Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z);
+        if (Vector3.Angle(transform.forward, playerDirPlane) <= FIRE_ANGLE || m_fireRobState == FireRobState.Back)
         {
             m_gunLogic.Fire();
         }
@@ -236,12 +225,6 @@ public class FireRobLogic : MonoBehaviour
         m_gunLogic.SpawnBullet();
     }
 
-    #region Head down and head up
-    void LateUpdate()
-    {
-        
-    }
-    #endregion
 
     #region Detect
     void EfficientDetectPlayer()
@@ -315,10 +298,8 @@ public class FireRobLogic : MonoBehaviour
         {
             isDead = true;
             m_animator.SetTrigger("Die");
+            Destroy(gameObject, 10.0f);
+            transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         }
-    }
-    public void Destroy()
-    {
-        Destroy(gameObject, 10.0f);
     }
 }

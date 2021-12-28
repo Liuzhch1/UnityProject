@@ -78,12 +78,23 @@
   - fix reload
 - player prefab
 
-##### future work
 
-- wepon handgun
-  - aim
-- add aim UI
-- fix aim angle
+
+### 12.28
+
+- weapon handgun aim animation
+- fix fire bug
+- player sound
+  - foot step
+  - jump
+  - crouch
+  - holster/unholster
+  - fire
+  - reload
+  - change weapon
+  - aim in/out
+- map test
+- fix weapon logic, divide properties of two guns
 
 ## Inventory Features
 
