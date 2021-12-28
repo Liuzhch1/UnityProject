@@ -98,11 +98,11 @@ public class FPSplayerLogic : MonoBehaviour
             {
                 if(m_weaponLogic.GetCurrentWeapon() == Weapon.AR)
                 {
-                    m_weaponLogic.changeWeapon(1);
+                    m_weaponLogic.changeWeapon(Weapon.handgun);
                 }
                 else
                 {
-                    m_weaponLogic.changeWeapon(0);
+                    m_weaponLogic.changeWeapon(Weapon.AR);
                 }
             }
         }
@@ -111,6 +111,14 @@ public class FPSplayerLogic : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if( m_verticalMovementInput == 1)
+        {
+            m_weaponLogic.disanbleFire();
+        }
+        else
+        {
+            m_weaponLogic.enableFire();
+        }
 
         // Apply jump
         if (m_jump)

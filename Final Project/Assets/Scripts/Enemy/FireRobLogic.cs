@@ -115,7 +115,7 @@ public class FireRobLogic : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = new Color(1, 0, 0, 0.25f);
-        Gizmos.DrawSphere(transform.position, READY_RADIUS);
+        //Gizmos.DrawSphere(transform.position, READY_RADIUS);
     }
 
     #region UpdateState

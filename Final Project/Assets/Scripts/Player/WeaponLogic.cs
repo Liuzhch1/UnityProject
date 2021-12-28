@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,6 +39,8 @@ public class WeaponLogic : MonoBehaviour
 
     bool m_hasScope = false;
     bool m_isUsingScope = false;
+
+    bool m_enableFire = false;
 
     #endregion
 
@@ -85,7 +87,7 @@ public class WeaponLogic : MonoBehaviour
     void Update()
     {
         // Shoot logics
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && m_enableFire)
         {
             if (m_shotCooldown <= 0.0f)
             {
@@ -122,6 +124,7 @@ public class WeaponLogic : MonoBehaviour
             if (m_mag > 0)
             {
                 m_isReloading = true;
+                m_enableFire = false;
                 m_animator.SetTrigger("Reload");
                 // Play Reload sound
                 //PlaySound(m_reloadSound, 0.35f);
@@ -133,7 +136,7 @@ public class WeaponLogic : MonoBehaviour
         }
 
         // Aim
-        if (Input.GetButtonDown("Fire2")&& !m_isReloading)
+        if (Input.GetButtonDown("Fire2") && !m_isReloading)
         {
             m_isAiming = !m_isAiming;
             m_animator.SetBool("isAiming", m_isAiming);
@@ -186,18 +189,19 @@ public class WeaponLogic : MonoBehaviour
         m_ammo = MAX_AMMO;
         m_mag -= 1;
         m_isReloading = false;
+        m_enableFire = true;
     }
 
     public void Aim()
     {
         if (m_isAiming)
         {
-            if(currentWeapon == Weapon.AR)
+            if (currentWeapon == Weapon.AR)
             {
                 m_FPCameraLogic.changeFOVto(ARAimFOV);
                 m_FPCameraLogic.changePositionTo(ARAimPoint.position);
             }
-            else if(currentWeapon == Weapon.handgun)
+            else if (currentWeapon == Weapon.handgun)
             {
                 m_FPCameraLogic.changeFOVto(HandgunAimFOV);
                 m_FPCameraLogic.changePositionTo(HandgunAimPoint.position);
@@ -219,7 +223,7 @@ public class WeaponLogic : MonoBehaviour
         {
             string hitTag = rayHit.collider.gameObject.tag;
             Debug.Log("Try to pick: " + hitTag);
-            if (hitTag == "mag") // µ¯¼Ð
+            if (hitTag == "mag") // ÂµÂ¯Â¼Ã
             {
                 m_mag += MAX_MAG;
             }
@@ -234,9 +238,11 @@ public class WeaponLogic : MonoBehaviour
     public void useScope()
     {
         //if (!m_hasScope) return;
-        if(currentWeapon == Weapon.AR)
+        if (currentWeapon == Weapon.AR)
         {
             m_animator.SetTrigger("Holster");
+            m_enableFire = false;
+
             if (m_isUsingScope)
             {
                 m_ARscope.SetActive(false);
@@ -255,6 +261,51 @@ public class WeaponLogic : MonoBehaviour
         }
     }
 
+    //public void changeWeapon(int type)
+    //{
+    //    //type 0 => AR, type 1 => handgun
+    //    if (type == 0)
+    //    {
+    //        currentWeapon = Weapon.AR;
+
+    //        m_animator.SetTrigger("Holster");
+
+    //    }
+    //    else if (type == 1)
+    //    {
+    //        currentWeapon = Weapon.handgun;
+
+    //        m_animator.SetTrigger("Holster");
+    //    }
+    //}
+
+    public void changeWeapon(Weapon type)
+    {
+        if (currentWeapon != type)
+        {
+            if (m_isAiming)
+            {
+                m_isAiming = !m_isAiming;
+                m_animator.SetBool("isAiming", m_isAiming);
+            }
+
+            m_enableFire = false;
+            m_animator.SetTrigger("Holster");
+
+            currentWeapon = type;
+        }
+    }
+
+    public Weapon GetCurrentWeapon()
+    {
+        return currentWeapon;
+    }
+
+    public void endTakeOut()
+    {
+        m_enableFire = true;
+    }
+
     public void setController() //change animator controller
     {
         if (currentWeapon == Weapon.AR)
@@ -268,31 +319,17 @@ public class WeaponLogic : MonoBehaviour
             Wp_AR.SetActive(false);
             Wp_handgun.SetActive(true);
             m_animator.runtimeAnimatorController = handGunController;
-
         }
     }
-    public void changeWeapon(int type)
+
+    public void disanbleFire()
     {
-        //type 0 => AR, type 1 => handgun
-        if (type == 0)
-        {
-            currentWeapon = Weapon.AR;
-
-            m_animator.SetTrigger("Holster");
-
-        }
-        else if (type == 1)
-        {
-            currentWeapon = Weapon.handgun;
-
-            m_animator.SetTrigger("Holster");
-        }
+        m_enableFire = false;
     }
 
-    public Weapon GetCurrentWeapon()
+    public void enableFire()
     {
-        return currentWeapon;
+        m_enableFire = true;
     }
-
     #endregion
 }
