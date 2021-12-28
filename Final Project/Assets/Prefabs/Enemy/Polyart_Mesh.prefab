@@ -789,7 +789,6 @@ GameObject:
   - component: {fileID: 44452922945119620}
   - component: {fileID: 44452922945119623}
   - component: {fileID: 44452922945119622}
-  - component: {fileID: 44452922945119625}
   m_Layer: 0
   m_Name: Polyart_Mesh
   m_TagString: Enemy01
@@ -890,19 +889,6 @@ MonoBehaviour:
   m_rightShoulderBone: {fileID: 0}
   m_leftShoulderBone: {fileID: 0}
   m_hips: {fileID: 0}
---- !u!65 &44452922945119625
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 44452922945119624}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.94, z: 1.6}
-  m_Center: {x: 0, y: 1, z: 0.33}
 --- !u!1 &44452922955858994
 GameObject:
   m_ObjectHideFlags: 0

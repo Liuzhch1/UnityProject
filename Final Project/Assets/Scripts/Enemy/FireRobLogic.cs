@@ -48,17 +48,8 @@ public class FireRobLogic : MonoBehaviour
 
     [SerializeField]
     Transform rayCastPoint;
-    [SerializeField]
-    Transform m_neckBone;
-    [SerializeField]
-    Transform m_rightShoulderBone;
-    [SerializeField]
-    Transform m_leftShoulderBone;
-    [SerializeField]
-    Transform m_hips;
 
     NavMeshAgent m_navMeshAgent;
-    testEnemyPlayerLogic m_playerLogic;
     GameObject m_player;
     Animator m_animator;
     FireRobGunLogic m_gunLogic;
@@ -75,7 +66,6 @@ public class FireRobLogic : MonoBehaviour
         m_gunLogic = GetComponentInChildren<FireRobGunLogic>();
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         m_player = GameObject.FindGameObjectWithTag("Player");
-        m_playerLogic = m_player.GetComponent<testEnemyPlayerLogic>();
         m_animator = GetComponent<Animator>();
         m_animator.SetFloat("State", 0.0f);
         m_fireRobState = FireRobState.Idel;
@@ -222,11 +212,12 @@ public class FireRobLogic : MonoBehaviour
             return;
         }
         Vector3 playerDir = m_player.transform.position - transform.position;
+        Vector3 playerDirPlane = new Vector3(playerDir.x, 0, playerDir.z);
         //slowly trun to player
         transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(playerDir), ROTATION_SPEED * Time.deltaTime);
 
-        //m_gunLogic.Fire();
-        if (Vector3.Angle(transform.forward, playerDir) <= FIRE_ANGLE || m_fireRobState == FireRobState.Back)
+        Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z);
+        if (Vector3.Angle(transform.forward, playerDirPlane) <= FIRE_ANGLE || m_fireRobState == FireRobState.Back)
         {
             m_gunLogic.Fire();
         }
@@ -236,12 +227,6 @@ public class FireRobLogic : MonoBehaviour
         m_gunLogic.SpawnBullet();
     }
 
-    #region Head down and head up
-    void LateUpdate()
-    {
-        
-    }
-    #endregion
 
     #region Detect
     void EfficientDetectPlayer()
@@ -315,10 +300,8 @@ public class FireRobLogic : MonoBehaviour
         {
             isDead = true;
             m_animator.SetTrigger("Die");
+            Destroy(gameObject, 10.0f);
+            transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         }
-    }
-    public void Destroy()
-    {
-        Destroy(gameObject, 10.0f);
     }
 }
