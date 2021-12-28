@@ -429,7 +429,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WEP_handgun_Animator
+  m_Name: WEP_Handgun_Animator
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: HorizontalInput
