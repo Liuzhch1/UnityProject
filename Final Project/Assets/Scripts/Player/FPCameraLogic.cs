@@ -23,6 +23,8 @@ public class FPCameraLogic : MonoBehaviour
     float m_recoilProgress = 0.0f;
     float m_startRotationX = 0.0f;
     float m_targetRotationX = 0.0f;
+    float m_FOV;
+    Vector3 m_target = Vector3.zero;
 
     #endregion
 
@@ -41,11 +43,27 @@ public class FPCameraLogic : MonoBehaviour
         // Cursor.visible = false;
 
         m_camera = m_cameraObj.GetComponent<Camera>();
+        m_FOV = m_camera.fieldOfView;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Abs(m_camera.fieldOfView - m_FOV) < 0.1f) {
+            m_camera.fieldOfView = m_FOV;
+        } else {
+            m_camera.fieldOfView = Mathf.Lerp(m_camera.fieldOfView, m_FOV, Time.deltaTime * 15f);
+        }
+
+        if (m_target != Vector3.zero) {
+            if (Vector3.Distance(m_cameraObj.transform.position, m_target) < 0.1f) {
+                m_cameraObj.transform.position = m_target;
+                m_target = Vector3.zero;
+            } else {
+                m_cameraObj.transform.position = Vector3.Lerp(m_cameraObj.transform.position, m_target, Time.deltaTime * 15f);
+            }
+        }
+        
 
         float MouseX_Input = Input.GetAxis("Mouse X");
         float MouseY_Input = Input.GetAxis("Mouse Y");
@@ -99,7 +117,7 @@ public class FPCameraLogic : MonoBehaviour
         }
 
         m_recoilProgress = 0.0f;
-        m_rotationX -= 4.0f;
+        m_rotationX -= 3.0f;
         m_rotationY += Random.Range(-1.0f, 1.0f);
         m_startRotationX = m_rotationX;
 
@@ -108,12 +126,12 @@ public class FPCameraLogic : MonoBehaviour
 
     public void changeFOVto(float aimFOV)
     {
-        m_camera.fieldOfView = aimFOV;
+        m_FOV = aimFOV;
     }
 
     public void changePositionTo(Vector3 target)
     {
-        m_cameraObj.transform.position = target;
+        m_target = target;
     }
     #endregion
 

@@ -44,8 +44,8 @@ public class WeaponLogic : MonoBehaviour
     bool m_isReloading = false;
     bool m_isAiming = false;
 
-    float ARAimFOV = 23.0f;
-    float HandgunAimFOV = 23.0f;
+    float ARAimFOV = 30.0f;
+    float HandgunAimFOV = 30.0f;
 
     bool m_hasScope = false;
     bool m_isUsingScope = false;
