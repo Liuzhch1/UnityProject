@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: PolygonSciFiWorlds_Env_Triplanar_Exp
   m_Shader: {fileID: 4800000, guid: 8e3a7be9db42981418988bc59e1916cb, type: 3}
   m_ShaderKeywords: 
@@ -260,7 +261,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Ground_Detail_Power: 1
+    - _Ground_Detail_Power: 0.403
     - _Ground_Detail_Scale: 0.074
     - _Ground_Falloff: 118
     - _Ground_Noise_Scale: 0.0181
@@ -274,8 +275,8 @@ Material:
     - _RimPower1: 3.01
     - _SmoothnessTextureChannel: 0
     - _Snow: 0
-    - _Spec_Metallic: 0.254
-    - _Spec_Smoothness: 0
+    - _Spec_Metallic: 0.247
+    - _Spec_Smoothness: 0.15
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _TransAmbient: 0.179
@@ -308,3 +309,4 @@ Material:
     - _Rock_Colour: {r: 0.11372549, g: 0.003921569, b: 0.13333334, a: 1}
     - _Rock_Colour_Primary: {r: 0.11490278, g: 0.0058390982, b: 0.13235295, a: 0}
     - _Rock_Colour_Secondary: {r: 0.11490278, g: 0.0058390982, b: 0.13235295, a: 0}
+  m_BuildTextureStacks: []
