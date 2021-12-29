@@ -46,4 +46,9 @@ public class testEnemyPlayerLogic : MonoBehaviour
 
         m_characterController.Move(m_movement);
     }
+
+    public void TakeDamage(int d)
+    {
+        return;
+    }
 }

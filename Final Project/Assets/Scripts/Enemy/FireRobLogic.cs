@@ -15,12 +15,13 @@ public enum FireRobState
 
 public class FireRobLogic : MonoBehaviour
 {
+    const float MINI_FIRE_RADIUS = 1.5f;
     const float READY_RADIUS = 10.0f;
     const float RUN_RADIUS = READY_RADIUS - 2.0f;
     const float STAND_RADIUS = 2 * READY_RADIUS / 3;
     const float BACK_RADIUS = READY_RADIUS / 3;
 
-    // ����ļнǣ���������нǾͲ����
+    // ?????н??????????н??????
     const float FIRE_ANGLE = 6.0f;
 
     const float WALKBACK_SPEED = 2.5f;
@@ -28,23 +29,12 @@ public class FireRobLogic : MonoBehaviour
     const float ROTATION_SPEED = 3.0f;
 
     #region View Parameter
-    //���Player����Ұ
-    //��Զ�ܹ������ľ���
+    //???Player?????
+    //???????????????
     const float MAX_VIEWDISTANCE = 3*READY_RADIUS;
-    //���Ƕ�
+    //?????
     const float VIEW_ANGLE = 140.0f;
-    //��������
-    const float VIEW_RADIUS = READY_RADIUS;
-    //����ܶ�
-    const int VIEW_ANGLE_STEP = 100;
-    //������Ұ�߶�
-    const float VIEW_HEIGHT = 2.0f;
-    // head up and down angle
-    float m_viewRotationX = 0.0f;
-    float m_viewRotationY = 0.0f;
     #endregion
-
-    
 
     [SerializeField]
     Transform rayCastPoint;
@@ -76,7 +66,7 @@ public class FireRobLogic : MonoBehaviour
         EfficientDetectPlayer();
         if (!m_player || isDead)
         {
-            Debug.Log("This FireRob is dead!");
+            //Debug.Log("This FireRob is dead!");
             return;
         }
         switch (m_fireRobState)
@@ -97,13 +87,6 @@ public class FireRobLogic : MonoBehaviour
                 UpdateBackState();
                 break;
         }
-
-        OnDrawGizmos();
-    }
-    void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(1, 0, 0, 0.25f);
-        //Gizmos.DrawSphere(transform.position, READY_RADIUS);
     }
 
     #region UpdateState
@@ -210,7 +193,7 @@ public class FireRobLogic : MonoBehaviour
             return;
         }
         Vector3 playerDir = m_player.transform.position - transform.position;
-        Vector3 playerDirPlane = new Vector3(playerDir.x, 0, playerDir.z);
+        Vector3 playerDirPlane = new Vector3(playerDir.x, transform.position.y, playerDir.z);
         //slowly trun to player
         transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(playerDir), ROTATION_SPEED * Time.deltaTime);
 
@@ -242,9 +225,8 @@ public class FireRobLogic : MonoBehaviour
 
         Ray ray = new Ray(rayCastPoint.position, m_player.transform.position - rayCastPoint.position);
         RaycastHit hit;
-        if(Physics.Raycast(ray,out hit, MAX_VIEWDISTANCE) && toPlayerAngle <= VIEW_ANGLE / 2)
+        if((Physics.Raycast(ray,out hit, MAX_VIEWDISTANCE) || Vector3.Distance(transform.position, m_player.transform.position) < MINI_FIRE_RADIUS) && toPlayerAngle <= VIEW_ANGLE / 2)
         {
-            Debug.Log("What is angle: " + toPlayerAngle);
             Debug.DrawLine(rayCastPoint.position, hit.transform.position,Color.red);
             if (hit.transform.gameObject.tag == "Player")
             {
@@ -252,33 +234,6 @@ public class FireRobLogic : MonoBehaviour
             }
         }
         Debug.DrawLine(transform.position, m_player.transform.position);
-    }
-    void DetectPlayer()
-    {
-        isAlert = false;
-        Vector3 forward_left = Quaternion.Euler(0, -VIEW_ANGLE / 2, 0) * transform.forward * VIEW_RADIUS;
-        for (int i = 0; i <= VIEW_ANGLE_STEP; i++)
-        {
-            Vector3 v = Quaternion.Euler(0, (VIEW_ANGLE / VIEW_ANGLE_STEP) * i, 0) * forward_left;
-
-            Vector3 rayFrom = new Vector3(transform.position.x, VIEW_HEIGHT, transform.position.z);
-            Ray ray = new Ray(rayFrom, v);
-            RaycastHit hit = new RaycastHit();
-            Physics.Raycast(ray, out hit, VIEW_RADIUS);
-
-            Vector3 pos = transform.position + v;
-            if (hit.transform != null)
-            {
-                pos = hit.point;
-            }
-            Debug.DrawLine(rayFrom, pos, Color.green);
-
-            if (hit.transform != null && hit.transform.gameObject.tag == "Player")
-            {
-                Debug.Log("ray hit player");
-                isAlert = true;
-            }
-        }
     }
     #endregion
     public void TakeDamage(int damage)

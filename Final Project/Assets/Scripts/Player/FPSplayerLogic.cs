@@ -40,6 +40,7 @@ public class FPSplayerLogic : MonoBehaviour
     float m_standHeight = 2.4f;
 
     int m_health = 100;
+    int m_healthPack = 0;
 
     Camera m_camera;
     FPCameraLogic m_cameraLogic;
@@ -70,6 +71,12 @@ public class FPSplayerLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UIManager.Instance.State != UIState.Game) {
+            m_horizontalMovementInput = Mathf.Lerp(m_horizontalMovementInput, 0, Time.deltaTime * 5f);
+            m_verticalMovementInput = Mathf.Lerp(m_verticalMovementInput, 0, Time.deltaTime * 5f);
+            return;
+        } 
+
         // Movement input
         m_horizontalMovementInput = Input.GetAxis("Horizontal");
         m_verticalMovementInput = Input.GetAxis("Vertical");
@@ -186,6 +193,12 @@ public class FPSplayerLogic : MonoBehaviour
     public void TakeDamage(int damage)
     {
         m_health -= damage;
+        Debug.Log(m_health);
+    }
+
+    public void RecoverHealth(int heal)
+	{
+        m_health += heal;
         Debug.Log(m_health);
     }
     #endregion

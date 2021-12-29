@@ -29,6 +29,7 @@ public class WeaponLogic : MonoBehaviour
     FPCameraLogic m_FPCameraLogic;
     Animator m_animator;
     AudioSource m_audioSource;
+    FPSplayerLogic m_FPSplayerLogic;
 
     Weapon currentWeapon = Weapon.AR;
 
@@ -38,6 +39,7 @@ public class WeaponLogic : MonoBehaviour
     float m_shotCooldown = 0;
     int m_ammo;
     int m_mag;
+    int m_healthPack;
 
     bool m_isReloading = false;
     bool m_isAiming = false;
@@ -117,6 +119,7 @@ public class WeaponLogic : MonoBehaviour
         m_FPCameraLogic = FindObjectOfType<FPCameraLogic>();
         m_animator = GetComponentInParent<Animator>();
         m_audioSource = GetComponent<AudioSource>();
+        m_FPSplayerLogic = FindObjectOfType<FPSplayerLogic>();
 
         m_AR = new Gun();
         m_Handgun = new Gun();
@@ -136,13 +139,20 @@ public class WeaponLogic : MonoBehaviour
         MAX_SHOT_COOLDOWN = 0.15f;
         MAX_AMMO = 30;
 
+        m_healthPack = 3;
+
         currentGun = m_AR;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (UIManager.Instance.State != UIState.Game) {
+            return;
+        }
+
         // Shoot logics
+        
         if (Input.GetButton("Fire1") && m_enableFire)
         {
             if (m_shotCooldown <= 0.0f)
@@ -177,6 +187,7 @@ public class WeaponLogic : MonoBehaviour
         // Reload
         if (Input.GetButtonDown("Reload") && !m_isReloading)
         {
+            
             if (m_mag > 0)
             {
                 m_isReloading = true;
@@ -203,6 +214,10 @@ public class WeaponLogic : MonoBehaviour
         {
             useScope();
         }
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+            pick();
+		}
     }
 
 
@@ -270,30 +285,46 @@ public class WeaponLogic : MonoBehaviour
         }
     }
 
-    //public void pick()
-    //{
-    //    Ray ray = new Ray(m_FPCameraLogic.gameObject.transform.position, m_FPCameraLogic.gameObject.transform.forward);
-    //    RaycastHit rayHit;
+    public void pick()
+    {
+        Ray ray = new Ray(m_FPCameraLogic.gameObject.transform.position, m_FPCameraLogic.gameObject.transform.forward);
+        RaycastHit rayHit;
 
-    //    if (Physics.Raycast(ray, out rayHit, 100.0f))
-    //    {
-    //        string hitTag = rayHit.collider.gameObject.tag;
-    //        Debug.Log("Try to pick: " + hitTag);
-    //        if (hitTag == "mag") // µ¯¼Ð
-    //        {
-    //            m_mag += MAX_MAG;
-    //        }
-    //        else if (hitTag == "scope")
-    //        {
-    //            m_hasScope = true;
-    //        }
-    //    }
+        if (Physics.Raycast(ray, out rayHit, 100.0f))
+        {
+            string hitTag = rayHit.collider.gameObject.tag;
+            Debug.Log("Try to pick: " + hitTag);
+            if (hitTag == "mag") 
+            {
+                Destroy(rayHit.collider.gameObject);
+                m_mag += 1;
+            }
+            else if (hitTag == "scope")
+            {
+                Destroy(rayHit.collider.gameObject);
+                m_hasScope = true;
+            }
+            else if (hitTag == "healthPack")
+            {
+                Destroy(rayHit.collider.gameObject);
+                m_healthPack += 1;
+            }
+        }
 
-    //}
+    }
+
+    public void useHealthPack()
+	{
+        if (m_healthPack > 0)
+		{
+            m_healthPack -= 1;
+            m_FPSplayerLogic.RecoverHealth(30);
+		}
+	}
 
     public void useScope()
     {
-        //if (!m_hasScope) return;
+        if (!m_hasScope) return;
         if (currentWeapon == Weapon.AR)
         {
             m_animator.SetTrigger("Holster");
@@ -319,6 +350,7 @@ public class WeaponLogic : MonoBehaviour
 
     public void changeWeapon(Weapon type)
     {
+        UIManager.Instance.displayWeapon(type);
         if (currentWeapon != type)
         {
             m_enableFire = false;
