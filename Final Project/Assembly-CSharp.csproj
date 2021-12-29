@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Enemy\FireRobGunLogic.cs" />
     <Compile Include="Assets\Scripts\Enemy\testEnemyPlayerLogic.cs" />
     <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Explosions_&amp;_Impacts\ImpactScript.cs" />
+    <Compile Include="Assets\Scripts\Scene\RadiationCloudLogic.cs" />
     <Compile Include="Assets\Scripts\Enemy\CloseEnemyLogic.cs" />
     <Compile Include="Assets\Packs\Low Poly FPS Pack\Third_Person_Character\Components\Plane_Demo_Scene_Components\Scripts\FieldOfViewIncreaseLPFP.cs" />
     <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Weapon_Scripts\AutomaticGunScriptLPFP.cs" />
@@ -93,7 +94,8 @@
     <Compile Include="Assets\Packs\Low Poly FPS Pack\Third_Person_Character\Components\Plane_Demo_Scene_Components\Scripts\BlinkingLightLPFP.cs" />
     <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\LightningScript.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimEvents.cs" />
-    <Compile Include="Assets\Scripts\Scene\RadiationCloudLogic.cs" />
+    <Compile Include="Assets\Scripts\Scene\AmmoCrateLogic.cs" />
+    <Compile Include="Assets\Scripts\Scene\ScopeLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packs\PolygonParticles\Materials\SHARED BY LUXURYPANDA.txt" />
