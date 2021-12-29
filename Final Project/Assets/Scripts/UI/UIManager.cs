@@ -71,9 +71,11 @@ public class UIManager : MonoBehaviour
             if (m_state == UIState.Game) {
                 //transform.GetChild(2).gameObject.SetActive(true);
                 m_state = UIState.Menu;
+                Cursor.visible = true;
             } else if (m_state == UIState.Menu) {
                 //transform.GetChild(2).gameObject.SetActive(false);
                 m_state = UIState.Game;
+                Cursor.visible = false;
             }
         }
 
@@ -81,11 +83,13 @@ public class UIManager : MonoBehaviour
             if (m_state == UIState.Game) {
                 m_state = UIState.Inventory;
                 m_pieMenu.gameObject.SetActive(true);
+                Cursor.visible = true;
             }
         } else {
             if (m_state == UIState.Inventory) {
                 m_state = UIState.Game;
                 m_pieMenu.gameObject.SetActive(false);
+                Cursor.visible = false;
             }
         }
 
