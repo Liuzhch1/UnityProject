@@ -142,6 +142,7 @@ public class WeaponLogic : MonoBehaviour
         m_healthPack = 3;
 
         currentGun = m_AR;
+        m_ARscope.SetActive(false);
     }
 
     // Update is called once per frame
@@ -210,10 +211,6 @@ public class WeaponLogic : MonoBehaviour
             m_animator.SetBool("isAiming", m_isAiming);
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            useScope();
-        }
 		if (Input.GetKeyDown(KeyCode.E))
 		{
             pick();
@@ -302,12 +299,26 @@ public class WeaponLogic : MonoBehaviour
             else if (hitTag == "scope")
             {
                 Destroy(rayHit.collider.gameObject);
-                m_hasScope = true;
+                m_ARscope.SetActive(true);
             }
             else if (hitTag == "healthPack")
             {
                 Destroy(rayHit.collider.gameObject);
                 m_healthPack += 1;
+            }
+            else if (hitTag == "radiationCloudController")
+            {
+                List<GameObject> childList = new List<GameObject>();
+                int childCount = rayHit.transform.childCount;
+                for (int i = 0; i < childCount; i++)
+                {
+                    GameObject child = rayHit.transform.GetChild(i).gameObject;
+                    childList.Add(child);
+                }
+                for (int i = 0; i < childCount; i++)
+                {
+                    DestroyImmediate(childList[i]);
+                }
             }
         }
 

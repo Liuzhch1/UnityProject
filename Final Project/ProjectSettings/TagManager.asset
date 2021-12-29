@@ -8,6 +8,7 @@ TagManager:
   - mag
   - healthPack
   - scope
+  - radiationCloudController
   layers:
   - Default
   - TransparentFX
