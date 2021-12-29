@@ -15,4 +15,20 @@ public class PieMenuLogic : MonoBehaviour
     {
         
     }
+
+    public void SwitchToAR() {
+        WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
+        if (weaponLogic) {
+            weaponLogic.changeWeapon(Weapon.AR);
+        }
+        //UIManager.Instance.switchState(UIState.Game);
+    }
+
+    public void SwitchToHandGun() {
+        WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
+        if (weaponLogic) {
+            weaponLogic.changeWeapon(Weapon.handgun);
+        }
+        //UIManager.Instance.switchState(UIState.Game);
+    }
 }

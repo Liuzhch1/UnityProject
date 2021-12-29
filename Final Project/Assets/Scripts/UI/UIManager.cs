@@ -67,35 +67,48 @@ public class UIManager : MonoBehaviour
         m_healthText.text = "" + health;
     }
 
+    public void switchState(UIState state) {
+        m_state = state;
+        switch (state) {
+            case UIState.Game:
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                m_pieMenu.gameObject.SetActive(false);
+                break;
+            case UIState.Menu:
+                //TODO: setactive menu ui
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                m_pieMenu.gameObject.SetActive(false);
+                break;
+            case UIState.Inventory:
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
+                m_pieMenu.gameObject.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                break;
+        }
+    }
+
     void Update()
     {
         if (Input.GetButtonDown("Menu")) {
             if (m_state == UIState.Game) {
                 //transform.GetChild(2).gameObject.SetActive(true);
-                m_state = UIState.Menu;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                switchState(UIState.Menu);
             } else if (m_state == UIState.Menu) {
                 //transform.GetChild(2).gameObject.SetActive(false);
-                m_state = UIState.Game;
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                switchState(UIState.Game);
             }
         }
-
         if (Input.GetButton("Inventory")) {
             if (m_state == UIState.Game) {
-                m_state = UIState.Inventory;
-                m_pieMenu.gameObject.SetActive(true);
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                switchState(UIState.Inventory);
             }
         } else {
             if (m_state == UIState.Inventory) {
-                m_state = UIState.Game;
-                m_pieMenu.gameObject.SetActive(false);
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                switchState(UIState.Game);
             }
         }
 
