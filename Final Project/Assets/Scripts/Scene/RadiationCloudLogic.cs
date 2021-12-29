@@ -6,7 +6,7 @@ public class RadiationCloudLogic : MonoBehaviour
 {
     GameObject m_player;
     FPSplayerLogic m_playerController;
-    float damageCooldown = 0.5f;
+    float damageCooldown = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,14 +21,13 @@ public class RadiationCloudLogic : MonoBehaviour
             damageCooldown -= Time.deltaTime;
         }
     }
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
-        Debug.Log("Enter Trigger!");
         FPSplayerLogic m_playerController = other.GetComponent<FPSplayerLogic>();
-        if(m_playerController)
+        if(m_playerController && damageCooldown <= 0.0f)
         {
-            m_playerController.TakeDamage(10);
-            Debug.Log("Take Damage!");
+            m_playerController.TakeDamage(1);
+            damageCooldown = 1.0f;
         }
     }
 
