@@ -325,6 +325,7 @@ public class WeaponLogic : MonoBehaviour
 
     public void changeWeapon(Weapon type)
     {
+        UIManager.Instance.displayWeapon(type);
         if (currentWeapon != type)
         {
             m_enableFire = false;

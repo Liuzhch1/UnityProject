@@ -16,14 +16,14 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance => m_instance;
     static UIManager m_instance;
 
-    //PostProcessVolume[] m_volumes;
     Transform m_canvas;
     Transform m_pieMenu;
+    Transform m_healthPanel;
+    Transform m_ARPanel;
+    Transform m_HandGunPanel;
+
     UIState m_state = UIState.Game;
     public UIState State => m_state;
-    Text m_ammoNumberText;
-    Text m_healthText;
-    Image[] m_ammoIcons;
 
     void Awake() {
         if(m_instance == null) {
@@ -38,10 +38,9 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         m_canvas = GameObject.Find("Canvas").transform;
         m_pieMenu = m_canvas.GetChild(0);
-        //m_volumes = FindObjectsOfType<PostProcessVolume>();
-        // m_ammoNumberText = transform.GetChild(0).GetChild(0).GetComponent<Text>();
-        // m_ammoIcons = transform.GetChild(0).GetChild(3).GetComponentsInChildren<Image>();
-        // m_healthText = transform.GetChild(1).GetChild(0).GetComponent<Text>();
+        m_healthPanel = m_canvas.GetChild(1);
+        m_ARPanel = m_canvas.GetChild(2);
+        m_HandGunPanel = m_canvas.GetChild(3);
     }
 
     // public void Retry() {
@@ -56,15 +55,22 @@ public class UIManager : MonoBehaviour
     //     transform.GetChild(3).gameObject.SetActive(true);
     // }
 
-    public void setAmmoNumber(int ammoNumber) {
-        m_ammoNumberText.text = "" + ammoNumber;
-        for (int i = 0; i < 3; i++) {
-            m_ammoIcons[i].enabled = ammoNumber > i * 10;
-        }
+    public void displayWeapon(Weapon weapon) {
+        m_ARPanel.gameObject.SetActive(weapon == Weapon.AR);
+        m_HandGunPanel.gameObject.SetActive(weapon == Weapon.handgun);
+    }
+    
+    public void setAmmoNumber(Weapon weapon, int ammoNumber, int magNumber) {
+        Transform weaponPanel = (weapon == Weapon.AR) ? m_ARPanel : m_HandGunPanel;
+        Text ammoNumberText = weaponPanel.GetChild(1).GetComponent<Text>();
+        Text magNumberText = weaponPanel.GetChild(2).GetComponent<Text>();
+        ammoNumberText.text = "" + ammoNumber;
+        magNumberText.text = "/" + magNumber;
     }
 
     public void setHealth(int health) {
-        m_healthText.text = "" + health;
+        Slider healthSlider = m_healthPanel.GetChild(1).GetComponent<Slider>();
+        healthSlider.value = health;
     }
 
     public void switchState(UIState state) {
