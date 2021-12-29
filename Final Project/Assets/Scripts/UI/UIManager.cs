@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 //using UnityEngine.Rendering.PostProcessing;
 
-enum UIState{
+public enum UIState{
     Game,
     Inventory,
     Menu
@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     Transform m_canvas;
     Transform m_pieMenu;
     UIState m_state = UIState.Game;
+    public UIState State => m_state;
     Text m_ammoNumberText;
     Text m_healthText;
     Image[] m_ammoIcons;
@@ -34,6 +35,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         m_canvas = GameObject.Find("Canvas").transform;
         m_pieMenu = m_canvas.GetChild(0);
         //m_volumes = FindObjectsOfType<PostProcessVolume>();
@@ -72,10 +74,12 @@ public class UIManager : MonoBehaviour
                 //transform.GetChild(2).gameObject.SetActive(true);
                 m_state = UIState.Menu;
                 Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
             } else if (m_state == UIState.Menu) {
                 //transform.GetChild(2).gameObject.SetActive(false);
                 m_state = UIState.Game;
                 Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
         }
 
@@ -84,12 +88,14 @@ public class UIManager : MonoBehaviour
                 m_state = UIState.Inventory;
                 m_pieMenu.gameObject.SetActive(true);
                 Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
             }
         } else {
             if (m_state == UIState.Inventory) {
                 m_state = UIState.Game;
                 m_pieMenu.gameObject.SetActive(false);
                 Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
         }
 

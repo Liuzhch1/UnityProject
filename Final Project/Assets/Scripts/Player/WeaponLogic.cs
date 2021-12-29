@@ -142,7 +142,12 @@ public class WeaponLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UIManager.Instance.State != UIState.Game) {
+            return;
+        }
+
         // Shoot logics
+        
         if (Input.GetButton("Fire1") && m_enableFire)
         {
             if (m_shotCooldown <= 0.0f)
@@ -177,6 +182,7 @@ public class WeaponLogic : MonoBehaviour
         // Reload
         if (Input.GetButtonDown("Reload") && !m_isReloading)
         {
+            
             if (m_mag > 0)
             {
                 m_isReloading = true;

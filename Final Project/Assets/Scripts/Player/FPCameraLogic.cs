@@ -37,8 +37,8 @@ public class FPCameraLogic : MonoBehaviour
     void Start()
     {
         // Disable mouse cursor
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
 
         m_camera = m_cameraObj.GetComponent<Camera>();
     }
@@ -46,12 +46,16 @@ public class FPCameraLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         float MouseX_Input = Input.GetAxis("Mouse X");
         float MouseY_Input = Input.GetAxis("Mouse Y");
 
-        m_rotationY += MouseX_Input * MouseSensitivity;
-        m_rotationX -= MouseY_Input * MouseSensitivity;
-        m_rotationX = Mathf.Clamp(m_rotationX, MIN_X, MAX_X);
+        if (UIManager.Instance.State == UIState.Game) {
+            m_rotationY += MouseX_Input * MouseSensitivity;
+            m_rotationX -= MouseY_Input * MouseSensitivity;
+            m_rotationX = Mathf.Clamp(m_rotationX, MIN_X, MAX_X);
+        }
+        
 
         // If player moves the mouse stop auto-retarget
         if (MouseX_Input != 0.0f || MouseY_Input != 0.0f)
