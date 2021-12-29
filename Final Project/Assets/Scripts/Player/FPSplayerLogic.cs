@@ -70,6 +70,12 @@ public class FPSplayerLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UIManager.Instance.State != UIState.Game) {
+            m_horizontalMovementInput = Mathf.Lerp(m_horizontalMovementInput, 0, Time.deltaTime * 5f);
+            m_verticalMovementInput = Mathf.Lerp(m_verticalMovementInput, 0, Time.deltaTime * 5f);
+            return;
+        } 
+
         // Movement input
         m_horizontalMovementInput = Input.GetAxis("Horizontal");
         m_verticalMovementInput = Input.GetAxis("Vertical");
