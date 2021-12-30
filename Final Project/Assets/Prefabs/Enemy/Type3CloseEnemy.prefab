@@ -1751,9 +1751,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba783a1ec56282d4eb34d679d685ff01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_closeEnemyType: 0
+  m_closeEnemyType: 2
   rayCastPoint: {fileID: 4928649380530213839}
-  m_health: 150
+  m_health: 200
 --- !u!195 &4929505667926118384
 NavMeshAgent:
   m_ObjectHideFlags: 0
