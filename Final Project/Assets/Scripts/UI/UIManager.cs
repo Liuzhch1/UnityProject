@@ -37,10 +37,13 @@ public class UIManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         m_canvas = GameObject.Find("Canvas").transform;
-        m_pieMenu = m_canvas.GetChild(0);
-        m_healthPanel = m_canvas.GetChild(1);
-        m_ARPanel = m_canvas.GetChild(2);
-        m_HandGunPanel = m_canvas.GetChild(3);
+        if (m_canvas) {
+            m_pieMenu = m_canvas.GetChild(0);
+            m_healthPanel = m_canvas.GetChild(1);
+            m_ARPanel = m_canvas.GetChild(2);
+            m_HandGunPanel = m_canvas.GetChild(3);
+        }
+        
     }
 
     // public void Retry() {

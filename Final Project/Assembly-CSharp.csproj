@@ -77,9 +77,11 @@
      <Compile Include="Assets\Packs\Low Poly FPS Pack\Third_Person_Character\Components\Scripts\ThirdPersonDemoLPFP.cs" />
      <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Weapon_Scripts\SniperScriptLPFP.cs" />
      <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\GasTankScript.cs" />
+     <Compile Include="Assets\Scripts\Scene\PickableItemLogic.cs" />
      <Compile Include="Assets\Packs\Low Poly FPS Pack\Third_Person_Character\Components\Plane_Demo_Scene_Components\Scripts\BlinkingLightLPFP.cs" />
      <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\LightningScript.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimEvents.cs" />
+     <Compile Include="Assets\Scripts\UI\CrosshairLogic.cs" />
      <None Include="Assets\Packs\PolygonParticles\Materials\SHARED BY LUXURYPANDA.txt" />
      <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_NoFogUnlit.shader" />
      <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_ColourChange.shader" />
