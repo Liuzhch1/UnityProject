@@ -244,4 +244,19 @@ public class FPSplayerLogic : MonoBehaviour
         }
     }
     #endregion
+
+    #region ForEnemy
+    public bool BackFree()
+    {
+        return true;
+    }
+    public bool LeftFree()
+    {
+        return true;
+    }
+    public bool RightFree()
+    {
+        return true;
+    }
+    #endregion
 }
