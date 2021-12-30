@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PieMenuLogic : MonoBehaviour
 {
@@ -15,6 +16,19 @@ public class PieMenuLogic : MonoBehaviour
     {
         
     }
+    // Display functions
+    public void setAmmoNumber(Weapon weapon, int ammoNumber, int magNumber) {
+        int id = (weapon == Weapon.AR) ? 0 : 1;
+        Text ammoText = transform.GetChild(id).GetChild(1).GetComponent<Text>();
+        ammoText.text = ammoNumber + "/" + magNumber;
+    }
+
+    public void setHealthPackNumber(int healthPackNumber) {
+        Text healthPackText = transform.GetChild(2).GetChild(1).GetComponent<Text>();
+        healthPackText.text = "" + healthPackNumber;
+    }
+    
+    // Button functions
 
     public void SwitchToAR() {
         WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
@@ -31,4 +45,6 @@ public class PieMenuLogic : MonoBehaviour
         }
         //UIManager.Instance.switchState(UIState.Game);
     }
+
+
 }
