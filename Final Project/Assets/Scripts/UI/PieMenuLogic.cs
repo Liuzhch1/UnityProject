@@ -10,16 +10,16 @@ public class PieMenuLogic : MonoBehaviour
     Text m_healthPackText;
 
     void OnEnable() {
-        // Get information
+        // Collect data
         WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
-        if (weaponLogic) {
+        if (this != null) {
             setAmmoNumber(Weapon.AR, weaponLogic.m_AR.ammo, weaponLogic.m_AR.mag);
             setAmmoNumber(Weapon.handgun, weaponLogic.m_Handgun.ammo, weaponLogic.m_Handgun.mag);
             setHealthPackNumber(0);
         }
     }
 
-    void Start()
+    void Awake()
     {
         m_ARAmmoText = transform.GetChild(0).GetChild(1).GetComponent<Text>();
         m_handGunAmmoText = transform.GetChild(1).GetChild(1).GetComponent<Text>();

@@ -167,6 +167,7 @@ public class WeaponLogic : MonoBehaviour
                     Shoot();
 
                     --m_ammo;
+                    --currentGun.ammo;
 
                     UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
 
@@ -174,7 +175,7 @@ public class WeaponLogic : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("empty gun");
+                    // Debug.Log("empty gun");
                     // Play Empty Clip Sound
                     PlaySound(m_shootEmptySound);
                 }
@@ -241,7 +242,7 @@ public class WeaponLogic : MonoBehaviour
             }
 
             // Spawn Bullet Impact VFX
-            Debug.Log("shoot");
+            // Debug.Log("shoot");
             GameObject.Instantiate(m_bulletImpactObj, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, 0, 0));
 
         }
@@ -257,7 +258,9 @@ public class WeaponLogic : MonoBehaviour
     public void endReload()
     {
         m_ammo = MAX_AMMO;
+        currentGun.ammo = MAX_AMMO;
         m_mag -= 1;
+        currentGun.mag -= 1;
         UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
         m_isReloading = false;
         m_enableFire = true;
@@ -383,8 +386,8 @@ public class WeaponLogic : MonoBehaviour
         {
             m_enableFire = false;
 
-            currentGun.ammo = m_ammo;
-            currentGun.mag = m_mag;
+            // currentGun.ammo = m_ammo;
+            // currentGun.mag = m_mag;
 
             if (m_isAiming)
             {
