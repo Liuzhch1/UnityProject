@@ -24,7 +24,6 @@ public class FPCameraLogic : MonoBehaviour
     float m_startRotationX = 0.0f;
     float m_targetRotationX = 0.0f;
     float m_FOV;
-    Vector3 m_target = Vector3.zero;
 
     #endregion
 
@@ -53,15 +52,6 @@ public class FPCameraLogic : MonoBehaviour
             m_camera.fieldOfView = m_FOV;
         } else {
             m_camera.fieldOfView = Mathf.Lerp(m_camera.fieldOfView, m_FOV, Time.deltaTime * 15f);
-        }
-
-        if (m_target != Vector3.zero) {
-            if (Vector3.Distance(m_cameraObj.transform.position, m_target) < 0.1f) {
-                m_cameraObj.transform.position = m_target;
-                m_target = Vector3.zero;
-            } else {
-                m_cameraObj.transform.position = Vector3.Lerp(m_cameraObj.transform.position, m_target, Time.deltaTime * 15f);
-            }
         }
         
 
@@ -131,7 +121,8 @@ public class FPCameraLogic : MonoBehaviour
 
     public void changePositionTo(Vector3 target)
     {
-        m_target = target;
+        m_cameraObj.transform.position = target;
+        //m_target = target;
     }
     #endregion
 

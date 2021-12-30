@@ -10,7 +10,7 @@ public class PieMenuLogic : MonoBehaviour
     Text m_healthPackText;
 
     void OnEnable() {
-        // Get information
+        // Collect data
         WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
         if (weaponLogic) {
             setAmmoNumber(Weapon.AR, weaponLogic.m_AR.ammo, weaponLogic.m_AR.mag);
@@ -19,7 +19,7 @@ public class PieMenuLogic : MonoBehaviour
         }
     }
 
-    void Start()
+    void Awake()
     {
         m_ARAmmoText = transform.GetChild(0).GetChild(1).GetComponent<Text>();
         m_handGunAmmoText = transform.GetChild(1).GetChild(1).GetComponent<Text>();

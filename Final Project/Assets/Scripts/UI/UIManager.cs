@@ -21,7 +21,9 @@ public class UIManager : MonoBehaviour
     Transform m_healthPanel;
     Transform m_ARPanel;
     Transform m_HandGunPanel;
+    Transform m_crosshair;
 
+    bool isAiming = false;
     UIState m_state = UIState.Game;
     public UIState State => m_state;
 
@@ -37,10 +39,14 @@ public class UIManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         m_canvas = GameObject.Find("Canvas").transform;
-        m_pieMenu = m_canvas.GetChild(0);
-        m_healthPanel = m_canvas.GetChild(1);
-        m_ARPanel = m_canvas.GetChild(2);
-        m_HandGunPanel = m_canvas.GetChild(3);
+        if (m_canvas) {
+            m_pieMenu = m_canvas.GetChild(0);
+            m_healthPanel = m_canvas.GetChild(1);
+            m_ARPanel = m_canvas.GetChild(2);
+            m_HandGunPanel = m_canvas.GetChild(3);
+            m_crosshair = m_canvas.GetChild(4);
+        }
+        
     }
 
     // public void Retry() {
@@ -80,22 +86,24 @@ public class UIManager : MonoBehaviour
         m_state = state;
         switch (state) {
             case UIState.Game:
+                isAiming = false;
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 m_pieMenu.gameObject.SetActive(false);
+                m_crosshair.gameObject.SetActive(true);
                 break;
             case UIState.Menu:
                 //TODO: setactive menu ui
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 m_pieMenu.gameObject.SetActive(false);
+                m_crosshair.gameObject.SetActive(false);
                 break;
             case UIState.Inventory:
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
                 m_pieMenu.gameObject.SetActive(true);
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                m_crosshair.gameObject.SetActive(false);
                 break;
         }
     }
@@ -119,6 +127,13 @@ public class UIManager : MonoBehaviour
             if (m_state == UIState.Inventory) {
                 switchState(UIState.Game);
             }
+        }
+
+        if (m_state == UIState.Game) {
+            if (Input.GetButtonDown("Fire2")) {
+                isAiming = !isAiming;
+                m_crosshair.gameObject.SetActive(!isAiming);
+            } 
         }
 
 
