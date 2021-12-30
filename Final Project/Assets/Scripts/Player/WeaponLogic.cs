@@ -39,7 +39,7 @@ public class WeaponLogic : MonoBehaviour
     float m_shotCooldown = 0;
     int m_ammo;
     int m_mag;
-    int m_healthPack;
+    public int m_healthPack;
 
     bool m_isReloading = false;
     bool m_isAiming = false;
@@ -303,6 +303,7 @@ public class WeaponLogic : MonoBehaviour
             {
                 Destroy(rayHit.collider.gameObject);
                 m_mag += 1;
+                currentGun.mag += 1;
                 UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
             }
             else if (hitTag == "scope")
