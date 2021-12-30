@@ -9,6 +9,13 @@ TagManager:
   - healthPack
   - scope
   - radiationCloudController
+  - CheckPoint
+  - ExplosiveBarrel
+  - GasTank
+  - Metal
+  - Target
+  - Concrete
+  - key
   layers:
   - Default
   - TransparentFX

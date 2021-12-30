@@ -45,6 +45,7 @@ public class CloseEnemyLogic : MonoBehaviour
     Animator m_animator;
 
     NavMeshAgent m_navMeshAgent;
+    Collider m_collider;
 
     CloseEnemyState m_enemyState;
 
@@ -85,6 +86,7 @@ public class CloseEnemyLogic : MonoBehaviour
         m_animator.SetInteger("State", 1);
         m_animator.SetInteger("Type", m_type);
         m_enemyState = CloseEnemyState.Idle;
+        m_collider = GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -195,7 +197,6 @@ public class CloseEnemyLogic : MonoBehaviour
         if (!m_player)
         {
             m_enemyState = CloseEnemyState.Idle;
-            m_animator.SetTrigger("PlayerDead");
             return;
         }
         if (!isAlert)
@@ -261,9 +262,8 @@ public class CloseEnemyLogic : MonoBehaviour
         else
         {
             m_navMeshAgent.enabled = false;
-            transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            m_collider.enabled = false;
             m_animator.SetTrigger("Dead");
-            Destroy(gameObject, 10.0f);
         }
     }
     public void Attack()
@@ -274,5 +274,42 @@ public class CloseEnemyLogic : MonoBehaviour
     {
         Vector3 look = new Vector3(m_player.transform.position.x, transform.position.y, m_player.transform.position.z);
         transform.LookAt(look);
+    }
+
+
+    public void Save(int index)
+    {
+        PlayerPrefs.SetFloat("EnemyPosX" + index, transform.position.x);
+        PlayerPrefs.SetFloat("EnemyPosY" + index, transform.position.y);
+        PlayerPrefs.SetFloat("EnemyPosZ" + index, transform.position.z);
+
+        PlayerPrefs.SetFloat("EnemyRotX" + index, transform.rotation.eulerAngles.x);
+        PlayerPrefs.SetFloat("EnemyRotY" + index, transform.rotation.eulerAngles.y);
+        PlayerPrefs.SetFloat("EnemyRotZ" + index, transform.rotation.eulerAngles.z);
+
+
+        PlayerPrefs.SetInt("EnemyHealth" + index, m_health);
+    }
+
+    public void Load(int index)
+    {
+        float playerPosX = PlayerPrefs.GetFloat("EnemyPosX" + index);
+        float playerPosY = PlayerPrefs.GetFloat("EnemyPosY" + index);
+        float playerPosZ = PlayerPrefs.GetFloat("EnemyPosZ" + index);
+
+        float playerRotX = PlayerPrefs.GetFloat("EnemyRotX" + index);
+        float playerRotY = PlayerPrefs.GetFloat("EnemyRotY" + index);
+        float playerRotZ = PlayerPrefs.GetFloat("EnemyRotZ" + index);
+
+        m_health = PlayerPrefs.GetInt("EnemyHealth" + index);
+
+        m_navMeshAgent.enabled = false;
+        transform.position = new Vector3(playerPosX, playerPosY, playerPosZ);
+        transform.rotation = Quaternion.Euler(playerRotX, playerRotY, playerRotZ);
+        m_enemyState = CloseEnemyState.Idle;
+        m_animator.SetInteger("State", 1);
+        isDead = false;
+        m_collider.enabled = false;
+        m_navMeshAgent.enabled = true;
     }
 }

@@ -6,7 +6,7 @@ public class RadiationCloudLogic : MonoBehaviour
 {
     GameObject m_player;
     FPSplayerLogic m_playerController;
-    float damageCooldown = 1.0f;
+    float damageCooldown = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +26,8 @@ public class RadiationCloudLogic : MonoBehaviour
         FPSplayerLogic m_playerController = other.GetComponent<FPSplayerLogic>();
         if(m_playerController && damageCooldown <= 0.0f)
         {
-            m_playerController.TakeDamage(1);
-            damageCooldown = 1.0f;
+            m_playerController.TakeDamage(3);
+            damageCooldown = 0.5f;
         }
     }
 

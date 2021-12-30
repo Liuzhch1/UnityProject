@@ -30,6 +30,7 @@ public class WeaponLogic : MonoBehaviour
     Animator m_animator;
     AudioSource m_audioSource;
     FPSplayerLogic m_FPSplayerLogic;
+    SaveManager m_saveManager;
 
     Weapon currentWeapon = Weapon.AR;
 
@@ -52,6 +53,8 @@ public class WeaponLogic : MonoBehaviour
 
     bool m_enableFire = false;
     bool m_isRunning = false;
+
+    public bool m_hasKey = false;
 
     public Gun m_AR;
     public Gun m_Handgun;
@@ -120,6 +123,7 @@ public class WeaponLogic : MonoBehaviour
         m_animator = GetComponentInParent<Animator>();
         m_audioSource = GetComponent<AudioSource>();
         m_FPSplayerLogic = FindObjectOfType<FPSplayerLogic>();
+        m_saveManager = FindObjectOfType<SaveManager>();
 
         m_AR = new Gun();
         m_Handgun = new Gun();
@@ -303,14 +307,14 @@ public class WeaponLogic : MonoBehaviour
         {
             string hitTag = rayHit.collider.gameObject.tag;
             Debug.Log("Try to pick: " + hitTag);
-            if (hitTag == "mag") 
+            if (hitTag == "mag" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
                 Destroy(rayHit.collider.gameObject);
                 m_mag += 1;
                 currentGun.mag += 1;
                 UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
             }
-            else if (hitTag == "scope")
+            else if (hitTag == "scope" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
                 List<GameObject> childList = new List<GameObject>();
                 int childCount = rayHit.transform.childCount;
@@ -326,12 +330,12 @@ public class WeaponLogic : MonoBehaviour
                 Destroy(rayHit.collider.gameObject);
                 m_ARscope.SetActive(true);
             }
-            else if (hitTag == "healthPack")
+            else if (hitTag == "healthPack" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
                 Destroy(rayHit.collider.gameObject);
                 m_healthPack += 1;
             }
-            else if (hitTag == "radiationCloudController")
+            else if (hitTag == "radiationCloudController" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
                 List<GameObject> childList = new List<GameObject>();
                 int childCount = rayHit.transform.childCount;
@@ -344,6 +348,14 @@ public class WeaponLogic : MonoBehaviour
                 {
                     DestroyImmediate(childList[i]);
                 }
+            }
+            else if(hitTag == "CheckPoint" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
+                m_FPSplayerLogic.RecoverHealth(100);
+                m_saveManager.Save();
+            }
+            else if(hitTag == "key" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
+                Destroy(rayHit.collider.gameObject);
+                m_hasKey = true;
             }
         }
 

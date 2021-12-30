@@ -213,7 +213,7 @@ public class FPSplayerLogic : MonoBehaviour
         m_health += heal;
         m_health = Mathf.Clamp(m_health, 0, 100);
         UIManager.Instance.setHealth(m_health);
-        // Debug.Log(m_health);
+        Debug.Log(m_health);
     }
     #endregion
 
@@ -297,6 +297,7 @@ public class FPSplayerLogic : MonoBehaviour
         float playerRotZ = PlayerPrefs.GetFloat("PlayerRotZ");
 
         m_health = PlayerPrefs.GetInt("PlayerHealth");
+        UIManager.Instance.setHealth(m_health);
 
         m_IsAlive = true;
         m_characterController.enabled = false;
