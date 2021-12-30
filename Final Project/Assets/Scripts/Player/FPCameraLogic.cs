@@ -14,6 +14,7 @@ public class FPCameraLogic : MonoBehaviour
 
     #region Fields
     Camera m_camera;
+    FPSplayerLogic m_FPSplayerLogic;
 
     float m_rotationX;
     float m_rotationY;
@@ -42,12 +43,17 @@ public class FPCameraLogic : MonoBehaviour
         // Cursor.visible = false;
 
         m_camera = m_cameraObj.GetComponent<Camera>();
+        m_FPSplayerLogic = FindObjectOfType<FPSplayerLogic>();
         m_FOV = m_camera.fieldOfView;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!m_FPSplayerLogic.m_IsAlive)
+		{
+            return;
+		}
         if (Mathf.Abs(m_camera.fieldOfView - m_FOV) < 0.1f) {
             m_camera.fieldOfView = m_FOV;
         } else {

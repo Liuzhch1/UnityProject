@@ -12,7 +12,8 @@ enum BossState
     FastRun3,
     FastAttack4,
     Attack5,
-    JumpAttack6,
+    Invisible,
+    JumpAttack,
     SkillAttack
 }
 
@@ -30,12 +31,16 @@ public class BossLogic : MonoBehaviour
     const int FAST_ATTACK_DAMAGE = 13;
     const int JUMP_ATTACK_DAMAGE = 20;
 
-    const float SKILL_COOLDOWN = 7.0f;
+    const float SKILL_COOLDOWN = 15.0f;
     // first time cool down
     float skillCooldown = 1.5f*SKILL_COOLDOWN;
 
     const float JUMPATTACK_SPEED = 2.0f;
     const float JUMPATTACK_DISTANCE = 3.7f * JUMPATTACK_SPEED;
+    const float JUMPATTACK_BIAS = 0.7f;
+
+    const float MAX_INVISIBLE_TIME = 5.0f;
+    float invisibleTime = MAX_INVISIBLE_TIME;
 
     GameObject m_player;
     FPSplayerLogic m_playerLogic;
@@ -50,6 +55,27 @@ public class BossLogic : MonoBehaviour
     int m_health=500;
     bool isDead = false;
     bool isAlert = false;
+    bool invisible = false;
+    bool isAttacking = false;
+
+    [SerializeField]
+    GameObject Type1Prefab;
+    [SerializeField]
+    GameObject Type2Prefab;
+    [SerializeField]
+    GameObject Type3Prefab;
+    [SerializeField]
+    Transform spawnPoint1;
+    [SerializeField]
+    Transform spawnPoint2;
+    [SerializeField]
+    Transform spawnPoint3;
+    [SerializeField]
+    GameObject mainBody;
+    [SerializeField]
+    GameObject tail;
+    //there will be no this type when Roar
+    int noType = 1;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -69,9 +95,19 @@ public class BossLogic : MonoBehaviour
         {
             return;
         }
+        if (!isAlert)
+        {
+            if (ToPlayerDistance() < 20.0f)
+            {
+                isAlert = true;
+            }
+        }
         if (skillCooldown > 0.0f)
         {
-            skillCooldown -= Time.deltaTime;
+            if (!isAttacking)
+            {
+                skillCooldown -= Time.deltaTime;
+            }
         }
         else
         {
@@ -80,12 +116,19 @@ public class BossLogic : MonoBehaviour
             if (skillType > 0.5f)
             {
                 //Roar
-                RoarAttack();
+                m_animator.SetTrigger("Roar");
+                m_navMeshAgent.SetDestination(transform.position);
+                isAttacking = true;
             }
             else
             {
                 //Invisible
-                InvisibleAttack();
+                TurnInvisible(false);
+                m_animator.SetTrigger("Invisible");
+                m_bossState = BossState.Invisible;
+                invisible = true;
+                m_navMeshAgent.SetDestination(transform.position);
+                m_navMeshAgent.speed = WALK_SPEED;
             }
             skillCooldown = SKILL_COOLDOWN;
             return;
@@ -103,16 +146,16 @@ public class BossLogic : MonoBehaviour
             case (BossState.FastRun3):
                 UpdateFastRun();
                 break;
-            case (BossState.FastAttack4):
-                UpdateFastAttack();
-                break;
             case (BossState.Attack5):
                 UpdateAttack();
                 break;
-            case (BossState.JumpAttack6):
-                UpdateJumpAttack();
+            case (BossState.JumpAttack):
+                break;
+            case (BossState.Invisible):
+                UpdateInvisiable();
                 break;
         }
+        Debug.Log("State: " + m_bossState);
     }
     #region Update State
     void UpdateIdle()
@@ -120,6 +163,7 @@ public class BossLogic : MonoBehaviour
         if (isAlert)
         {
             m_bossState = BossState.Walk2;
+            m_navMeshAgent.speed = WALK_SPEED;
             return;
         }
         m_animator.SetInteger("State", 1);
@@ -130,14 +174,16 @@ public class BossLogic : MonoBehaviour
         {
             m_bossState = BossState.FastRun3;
             walkTime = MAX_WALKTIME;
+            m_navMeshAgent.speed = FASTRUN_SPEED;
             return;
         }
-        else if (Vector3.Distance(transform.position, m_player.transform.position) <= ATTACK_RADIUS)
+        else if (ToPlayerDistance() <= ATTACK_RADIUS)
         {
             m_bossState = BossState.Attack5;
             m_navMeshAgent.SetDestination(transform.position);
             return;
         }
+        walkTime -= Time.deltaTime;
         LookAtPlayer();
         m_animator.SetInteger("State", 2);
         m_navMeshAgent.speed = WALK_SPEED;
@@ -145,51 +191,117 @@ public class BossLogic : MonoBehaviour
     }
     void UpdateFastRun()
     {
-        float distance = Vector3.Distance(transform.position, m_player.transform.position);
-        if (distance > JUMPATTACK_DISTANCE - 0.1f && distance < JUMPATTACK_DISTANCE + 0.1f)
+        if (ToPlayerDistance() > JUMPATTACK_DISTANCE + JUMPATTACK_BIAS && ToPlayerDistance() < JUMPATTACK_DISTANCE +JUMPATTACK_BIAS+0.1f)
         {
-            m_bossState = BossState.JumpAttack6;
+            isAttacking = true;
+            m_bossState = BossState.JumpAttack;
             m_animator.SetTrigger("JumpAttack");
             m_navMeshAgent.speed = JUMPATTACK_SPEED;
+            m_navMeshAgent.destination = m_player.transform.position;
             return;
         }
-        if (distance < ATTACK_RADIUS)
+        if (ToPlayerDistance() < ATTACK_RADIUS)
         {
             m_bossState = BossState.Attack5;
             m_navMeshAgent.SetDestination(transform.position);
             return;
         }
-        LookAtPlayer();
         m_animator.SetInteger("State", 3);
-    }
-    void UpdateFastAttack()
-    {
-
+        m_navMeshAgent.SetDestination(m_player.transform.position);
+        LookAtPlayer();
     }
     void UpdateAttack()
     {
-
-    }
-    void UpdateJumpAttack()
-    {
-
+        isAttacking = true;
+        if (!m_player)
+        {
+            m_bossState = BossState.Idle1;
+            m_animator.SetTrigger("PlayerDead");
+            isAlert = false;
+            isAttacking = false;
+            return;
+        }
+        if (ToPlayerDistance() > ATTACK_RADIUS + 1.0f)
+        {
+            m_bossState = BossState.Walk2;
+            m_navMeshAgent.speed = WALK_SPEED;
+            isAttacking = false;
+            return;
+        }
+        m_animator.SetInteger("State", 5);
+        LookAtPlayer();
     }
     void UpdateInvisiable()
     {
+        if (!invisible)
+        {
+            return;
+        }
+        if (invisibleTime > 0.0f)
+        {
+            invisibleTime -= Time.deltaTime;
+            return;
+        }
+        Vector3 playerPos = m_player.transform.position;
+        if (m_playerLogic.BackFree())
+        {
+            Vector3 back = -3 * m_player.transform.forward;
+            transform.position = new Vector3(playerPos.x + back.x, transform.position.y, playerPos.z + back.z);
+        }
+        else if (m_playerLogic.LeftFree())
+        {
 
-    }
-    void UpdateRoar()
-    {
+        }
+        else if (m_playerLogic.RightFree())
+        {
 
+        }
+        else
+        {
+
+        }
+        m_animator.SetTrigger("FastAttack");
+        LookAtPlayer();
+        m_navMeshAgent.SetDestination(transform.position);
+        TurnInvisible(true);
+        invisibleTime = MAX_INVISIBLE_TIME;
+        invisible = false;
     }
     #endregion
-    void RoarAttack()
+    public void RoarSpawnEnemy()
     {
-
+        if (noType != 1)
+        {
+            GameObject enemy1 = Instantiate(Type1Prefab, spawnPoint1.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
+            enemy1.transform.forward = transform.forward;
+        }
+        if (noType != 2)
+        {
+            GameObject enemy2 = Instantiate(Type2Prefab, spawnPoint2.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
+            enemy2.transform.forward = transform.forward;
+        }
+        if (noType != 3)
+        {
+            GameObject enemy3 = Instantiate(Type3Prefab, spawnPoint3.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
+            enemy3.transform.forward = transform.forward;
+        }
+        switch (noType)
+        {
+            case (1):
+                noType = 2;
+                break;
+            case (2):
+                noType = 3;
+                break;
+            case (3):
+                noType = 1;
+                break;
+        }
     }
-    void InvisibleAttack()
+    void TurnInvisible(bool turn)
     {
-
+        mainBody.GetComponent<SkinnedMeshRenderer>().enabled = turn;
+        tail.GetComponent<SkinnedMeshRenderer>().enabled = turn;
     }
     public void LookAtPlayer()
     {
@@ -199,5 +311,50 @@ public class BossLogic : MonoBehaviour
     public void FinishSkillAttack()
     {
         m_bossState = BossState.Walk2;
+        isAttacking = false;
+    }
+    public void FinishJumpAttack()
+    {
+        m_bossState = BossState.Walk2;
+        m_animator.SetInteger("State", 2);
+        isAttacking = false;
+    }
+    public void FinishRoarAttack()
+    {
+        m_bossState = BossState.Walk2;
+        m_animator.SetInteger("State", 2);
+        isAttacking = false;
+    }
+    public void FinishFastAttack()
+    {
+        m_bossState = BossState.Walk2;
+        m_animator.SetInteger("State", 2);
+        isAttacking = false;
+    }
+    float ToPlayerDistance()
+    {
+        return Vector3.Distance(transform.position, m_player.transform.position);
+    }
+    public void Attack()
+    {
+        m_playerLogic.TakeDamage(ATTACK_DAMAGE);
+    }
+    public void JumpAttack()
+    {
+        m_playerLogic.TakeDamage(JUMP_ATTACK_DAMAGE);
+    }
+    public void TakeDamage(int damage)
+    {
+        if (m_health > 0)
+        {
+            m_health -= damage;
+        }
+        else
+        {
+            m_navMeshAgent.enabled = false;
+            transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            m_animator.SetTrigger("Dead");
+            Destroy(gameObject, 10.0f);
+        }
     }
 }

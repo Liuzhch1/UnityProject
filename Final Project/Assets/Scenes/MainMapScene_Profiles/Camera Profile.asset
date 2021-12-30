@@ -140,10 +140,10 @@ MonoBehaviour:
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 354
+    value: 360
   sampleCount:
     overrideState: 1
-    value: 10
+    value: 19
 --- !u!114 &-3438801640709198892
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -171,7 +171,7 @@ MonoBehaviour:
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.19
+    value: 0.202
   smoothness:
     overrideState: 1
     value: 0.414
@@ -306,7 +306,7 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 0
+    overrideState: 1
     value: 0.1
   contrast:
     overrideState: 1
@@ -340,7 +340,7 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.9868973, y: 1, z: 0.94406354, w: 0.070609}
+    value: {x: 0.9868973, y: 1, z: 0.94406354, w: 0.052956752}
   gamma:
     overrideState: 1
     value: {x: 1, y: 0.92989516, z: 0.94095117, w: 0}

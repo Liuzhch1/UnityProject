@@ -8,8 +8,8 @@ public class SaveManager : MonoBehaviour
     static SaveManager m_instance;
 
     FPSplayerLogic m_playerLogic;
+    CloseEnemyLogic[] m_closeEnemynemyLogic;
     FireRobLogic[] m_fireRobLogic;
-    CloseEnemyLogic[] m_closeEnemyLogic;
 
     void Awake()
     {
@@ -27,8 +27,8 @@ public class SaveManager : MonoBehaviour
     void Start()
     {
         m_playerLogic = FindObjectOfType<FPSplayerLogic>();
+        m_closeEnemynemyLogic = FindObjectsOfType<CloseEnemyLogic>();
         m_fireRobLogic = FindObjectsOfType<FireRobLogic>();
-        m_closeEnemyLogic = FindObjectsOfType<CloseEnemyLogic>();
     }
 
     // Update is called once per frame
@@ -38,14 +38,12 @@ public class SaveManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             Save();
-            Debug.Log("Save");
         }
 
         // Load
         if (Input.GetKeyDown(KeyCode.L))
         {
             Load();
-            Debug.Log("Load");
         }
     }
 
@@ -53,13 +51,13 @@ public class SaveManager : MonoBehaviour
     {
         m_playerLogic.Save();
 
+        for (int index = 0; index < m_closeEnemynemyLogic.Length; ++index)
+        {
+            m_closeEnemynemyLogic[index].Save(index);
+        }
         for (int index = 0; index < m_fireRobLogic.Length; ++index)
         {
             m_fireRobLogic[index].Save(index);
-        }
-        for (int index = 0; index < m_closeEnemyLogic.Length; ++index)
-        {
-            m_closeEnemyLogic[index].Save(index);
         }
 
         PlayerPrefs.Save();
@@ -69,13 +67,13 @@ public class SaveManager : MonoBehaviour
     {
         m_playerLogic.Load();
 
+        for (int index = 0; index < m_closeEnemynemyLogic.Length; ++index)
+        {
+            m_closeEnemynemyLogic[index].Load(index);
+        }
         for (int index = 0; index < m_fireRobLogic.Length; ++index)
         {
             m_fireRobLogic[index].Load(index);
-        }
-        for (int index = 0; index < m_closeEnemyLogic.Length; ++index)
-        {
-            m_closeEnemyLogic[index].Load(index);
         }
     }
 }

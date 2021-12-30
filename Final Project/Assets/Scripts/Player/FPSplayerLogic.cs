@@ -127,19 +127,7 @@ public class FPSplayerLogic : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!m_IsAlive)
-        {
-
-            // Set Animation Parameters
-            if (m_animator)
-            {
-                m_animator.SetFloat("VerticalInput", 0);
-                m_animator.SetFloat("HorizontalInput", 0);
-            }
-
-            return;
-        }
-        if ( m_verticalMovementInput == 1)
+        if( m_verticalMovementInput == 1)
         {
             m_weaponLogic.disanbleRunFire();
         }
@@ -271,6 +259,20 @@ public class FPSplayerLogic : MonoBehaviour
     }
     #endregion
 
+    #region ForEnemy
+    public bool BackFree()
+    {
+        return true;
+    }
+    public bool LeftFree()
+    {
+        return true;
+    }
+    public bool RightFree()
+    {
+        return true;
+    }
+    #endregion
     public void Save()
     {
         PlayerPrefs.SetFloat("PlayerPosX", transform.position.x);
