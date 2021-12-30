@@ -54,5 +54,12 @@ public class PieMenuLogic : MonoBehaviour
         //UIManager.Instance.switchState(UIState.Game);
     }
 
+    public void UseHealthPack() {
+        WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
+        if (weaponLogic) {
+            weaponLogic.useHealthPack();
+        }
+    }
+
 
 }
