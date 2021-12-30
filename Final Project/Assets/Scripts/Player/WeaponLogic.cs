@@ -298,6 +298,17 @@ public class WeaponLogic : MonoBehaviour
             }
             else if (hitTag == "scope")
             {
+                List<GameObject> childList = new List<GameObject>();
+                int childCount = rayHit.transform.childCount;
+                for (int i = 0; i < childCount; i++)
+                {
+                    GameObject child = rayHit.transform.GetChild(i).gameObject;
+                    childList.Add(child);
+                }
+                for (int i = 0; i < childCount; i++)
+                {
+                    DestroyImmediate(childList[i]);
+                }
                 Destroy(rayHit.collider.gameObject);
                 m_ARscope.SetActive(true);
             }
