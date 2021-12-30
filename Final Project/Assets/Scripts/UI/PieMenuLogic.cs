@@ -12,10 +12,10 @@ public class PieMenuLogic : MonoBehaviour
     void OnEnable() {
         // Collect data
         WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
-        if (this != null) {
+        if (weaponLogic) {
             setAmmoNumber(Weapon.AR, weaponLogic.m_AR.ammo, weaponLogic.m_AR.mag);
             setAmmoNumber(Weapon.handgun, weaponLogic.m_Handgun.ammo, weaponLogic.m_Handgun.mag);
-            setHealthPackNumber(0);
+            setHealthPackNumber(weaponLogic.m_healthPack);
         }
     }
 

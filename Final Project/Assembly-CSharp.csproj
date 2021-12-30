@@ -99,6 +99,8 @@
     <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\LightningScript.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimEvents.cs" />
     <Compile Include="Assets\Scripts\Scene\SaveManager.cs" />
+    <Compile Include="Assets\Scripts\UI\CrosshairLogic.cs" />
+    <Compile Include="Assets\Scripts\Enemy\BossLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packs\PolygonParticles\Materials\SHARED BY LUXURYPANDA.txt" />

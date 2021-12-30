@@ -206,13 +206,17 @@ public class FPSplayerLogic : MonoBehaviour
     public void TakeDamage(int damage)
     {
         m_health -= damage;
-        Debug.Log(m_health);
+        m_health = Mathf.Clamp(m_health, 0, 100);
+        UIManager.Instance.setHealth(m_health);
+        // Debug.Log(m_health);
     }
 
     public void RecoverHealth(int heal)
 	{
         m_health += heal;
-        Debug.Log(m_health);
+        m_health = Mathf.Clamp(m_health, 0, 100);
+        UIManager.Instance.setHealth(m_health);
+        // Debug.Log(m_health);
     }
     #endregion
 

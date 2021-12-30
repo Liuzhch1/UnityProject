@@ -96,7 +96,6 @@ public class CloseEnemyLogic : MonoBehaviour
         {
             return;
         }
-        Debug.Log("state: " + m_enemyState);
         switch (m_enemyState)
         {
             case (CloseEnemyState.Idle):
@@ -113,7 +112,6 @@ public class CloseEnemyLogic : MonoBehaviour
                 break;
         }
         EfficientDetectPlayer();
-        Debug.Log("IsAlert: " + isAlert);
     }
     #region Update State
     void UpdateIdleState()
@@ -274,7 +272,6 @@ public class CloseEnemyLogic : MonoBehaviour
     }
     public void LookAtPlayer()
     {
-        Debug.Log("looked");
         Vector3 look = new Vector3(m_player.transform.position.x, transform.position.y, m_player.transform.position.z);
         transform.LookAt(look);
     }
