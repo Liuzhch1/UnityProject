@@ -297,6 +297,7 @@ public class FPSplayerLogic : MonoBehaviour
         float playerRotZ = PlayerPrefs.GetFloat("PlayerRotZ");
 
         m_health = PlayerPrefs.GetInt("PlayerHealth");
+        UIManager.Instance.setHealth(m_health);
 
         m_IsAlive = true;
         m_characterController.enabled = false;

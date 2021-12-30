@@ -309,6 +309,7 @@ public class CloseEnemyLogic : MonoBehaviour
         m_enemyState = CloseEnemyState.Idle;
         m_animator.SetInteger("State", 1);
         isDead = false;
+        m_collider.enabled = false;
         m_navMeshAgent.enabled = true;
     }
 }

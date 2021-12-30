@@ -293,6 +293,7 @@ public class FireRobLogic : MonoBehaviour
         m_fireRobState = FireRobState.Idle;
         m_animator.SetFloat("State", 0.0f);
         isDead = false;
+        m_collider.enabled = true;
         m_navMeshAgent.enabled = true;
     }
 }
