@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public enum FireRobState
 {
-    Idle,
+    Idel,
     Ready,
     Run,
     Stand,
@@ -43,7 +43,6 @@ public class FireRobLogic : MonoBehaviour
     GameObject m_player;
     Animator m_animator;
     FireRobGunLogic m_gunLogic;
-    Collider m_collider;
 
     FireRobState m_fireRobState;
 
@@ -56,11 +55,10 @@ public class FireRobLogic : MonoBehaviour
     {
         m_gunLogic = GetComponentInChildren<FireRobGunLogic>();
         m_navMeshAgent = GetComponent<NavMeshAgent>();
-        m_collider = GetComponent<Collider>();
         m_player = GameObject.FindGameObjectWithTag("Player");
         m_animator = GetComponent<Animator>();
         m_animator.SetFloat("State", 0.0f);
-        m_fireRobState = FireRobState.Idle;
+        m_fireRobState = FireRobState.Idel;
     }
     // Update is called once per frame
     void Update()
@@ -73,7 +71,7 @@ public class FireRobLogic : MonoBehaviour
         }
         switch (m_fireRobState)
         {
-            case (FireRobState.Idle):
+            case (FireRobState.Idel):
                 UpdateIdelState();
                 break;
             case (FireRobState.Ready):
@@ -107,7 +105,7 @@ public class FireRobLogic : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
         {
-            m_fireRobState = FireRobState.Idle;
+            m_fireRobState = FireRobState.Idel;
         }
         else if (Vector3.Distance(transform.position, m_player.transform.position) < RUN_RADIUS)
         {
@@ -255,44 +253,8 @@ public class FireRobLogic : MonoBehaviour
         {
             isDead = true;
             m_animator.SetTrigger("Die");
-            m_collider.enabled = false;
-            m_navMeshAgent.enabled = false;
+            Destroy(gameObject, 10.0f);
+            transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         }
-    }
-
-    public void Save(int index)
-    {
-        PlayerPrefs.SetFloat("EnemyPosX" + index, transform.position.x);
-        PlayerPrefs.SetFloat("EnemyPosY" + index, transform.position.y);
-        PlayerPrefs.SetFloat("EnemyPosZ" + index, transform.position.z);
-
-        PlayerPrefs.SetFloat("EnemyRotX" + index, transform.rotation.eulerAngles.x);
-        PlayerPrefs.SetFloat("EnemyRotY" + index, transform.rotation.eulerAngles.y);
-        PlayerPrefs.SetFloat("EnemyRotZ" + index, transform.rotation.eulerAngles.z);
-
-
-        PlayerPrefs.SetInt("EnemyHealth" + index, m_health);
-        
-    }
-
-    public void Load(int index)
-    {
-        float playerPosX = PlayerPrefs.GetFloat("EnemyPosX" + index);
-        float playerPosY = PlayerPrefs.GetFloat("EnemyPosY" + index);
-        float playerPosZ = PlayerPrefs.GetFloat("EnemyPosZ" + index);
-
-        float playerRotX = PlayerPrefs.GetFloat("EnemyRotX" + index);
-        float playerRotY = PlayerPrefs.GetFloat("EnemyRotY" + index);
-        float playerRotZ = PlayerPrefs.GetFloat("EnemyRotZ" + index);
-
-        m_health = PlayerPrefs.GetInt("EnemyHealth" + index);
-
-        m_navMeshAgent.enabled = false;
-        transform.position = new Vector3(playerPosX, playerPosY, playerPosZ);
-        transform.rotation = Quaternion.Euler(playerRotX, playerRotY, playerRotZ);
-        m_fireRobState = FireRobState.Idle;
-        m_animator.SetFloat("State", 0.0f);
-        isDead = false;
-        m_navMeshAgent.enabled = true;
     }
 }

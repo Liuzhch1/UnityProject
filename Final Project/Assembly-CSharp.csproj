@@ -83,15 +83,36 @@
      <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\LightningScript.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimEvents.cs" />
      <Compile Include="Assets\Scripts\Enemy\BossLogic.cs" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Packs\PolygonParticles\Materials\SHARED BY LUXURYPANDA.txt" />
      <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_NoFogUnlit.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_ColourChange.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
      <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_SciFiPlant.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_Holographic_Sign.shader" />
      <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_Skybox.shader" />
      <None Include="Assets\Packs\Polygonal Particles\Assets\Shaders\GradientBackgroundShader.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_EnvTriplanar.shader" />
      <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_Triplanar_Worlds.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.24f1c2\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

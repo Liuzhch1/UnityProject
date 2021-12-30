@@ -70,9 +70,9 @@ Material:
     - _DstBlend: 0
     - _EmissionScaleUI: 0
     - _GlossMapScale: 1
-    - _Glossiness: 1
+    - _Glossiness: 0.484
     - _GlossyReflections: 1
-    - _Metallic: 0.089
+    - _Metallic: 0.554
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Outline: 0.0025
