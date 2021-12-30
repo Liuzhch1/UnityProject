@@ -58,6 +58,7 @@ public class PieMenuLogic : MonoBehaviour
         WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
         if (weaponLogic) {
             weaponLogic.useHealthPack();
+            setHealthPackNumber(weaponLogic.m_healthPack);
         }
     }
 
