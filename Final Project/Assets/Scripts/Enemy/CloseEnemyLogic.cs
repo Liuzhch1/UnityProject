@@ -195,6 +195,7 @@ public class CloseEnemyLogic : MonoBehaviour
         if (!m_player)
         {
             m_enemyState = CloseEnemyState.Idle;
+            m_animator.SetTrigger("PlayerDead");
             return;
         }
         if (!isAlert)

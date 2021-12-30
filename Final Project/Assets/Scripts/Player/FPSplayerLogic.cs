@@ -41,6 +41,7 @@ public class FPSplayerLogic : MonoBehaviour
 
     int m_health = 100;
     int m_healthPack = 0;
+    public bool m_IsAlive = true;
 
     Camera m_camera;
     FPCameraLogic m_cameraLogic;
@@ -75,7 +76,12 @@ public class FPSplayerLogic : MonoBehaviour
             m_horizontalMovementInput = Mathf.Lerp(m_horizontalMovementInput, 0, Time.deltaTime * 5f);
             m_verticalMovementInput = Mathf.Lerp(m_verticalMovementInput, 0, Time.deltaTime * 5f);
             return;
-        } 
+        }
+
+		if (!m_IsAlive)
+		{
+            return;
+		}
 
         // Movement input
         m_horizontalMovementInput = Input.GetAxis("Horizontal");
@@ -195,7 +201,11 @@ public class FPSplayerLogic : MonoBehaviour
         m_health -= damage;
         m_health = Mathf.Clamp(m_health, 0, 100);
         UIManager.Instance.setHealth(m_health);
-        // Debug.Log(m_health);
+        Debug.Log(m_health);
+        if (m_health <= 0)
+        {
+            m_IsAlive = false;
+        }
     }
 
     public void RecoverHealth(int heal)
@@ -248,4 +258,52 @@ public class FPSplayerLogic : MonoBehaviour
         }
     }
     #endregion
+
+    #region ForEnemy
+    public bool BackFree()
+    {
+        return true;
+    }
+    public bool LeftFree()
+    {
+        return true;
+    }
+    public bool RightFree()
+    {
+        return true;
+    }
+    #endregion
+    public void Save()
+    {
+        PlayerPrefs.SetFloat("PlayerPosX", transform.position.x);
+        PlayerPrefs.SetFloat("PlayerPosY", transform.position.y);
+        PlayerPrefs.SetFloat("PlayerPosZ", transform.position.z);
+
+        PlayerPrefs.SetFloat("PlayerRotX", transform.rotation.eulerAngles.x);
+        PlayerPrefs.SetFloat("PlayerRotY", transform.rotation.eulerAngles.y);
+        PlayerPrefs.SetFloat("PlayerRotZ", transform.rotation.eulerAngles.z);
+
+        PlayerPrefs.SetInt("PlayerHealth", m_health);
+    }
+
+    public void Load()
+    {
+        float playerPosX = PlayerPrefs.GetFloat("PlayerPosX");
+        float playerPosY = PlayerPrefs.GetFloat("PlayerPosY");
+        float playerPosZ = PlayerPrefs.GetFloat("PlayerPosZ");
+
+        float playerRotX = PlayerPrefs.GetFloat("PlayerRotX");
+        float playerRotY = PlayerPrefs.GetFloat("PlayerRotY");
+        float playerRotZ = PlayerPrefs.GetFloat("PlayerRotZ");
+
+        m_health = PlayerPrefs.GetInt("PlayerHealth");
+
+        m_IsAlive = true;
+        m_characterController.enabled = false;
+
+        transform.position = new Vector3(playerPosX, playerPosY, playerPosZ);
+        transform.rotation = Quaternion.Euler(playerRotX, playerRotY, playerRotZ);
+
+        m_characterController.enabled = true;
+    }
 }

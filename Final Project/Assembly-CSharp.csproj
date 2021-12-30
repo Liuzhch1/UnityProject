@@ -35,6 +35,75 @@
     <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
+  <PropertyGroup>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <UnityProjectGenerator>Package</UnityProjectGenerator>
+    <UnityProjectGeneratorVersion>2.0.12</UnityProjectGeneratorVersion>
+    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
+    <UnityVersion>2020.3.24f1c2</UnityVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Scripts\Inventory\ItemData_SO.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\DebrisScript.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Weapon_Scripts\GrenadeLauncherScriptLPFP.cs" />
+    <Compile Include="Assets\Scripts\Scene\DoorLogic.cs" />
+    <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Mecanim\PlaySoundScript.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Weapon_Scripts\RocketLauncherScriptLPFP.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Casings_&amp;_Projectiles\GrenadeScript.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\ExplosiveBarrelScript.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\TargetScript.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Weapon_Scripts\BoltActionSniperScriptLPFP.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Weapon_Scripts\PumpShotgunScriptLPFP.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\LightMovementScript.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Casings_&amp;_Projectiles\CasingScript.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Explosions_&amp;_Impacts\ExplosionScript.cs" />
+    <Compile Include="Assets\Scripts\Enemy\FireRobGunLogic.cs" />
+    <Compile Include="Assets\Scripts\Enemy\testEnemyPlayerLogic.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Explosions_&amp;_Impacts\ImpactScript.cs" />
+    <Compile Include="Assets\Scripts\Scene\RadiationCloudLogic.cs" />
+    <Compile Include="Assets\Scripts\Enemy\CloseEnemyLogic.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Third_Person_Character\Components\Plane_Demo_Scene_Components\Scripts\FieldOfViewIncreaseLPFP.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Weapon_Scripts\AutomaticGunScriptLPFP.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Bullet\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\Enemy\BossLogic.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\FPSController\FpsControllerLPFP.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Third_Person_Character\Components\Plane_Demo_Scene_Components\Scripts\PlaneDoorLightsLPFP.cs" />
+    <Compile Include="Assets\Scripts\Player\FPCameraLogic.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Third_Person_Character\Components\Plane_Demo_Scene_Components\Scripts\PropellerRotateLPFP.cs" />
+    <Compile Include="Assets\Scripts\Enemy\FireRobIKControl.cs" />
+    <Compile Include="Assets\Scripts\UI\PieMenuLogic.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Casings_&amp;_Projectiles\ProjectileScript.cs" />
+    <Compile Include="Assets\Scripts\Inventory\ItemLogic.cs" />
+    <Compile Include="Assets\Scripts\UI\CrosshairLogic.cs" />
+    <Compile Include="Assets\Scripts\Enemy\FireRobBulletLogic.cs" />
+    <Compile Include="Assets\Scripts\Enemy\SoldierLogic.cs" />
+    <Compile Include="Assets\Scripts\Player\FPSplayerLogic.cs" />
+    <Compile Include="Assets\Scripts\Player\WeaponLogic.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Misc\LookAtCamera.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Weapon_Scripts\HandgunScriptLPFP.cs" />
+    <Compile Include="Assets\Scripts\Enemy\FireRobLogic.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Third_Person_Character\Components\Scripts\ThirdPersonDemoLPFP.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Scripts\Weapon_Scripts\SniperScriptLPFP.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\GasTankScript.cs" />
+    <Compile Include="Assets\Scripts\Scene\PickableItemLogic.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Third_Person_Character\Components\Plane_Demo_Scene_Components\Scripts\BlinkingLightLPFP.cs" />
+    <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\LightningScript.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAnimEvents.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Packs\PolygonParticles\Materials\SHARED BY LUXURYPANDA.txt" />
+    <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_NoFogUnlit.shader" />
+    <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_ColourChange.shader" />
+    <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_SciFiPlant.shader" />
+    <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_Holographic_Sign.shader" />
+    <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_Skybox.shader" />
+    <None Include="Assets\Packs\Polygonal Particles\Assets\Shaders\GradientBackgroundShader.shader" />
+    <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_EnvTriplanar.shader" />
+    <None Include="Assets\Packs\PolygonSciFiWorlds\Shaders\SyntyStudios_Triplanar_Worlds.shader" />
+  </ItemGroup>
+  <ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Inventory\ItemData_SO.cs" />
      <Compile Include="Assets\Packs\Low Poly FPS Pack\Components\Demo_Scene_Components\Scripts\DebrisScript.cs" />
