@@ -49,6 +49,41 @@ public class UIManager : MonoBehaviour
         
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X)) { // for test
+            Debug.Log("Test UI!");
+            displayHeal();
+        }
+        if (Input.GetButtonDown("Menu")) {
+            if (m_state == UIState.Game) {
+                //transform.GetChild(2).gameObject.SetActive(true);
+                switchState(UIState.Menu);
+            } else if (m_state == UIState.Menu) {
+                //transform.GetChild(2).gameObject.SetActive(false);
+                switchState(UIState.Game);
+            }
+        }
+        if (Input.GetButton("Inventory")) {
+            if (m_state == UIState.Game) {
+                switchState(UIState.Inventory);
+            }
+        } else {
+            if (m_state == UIState.Inventory) {
+                switchState(UIState.Game);
+            }
+        }
+
+        if (m_state == UIState.Game) {
+            if (Input.GetButtonDown("Fire2")) {
+                isAiming = !isAiming;
+                m_crosshair.gameObject.SetActive(!isAiming);
+            } 
+        }
+
+
+    }
+
     // public void Retry() {
     //     SceneManager.LoadScene("GameScene");
     // }
@@ -60,6 +95,13 @@ public class UIManager : MonoBehaviour
     // public void DisplayRetryPanel() {
     //     transform.GetChild(3).gameObject.SetActive(true);
     // }
+
+    public void displayHurt() {
+        transform.GetChild(0).GetComponent<Animator>().SetTrigger("Hurt");
+    }
+    public void displayHeal() {
+        transform.GetChild(1).GetComponent<Animator>().SetTrigger("Heal");
+    }
 
     public void displayWeapon(Weapon weapon) {
         m_ARPanel.gameObject.SetActive(weapon == Weapon.AR);
@@ -108,34 +150,5 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (Input.GetButtonDown("Menu")) {
-            if (m_state == UIState.Game) {
-                //transform.GetChild(2).gameObject.SetActive(true);
-                switchState(UIState.Menu);
-            } else if (m_state == UIState.Menu) {
-                //transform.GetChild(2).gameObject.SetActive(false);
-                switchState(UIState.Game);
-            }
-        }
-        if (Input.GetButton("Inventory")) {
-            if (m_state == UIState.Game) {
-                switchState(UIState.Inventory);
-            }
-        } else {
-            if (m_state == UIState.Inventory) {
-                switchState(UIState.Game);
-            }
-        }
-
-        if (m_state == UIState.Game) {
-            if (Input.GetButtonDown("Fire2")) {
-                isAiming = !isAiming;
-                m_crosshair.gameObject.SetActive(!isAiming);
-            } 
-        }
-
-
-    }
+    
 }

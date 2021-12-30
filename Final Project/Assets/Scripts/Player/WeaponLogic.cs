@@ -363,10 +363,12 @@ public class WeaponLogic : MonoBehaviour
 
     public void useHealthPack()
 	{
-        if (m_healthPack > 0)
+
+        if (m_healthPack > 0 && m_FPSplayerLogic.m_health < 100)
 		{
             m_healthPack -= 1;
             m_FPSplayerLogic.RecoverHealth(30);
+            UIManager.Instance.displayHeal();
 		}
 	}
 
