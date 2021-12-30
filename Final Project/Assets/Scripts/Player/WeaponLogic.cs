@@ -154,7 +154,11 @@ public class WeaponLogic : MonoBehaviour
             return;
         }
 
-        // Shoot logics
+		// Shoot logics
+		if (!m_FPSplayerLogic.m_IsAlive)
+		{
+            return;
+		}
         
         if (Input.GetButton("Fire1") && m_enableFire)
         {
