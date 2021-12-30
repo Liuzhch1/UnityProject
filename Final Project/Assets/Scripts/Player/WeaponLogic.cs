@@ -53,8 +53,8 @@ public class WeaponLogic : MonoBehaviour
     bool m_enableFire = false;
     bool m_isRunning = false;
 
-    Gun m_AR;
-    Gun m_Handgun;
+    public Gun m_AR;
+    public Gun m_Handgun;
     Gun currentGun;
 
     #endregion
@@ -134,14 +134,16 @@ public class WeaponLogic : MonoBehaviour
         m_Handgun.ammo = 10;
         m_Handgun.mag = 3;
 
-        m_ammo = 30;
-        m_mag = 5;
-        MAX_SHOT_COOLDOWN = 0.15f;
-        MAX_AMMO = 30;
+        currentGun = m_AR;
+
+        m_ammo = currentGun.ammo;
+        m_mag = currentGun.mag;
+        MAX_SHOT_COOLDOWN = currentGun.MAX_COOL_DOWN;
+        MAX_AMMO = currentGun.MAX_AMMO;
 
         m_healthPack = 3;
 
-        currentGun = m_AR;
+        
         m_ARscope.SetActive(false);
     }
 
@@ -165,6 +167,8 @@ public class WeaponLogic : MonoBehaviour
                     Shoot();
 
                     --m_ammo;
+
+                    UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
 
                     PlayShootSound(0.3f);
                 }
@@ -254,6 +258,7 @@ public class WeaponLogic : MonoBehaviour
     {
         m_ammo = MAX_AMMO;
         m_mag -= 1;
+        UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
         m_isReloading = false;
         m_enableFire = true;
     }
@@ -295,6 +300,7 @@ public class WeaponLogic : MonoBehaviour
             {
                 Destroy(rayHit.collider.gameObject);
                 m_mag += 1;
+                UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
             }
             else if (hitTag == "scope")
             {

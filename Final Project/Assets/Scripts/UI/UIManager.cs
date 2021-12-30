@@ -61,6 +61,9 @@ public class UIManager : MonoBehaviour
     }
     
     public void setAmmoNumber(Weapon weapon, int ammoNumber, int magNumber) {
+        // PieMenuLogic pieMenuLogic = FindObjectOfType<PieMenuLogic>();
+        // if (pieMenuLogic)
+        //     pieMenuLogic.setAmmoNumber(weapon, ammoNumber, magNumber);
         Transform weaponPanel = (weapon == Weapon.AR) ? m_ARPanel : m_HandGunPanel;
         Text ammoNumberText = weaponPanel.GetChild(1).GetComponent<Text>();
         Text magNumberText = weaponPanel.GetChild(2).GetComponent<Text>();
