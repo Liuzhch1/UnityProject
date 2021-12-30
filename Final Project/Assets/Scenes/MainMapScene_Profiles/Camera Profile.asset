@@ -71,7 +71,7 @@ MonoBehaviour:
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0.1
+    value: 0.238
   fastMode:
     overrideState: 0
     value: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.9
+    value: 0.53
   threshold:
     overrideState: 1
     value: 0.5
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -171,7 +171,7 @@ MonoBehaviour:
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.208
+    value: 0.19
   smoothness:
     overrideState: 1
     value: 0.414
@@ -226,16 +226,16 @@ MonoBehaviour:
     value: 1
   focusDistance:
     overrideState: 1
-    value: 0.3
+    value: 2
   aperture:
     overrideState: 1
-    value: 4.5
+    value: 3.1
   focalLength:
     overrideState: 1
-    value: 13
+    value: 32
   kernelSize:
     overrideState: 1
-    value: 0
+    value: 2
 --- !u!114 &6864581386380844185
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -301,16 +301,16 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 0
-    value: 0
+    value: -11
   brightness:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 1
+    overrideState: 0
     value: 0.1
   contrast:
-    overrideState: 0
-    value: -25.4
+    overrideState: 1
+    value: 17
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -339,14 +339,14 @@ MonoBehaviour:
     overrideState: 0
     value: 100
   lift:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 0.9868973, y: 1, z: 0.94406354, w: 0.070609}
   gamma:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 1, y: 0.92989516, z: 0.94095117, w: 0}
   gain:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 1, y: 0.9382484, z: 0.9345777, w: 0}
   masterCurve:
     overrideState: 0
     value:
