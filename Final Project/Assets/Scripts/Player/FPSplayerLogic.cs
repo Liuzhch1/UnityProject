@@ -225,7 +225,7 @@ public class FPSplayerLogic : MonoBehaviour
         m_health += heal;
         m_health = Mathf.Clamp(m_health, 0, 100);
         UIManager.Instance.setHealth(m_health);
-        // Debug.Log(m_health);
+        Debug.Log(m_health);
     }
     #endregion
 
