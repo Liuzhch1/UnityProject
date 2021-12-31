@@ -283,7 +283,7 @@ public class WeaponLogic : MonoBehaviour
         // Add recoil to Camera
         if(m_isAiming)
         {
-            if (m_isUsingScope)
+            if (currentWeapon == Weapon.AR && m_isUsingScope)
             {
                 m_FPCameraLogic.AddRecoil(0.5f); 
             }
