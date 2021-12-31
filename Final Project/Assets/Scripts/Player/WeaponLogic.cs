@@ -176,9 +176,9 @@ public class WeaponLogic : MonoBehaviour
             {
                 if (m_ammo > 0)
                 {
-                    if (!m_isUsingScope || !m_isAiming) {
-                        m_animator.SetTrigger("Shoot");
-                    }
+                    
+
+                    m_animator.SetTrigger("Shoot");
                     
 
                     Shoot();
