@@ -95,7 +95,8 @@ public class FPCameraLogic : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.rotation = Quaternion.Euler(m_rotationX, m_rotationY, 0);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(m_rotationX, m_rotationY, 0), Time.deltaTime * 10f);
+        //transform.rotation = Quaternion.Euler(m_rotationX, m_rotationY, 0);
     }
     #endregion
 
