@@ -58,5 +58,15 @@ public class PlayerAnimEvents : MonoBehaviour
         m_audioSource.volume = 1;
         m_audioSource.PlayOneShot(m_runningSound);
     }
+
+    public void doKnifeAttack()
+    {
+        m_weaponLogic.enableKnife();
+    }
+
+    public void endKnifeAttack()
+    {
+        m_weaponLogic.disableKnife();
+    }
     #endregion
 }

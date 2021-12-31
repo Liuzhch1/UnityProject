@@ -48,11 +48,13 @@ public class WeaponLogic : MonoBehaviour
     float ARAimFOV = 30.0f;
     float HandgunAimFOV = 30.0f;
 
-    bool m_hasScope = false;
+    public bool m_hasScope = false;
     bool m_isUsingScope = false;
 
     bool m_enableFire = false;
     bool m_isRunning = false;
+    bool m_isKnifeAttacking = false;
+    float m_knifeCoolDown = 0.0f;
 
     public bool m_hasKey = false;
 
@@ -113,6 +115,9 @@ public class WeaponLogic : MonoBehaviour
 
     [SerializeField]
     AudioClip m_aimOut;
+
+    [SerializeField]
+    AudioClip m_knifeAttackSound;
 
     #endregion
 
@@ -192,6 +197,11 @@ public class WeaponLogic : MonoBehaviour
             }
         }
 
+        if(m_knifeCoolDown >= 0.0f)
+        {
+            m_knifeCoolDown -= Time.deltaTime;
+        }
+
         // Update Shot Cooldown
         if (m_shotCooldown > 0.0f)
         {
@@ -201,20 +211,8 @@ public class WeaponLogic : MonoBehaviour
         // Reload
         if (Input.GetButtonDown("Reload") && !m_isReloading)
         {
+            Reload();
             
-            if (m_mag > 0)
-            {
-                m_isReloading = true;
-                m_enableFire = false;
-
-                m_animator.SetTrigger("Reload");
-
-                PlayReloadSound();
-            }
-            else
-            {
-                // reload empty
-            }
         }
 
         // Aim
@@ -228,9 +226,28 @@ public class WeaponLogic : MonoBehaviour
 		{
             pick();
 		}
+
+        if(Input.GetButtonDown("KnifeAttack") && !m_isReloading && m_knifeCoolDown <= 0.0f)
+        {
+            if (m_isAiming)
+            {
+                m_isAiming = !m_isAiming;
+                m_animator.SetBool("isAiming", m_isAiming);
+            }
+
+            m_knifeCoolDown = 0.5f;
+
+            m_animator.SetTrigger("KnifeAttack");
+        }
     }
 
-
+    private void FixedUpdate()
+    {
+        if (m_isKnifeAttacking)
+        {
+            KnifeAttack();
+        }
+    }
     #endregion
 
     #region Help Methods
@@ -250,7 +267,6 @@ public class WeaponLogic : MonoBehaviour
             }
 
             // Spawn Bullet Impact VFX
-            // Debug.Log("shoot");
             GameObject.Instantiate(m_bulletImpactObj, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, 0, 0));
 
         }
@@ -260,7 +276,44 @@ public class WeaponLogic : MonoBehaviour
         //m_muzzleFlashLight.enabled = true;
 
         // Add recoil to Camera
-        m_FPCameraLogic.AddRecoil();
+        if(m_isAiming)
+        {
+            if (m_isUsingScope)
+            {
+                m_FPCameraLogic.AddRecoil(0.5f); 
+            }
+            else
+            {
+                m_FPCameraLogic.AddRecoil(1.0f); 
+            }
+        }
+        else
+        {
+            m_FPCameraLogic.AddRecoil(2.0f); ;
+        }
+    }
+
+    void Reload()
+    {
+        if (m_mag > 0)
+        {
+            if (m_isAiming)
+            {
+                m_isAiming = !m_isAiming;
+                m_animator.SetBool("isAiming", m_isAiming);
+            }
+
+            m_isReloading = true;
+            m_enableFire = false;
+
+            m_animator.SetTrigger("Reload");
+
+            PlayReloadSound();
+        }
+        else
+        {
+            // reload empty
+        }
     }
 
     public void endReload()
@@ -363,7 +416,6 @@ public class WeaponLogic : MonoBehaviour
 
     public void useHealthPack()
 	{
-
         if (m_healthPack > 0 && m_FPSplayerLogic.m_health < 100)
 		{
             m_healthPack -= 1;
@@ -473,6 +525,39 @@ public class WeaponLogic : MonoBehaviour
             m_enableFire = true;
             m_isRunning = false;
         }
+    }
+
+    public void enableKnife()
+    {
+        m_isKnifeAttacking = true;
+        
+        PlaySound(m_knifeAttackSound);
+    }
+
+    public void disableKnife()
+    {
+        m_isKnifeAttacking = false;
+    }
+
+    void KnifeAttack()
+    {
+        Ray ray = new Ray(m_FPCameraLogic.gameObject.transform.position, m_FPCameraLogic.gameObject.transform.forward);
+        RaycastHit rayHit;
+
+        // Log which object we hit
+        if (Physics.Raycast(ray, out rayHit, 2.0f))
+        {
+            string hitTag = rayHit.collider.gameObject.tag;
+            Debug.Log("Knife Hit Object: " + hitTag);
+            if (hitTag == "Enemy01")
+            {
+                rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(5);
+                disableKnife();
+            }
+
+        }
+
+        
     }
     #endregion
 

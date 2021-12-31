@@ -105,7 +105,7 @@ public class FPCameraLogic : MonoBehaviour
         return m_rotationY;
     }
 
-    public void AddRecoil()
+    public void AddRecoil(float x)
     {
         if (!m_recoilAnim)
         {
@@ -113,7 +113,7 @@ public class FPCameraLogic : MonoBehaviour
         }
 
         m_recoilProgress = 0.0f;
-        m_rotationX -= 3.0f;
+        m_rotationX -= x;
         m_rotationY += Random.Range(-1.0f, 1.0f);
         m_startRotationX = m_rotationX;
 
