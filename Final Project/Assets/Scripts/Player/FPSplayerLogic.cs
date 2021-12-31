@@ -39,7 +39,7 @@ public class FPSplayerLogic : MonoBehaviour
     float m_crouchHeight = 1.0f;
     float m_standHeight = 2.4f;
 
-    int m_health = 100;
+    public int m_health = 100;
     int m_healthPack = 0;
     public bool m_IsAlive = true;
 
@@ -198,6 +198,7 @@ public class FPSplayerLogic : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        UIManager.Instance.displayHurt();
         m_health -= damage;
         m_health = Mathf.Clamp(m_health, 0, 100);
         UIManager.Instance.setHealth(m_health);
