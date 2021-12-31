@@ -350,7 +350,6 @@ public class WeaponLogic : MonoBehaviour
                 }
             }
             else if(hitTag == "CheckPoint" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
-                m_FPSplayerLogic.RecoverHealth(100);
                 m_saveManager.Save();
             }
             else if(hitTag == "key" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
