@@ -127,7 +127,7 @@ public class FPCameraLogic : MonoBehaviour
 
     public void changePositionTo(Vector3 target)
     {
-        //m_cameraObj.transform.position = target;
+        m_cameraObj.transform.position = target;
         //m_target = target;
     }
     #endregion

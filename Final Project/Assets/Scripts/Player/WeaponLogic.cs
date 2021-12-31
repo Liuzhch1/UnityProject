@@ -341,7 +341,11 @@ public class WeaponLogic : MonoBehaviour
             {
                 UIManager.Instance.hideCrosshair();
                 m_FPCameraLogic.changeFOVto(ARAimFOV);
-                m_FPCameraLogic.changePositionTo(ARAimPoint.position);
+                if (m_isUsingScope) {
+                    Debug.Log("Scope aim!");
+                    m_FPCameraLogic.changePositionTo(ARAimPoint.position);
+                }
+                
             }
             else if (currentWeapon == Weapon.handgun)
             {
@@ -389,7 +393,9 @@ public class WeaponLogic : MonoBehaviour
                     DestroyImmediate(childList[i]);
                 }
                 Destroy(rayHit.collider.gameObject);
-                m_ARscope.SetActive(true);
+                //m_ARscope.SetActive(true);
+                m_hasScope = true;
+                useScope();
             }
             else if (hitTag == "healthPack" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
