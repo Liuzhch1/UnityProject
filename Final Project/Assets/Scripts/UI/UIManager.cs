@@ -23,7 +23,6 @@ public class UIManager : MonoBehaviour
     Transform m_HandGunPanel;
     Transform m_crosshair;
 
-    bool isAiming = false;
     UIState m_state = UIState.Game;
     public UIState State => m_state;
 
@@ -55,17 +54,24 @@ public class UIManager : MonoBehaviour
             Debug.Log("Test UI!");
             displayHeal();
         }
+
         if (Input.GetButtonDown("Menu")) {
             if (m_state == UIState.Game) {
-                //transform.GetChild(2).gameObject.SetActive(true);
+                WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
+                if (weaponLogic) {
+                    weaponLogic.QuitAim();
+                }
                 switchState(UIState.Menu);
             } else if (m_state == UIState.Menu) {
-                //transform.GetChild(2).gameObject.SetActive(false);
                 switchState(UIState.Game);
             }
         }
         if (Input.GetButton("Inventory")) {
             if (m_state == UIState.Game) {
+                WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
+                if (weaponLogic) {
+                    weaponLogic.QuitAim();
+                }
                 switchState(UIState.Inventory);
             }
         } else {
@@ -73,14 +79,6 @@ public class UIManager : MonoBehaviour
                 switchState(UIState.Game);
             }
         }
-
-        if (m_state == UIState.Game) {
-            if (Input.GetButtonDown("Fire2")) {
-                isAiming = !isAiming;
-                m_crosshair.gameObject.SetActive(!isAiming);
-            } 
-        }
-
 
     }
 
@@ -96,6 +94,20 @@ public class UIManager : MonoBehaviour
     //     transform.GetChild(3).gameObject.SetActive(true);
     // }
 
+    public void displayCrosshair() {
+        if (m_state == UIState.Game) {
+            m_crosshair.gameObject.SetActive(true);
+        }
+    }
+
+    public void hideCrosshair() {
+        m_crosshair.gameObject.SetActive(false);
+    }
+
+    public void setShootingCrosshair() {
+        m_crosshair.GetComponent<CrosshairLogic>().SetShooting();
+    }
+    
     public void displayHurt() {
         transform.GetChild(0).GetComponent<Animator>().SetTrigger("Hurt");
     }
@@ -128,7 +140,6 @@ public class UIManager : MonoBehaviour
         m_state = state;
         switch (state) {
             case UIState.Game:
-                isAiming = false;
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 m_pieMenu.gameObject.SetActive(false);

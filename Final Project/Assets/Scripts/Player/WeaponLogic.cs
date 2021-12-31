@@ -253,6 +253,7 @@ public class WeaponLogic : MonoBehaviour
     #region Help Methods
     void Shoot()
     {
+        UIManager.Instance.setShootingCrosshair();
         Ray ray = new Ray(m_FPCameraLogic.gameObject.transform.position, m_FPCameraLogic.gameObject.transform.forward);
         RaycastHit rayHit;
 
@@ -295,13 +296,9 @@ public class WeaponLogic : MonoBehaviour
 
     void Reload()
     {
-        if (m_mag > 0)
+        if (m_mag > 0 && m_ammo < MAX_AMMO)
         {
-            if (m_isAiming)
-            {
-                m_isAiming = !m_isAiming;
-                m_animator.SetBool("isAiming", m_isAiming);
-            }
+            QuitAim();
 
             m_isReloading = true;
             m_enableFire = false;
@@ -313,6 +310,14 @@ public class WeaponLogic : MonoBehaviour
         else
         {
             // reload empty
+        }
+    }
+
+    public void QuitAim() {
+        if (m_isAiming)
+        {
+            m_isAiming = false;
+            m_animator.SetBool("isAiming", m_isAiming);
         }
     }
 
@@ -334,17 +339,20 @@ public class WeaponLogic : MonoBehaviour
             PlaySound(m_aimIn);
             if (currentWeapon == Weapon.AR)
             {
+                UIManager.Instance.hideCrosshair();
                 m_FPCameraLogic.changeFOVto(ARAimFOV);
                 m_FPCameraLogic.changePositionTo(ARAimPoint.position);
             }
             else if (currentWeapon == Weapon.handgun)
             {
+                UIManager.Instance.hideCrosshair();
                 m_FPCameraLogic.changeFOVto(HandgunAimFOV);
                 m_FPCameraLogic.changePositionTo(HandgunAimPoint.position);
             }
         }
         else
         {
+            UIManager.Instance.displayCrosshair();
             PlaySound(m_aimOut);
             m_FPCameraLogic.changeFOVto(originFOV);
             m_FPCameraLogic.changePositionTo(OriginAimPoint.position);
@@ -460,11 +468,7 @@ public class WeaponLogic : MonoBehaviour
             // currentGun.ammo = m_ammo;
             // currentGun.mag = m_mag;
 
-            if (m_isAiming)
-            {
-                m_isAiming = !m_isAiming;
-                m_animator.SetBool("isAiming", m_isAiming);
-            }
+            QuitAim();
 
             m_animator.SetTrigger("Holster");
 
