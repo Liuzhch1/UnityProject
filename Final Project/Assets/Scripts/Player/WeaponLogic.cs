@@ -491,6 +491,8 @@ public class WeaponLogic : MonoBehaviour
             m_mag = currentGun.mag;
             MAX_AMMO = currentGun.MAX_AMMO;
             MAX_SHOT_COOLDOWN = currentGun.MAX_COOL_DOWN;
+
+            m_isReloading = false;
         }
     }
 
