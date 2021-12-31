@@ -47,7 +47,7 @@ MonoBehaviour:
     value: 0.3
   aperture:
     overrideState: 1
-    value: 0.23
+    value: 0.24
   focalLength:
     overrideState: 1
     value: 3
@@ -1383,10 +1383,10 @@ MonoBehaviour:
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 125
+    value: 270
   sampleCount:
     overrideState: 1
-    value: 9
+    value: 10
 --- !u!114 &-484641344057666226
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1469,13 +1469,13 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.9
+    value: 3
   threshold:
     overrideState: 1
-    value: 0.5
+    value: 1.18
   softKnee:
     overrideState: 1
-    value: 0.5
+    value: 0.52
   clamp:
     overrideState: 1
     value: 65472
@@ -1492,12 +1492,12 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   dirtTexture:
-    overrideState: 0
-    value: {fileID: 0}
+    overrideState: 1
+    value: {fileID: 2800000, guid: aeb9c6adc7c3b15489f7986476f74434, type: 3}
     defaultState: 1
   dirtIntensity:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 5
 --- !u!114 &4969976442469605393
 MonoBehaviour:
   m_ObjectHideFlags: 3
