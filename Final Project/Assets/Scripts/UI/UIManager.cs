@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     Transform m_ARPanel;
     Transform m_HandGunPanel;
     Transform m_crosshair;
+    Transform m_scopeCrosshair;
 
     UIState m_state = UIState.Game;
     public UIState State => m_state;
@@ -44,6 +45,7 @@ public class UIManager : MonoBehaviour
             m_ARPanel = m_canvas.GetChild(2);
             m_HandGunPanel = m_canvas.GetChild(3);
             m_crosshair = m_canvas.GetChild(4);
+            m_scopeCrosshair = m_canvas.GetChild(5);
         }
         
     }
@@ -104,10 +106,22 @@ public class UIManager : MonoBehaviour
         m_crosshair.gameObject.SetActive(false);
     }
 
+    public void displayScopeCrosshair() {
+        if (m_state == UIState.Game) {
+            m_scopeCrosshair.gameObject.SetActive(true);
+        }
+    }
+
+    public void hideScopeCrosshair() {
+        if (m_state == UIState.Game) {
+            m_scopeCrosshair.gameObject.SetActive(false);
+        }
+    }
+
     public void setShootingCrosshair() {
         m_crosshair.GetComponent<CrosshairLogic>().SetShooting();
     }
-    
+
     public void displayHurt() {
         transform.GetChild(0).GetComponent<Animator>().SetTrigger("Hurt");
     }
@@ -151,12 +165,14 @@ public class UIManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 m_pieMenu.gameObject.SetActive(false);
                 m_crosshair.gameObject.SetActive(false);
+                m_scopeCrosshair.gameObject.SetActive(false);
                 break;
             case UIState.Inventory:
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
                 m_pieMenu.gameObject.SetActive(true);
                 m_crosshair.gameObject.SetActive(false);
+                m_scopeCrosshair.gameObject.SetActive(false);
                 break;
         }
     }

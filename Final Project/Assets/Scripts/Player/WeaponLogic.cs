@@ -46,6 +46,7 @@ public class WeaponLogic : MonoBehaviour
     bool m_isAiming = false;
 
     float ARAimFOV = 30.0f;
+    float ARScopeAimFOV = 25.0f;
     float HandgunAimFOV = 30.0f;
 
     public bool m_hasScope = false;
@@ -175,7 +176,10 @@ public class WeaponLogic : MonoBehaviour
             {
                 if (m_ammo > 0)
                 {
-                    m_animator.SetTrigger("Shoot");
+                    if (!m_isUsingScope || !m_isAiming) {
+                        m_animator.SetTrigger("Shoot");
+                    }
+                    
 
                     Shoot();
 
@@ -340,9 +344,10 @@ public class WeaponLogic : MonoBehaviour
             if (currentWeapon == Weapon.AR)
             {
                 UIManager.Instance.hideCrosshair();
-                m_FPCameraLogic.changeFOVto(ARAimFOV);
+                m_FPCameraLogic.changeFOVto(m_isUsingScope ? ARScopeAimFOV : ARAimFOV);
                 if (m_isUsingScope) {
-                    Debug.Log("Scope aim!");
+                    //Debug.Log("Scope aim!");
+                    UIManager.Instance.displayScopeCrosshair();
                     m_FPCameraLogic.changePositionTo(ARAimPoint.position);
                 }
                 
@@ -357,6 +362,7 @@ public class WeaponLogic : MonoBehaviour
         else
         {
             UIManager.Instance.displayCrosshair();
+            UIManager.Instance.hideScopeCrosshair();
             PlaySound(m_aimOut);
             m_FPCameraLogic.changeFOVto(originFOV);
             m_FPCameraLogic.changePositionTo(OriginAimPoint.position);
