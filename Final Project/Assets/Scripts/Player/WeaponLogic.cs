@@ -281,20 +281,13 @@ public class WeaponLogic : MonoBehaviour
         //m_muzzleFlashLight.enabled = true;
 
         // Add recoil to Camera
-        if(m_isAiming)
-        {
-            if (currentWeapon == Weapon.AR && m_isUsingScope)
-            {
-                m_FPCameraLogic.AddRecoil(0.5f); 
-            }
-            else
-            {
-                m_FPCameraLogic.AddRecoil(1.0f); 
-            }
-        }
-        else
-        {
-            m_FPCameraLogic.AddRecoil(2.0f); ;
+        switch (currentWeapon) {
+            case Weapon.AR :
+                m_FPCameraLogic.AddRecoil(m_isAiming ? (m_isUsingScope ? 0.5f : 1.0f) : 1.8f);
+                break;
+            case Weapon.handgun:
+                m_FPCameraLogic.AddRecoil(m_isAiming ? 1.5f : 2.5f); 
+                break;
         }
     }
 
