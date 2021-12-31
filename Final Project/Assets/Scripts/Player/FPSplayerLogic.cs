@@ -284,7 +284,6 @@ public class FPSplayerLogic : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerRotY", transform.rotation.eulerAngles.y);
         PlayerPrefs.SetFloat("PlayerRotZ", transform.rotation.eulerAngles.z);
 
-        PlayerPrefs.SetInt("PlayerHealth", m_health);
     }
 
     public void Load()
@@ -297,7 +296,7 @@ public class FPSplayerLogic : MonoBehaviour
         float playerRotY = PlayerPrefs.GetFloat("PlayerRotY");
         float playerRotZ = PlayerPrefs.GetFloat("PlayerRotZ");
 
-        m_health = PlayerPrefs.GetInt("PlayerHealth");
+        m_health = 100;
         UIManager.Instance.setHealth(m_health);
 
         m_IsAlive = true;

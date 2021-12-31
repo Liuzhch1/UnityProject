@@ -29,6 +29,7 @@ public class SaveManager : MonoBehaviour
         m_playerLogic = FindObjectOfType<FPSplayerLogic>();
         m_closeEnemynemyLogic = FindObjectsOfType<CloseEnemyLogic>();
         m_fireRobLogic = FindObjectsOfType<FireRobLogic>();
+        Save();
     }
 
     // Update is called once per frame
