@@ -1693,9 +1693,10 @@ GameObject:
   - component: {fileID: 4988743647475337687}
   - component: {fileID: 4929505667926118385}
   - component: {fileID: 4929505667926118384}
+  - component: {fileID: 4760928555955165955}
   m_Layer: 0
   m_Name: Type3CloseEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy02
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1753,7 +1754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_closeEnemyType: 2
   rayCastPoint: {fileID: 4928649380530213839}
-  m_health: 200
+  m_health: 170
 --- !u!195 &4929505667926118384
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1776,6 +1777,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &4760928555955165955
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930850759099791503}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.7
+  m_Height: 2.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4930903135504746193
 GameObject:
   m_ObjectHideFlags: 0

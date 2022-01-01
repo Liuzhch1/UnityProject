@@ -46,6 +46,7 @@ public class WeaponLogic : MonoBehaviour
     bool m_isAiming = false;
 
     float ARAimFOV = 30.0f;
+    float ARScopeAimFOV = 25.0f;
     float HandgunAimFOV = 30.0f;
 
     public bool m_hasScope = false;
@@ -57,6 +58,8 @@ public class WeaponLogic : MonoBehaviour
     float m_knifeCoolDown = 0.0f;
 
     public bool m_hasKey = false;
+
+    int m_handGrenadeNum = 3;
 
     public Gun m_AR;
     public Gun m_Handgun;
@@ -79,6 +82,12 @@ public class WeaponLogic : MonoBehaviour
 
     [SerializeField]
     GameObject m_bulletImpactObj;
+
+    [SerializeField]
+    GameObject m_bulletImpactBlood;
+
+    [SerializeField]
+    GameObject m_bulletImpactDust;
 
     [SerializeField]
     GameObject m_ironSight;
@@ -119,6 +128,12 @@ public class WeaponLogic : MonoBehaviour
     [SerializeField]
     AudioClip m_knifeAttackSound;
 
+    [SerializeField]
+    GameObject m_handGrenadeObj;
+
+    [SerializeField]
+    Transform m_grenadeSpawnPoint;
+
     #endregion
 
     #region Unity
@@ -136,12 +151,12 @@ public class WeaponLogic : MonoBehaviour
         m_AR.MAX_AMMO = 30;
         m_AR.MAX_COOL_DOWN = 0.15f;
         m_AR.ammo = 30;
-        m_AR.mag = 5;
+        m_AR.mag = 150;
 
         m_Handgun.MAX_AMMO = 10;
         m_Handgun.MAX_COOL_DOWN = 0.35f;
         m_Handgun.ammo = 10;
-        m_Handgun.mag = 3;
+        m_Handgun.mag = 30;
 
         currentGun = m_AR;
 
@@ -152,7 +167,6 @@ public class WeaponLogic : MonoBehaviour
 
         m_healthPack = 3;
 
-        
         m_ARscope.SetActive(false);
     }
 
@@ -175,7 +189,10 @@ public class WeaponLogic : MonoBehaviour
             {
                 if (m_ammo > 0)
                 {
+                    
+
                     m_animator.SetTrigger("Shoot");
+                    
 
                     Shoot();
 
@@ -239,6 +256,14 @@ public class WeaponLogic : MonoBehaviour
 
             m_animator.SetTrigger("KnifeAttack");
         }
+
+        if(Input.GetButtonDown("HandGrenade") && !m_isReloading)
+        {
+            if (m_handGrenadeNum > 0)
+            {
+                m_animator.SetTrigger("ThrowHandGrenade");
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -253,6 +278,7 @@ public class WeaponLogic : MonoBehaviour
     #region Help Methods
     void Shoot()
     {
+        UIManager.Instance.setShootingCrosshair();
         Ray ray = new Ray(m_FPCameraLogic.gameObject.transform.position, m_FPCameraLogic.gameObject.transform.forward);
         RaycastHit rayHit;
 
@@ -261,14 +287,27 @@ public class WeaponLogic : MonoBehaviour
         {
             string hitTag = rayHit.collider.gameObject.tag;
             Debug.Log("Bullet Hit Object: " + hitTag);
-            if (hitTag == "Enemy01")
-            {
+            if(hitTag == "Enemy01")
+			{
                 rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(10);
+
+                Object obj =  GameObject.Instantiate(m_bulletImpactDust, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, Random.value * 180, 0));
+                Destroy(obj, 1.0f);
             }
-
-            // Spawn Bullet Impact VFX
-            GameObject.Instantiate(m_bulletImpactObj, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, 0, 0));
-
+            else if(hitTag == "Enemy02")
+			{
+                rayHit.collider.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(10);
+                GameObject.Instantiate(m_bulletImpactBlood, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, Random.value * 180, 0));
+            }
+            else if(hitTag == "Boss")
+			{
+                rayHit.collider.gameObject.GetComponent<BossLogic>().TakeDamage(10);
+                GameObject.Instantiate(m_bulletImpactBlood, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, Random.value * 180, 0));
+            }
+			else
+			{
+                GameObject.Instantiate(m_bulletImpactObj, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, 0, 0));
+            }
         }
 
         // Play Muzzle VFX & Turn light on
@@ -276,32 +315,21 @@ public class WeaponLogic : MonoBehaviour
         //m_muzzleFlashLight.enabled = true;
 
         // Add recoil to Camera
-        if(m_isAiming)
-        {
-            if (m_isUsingScope)
-            {
-                m_FPCameraLogic.AddRecoil(0.5f); 
-            }
-            else
-            {
-                m_FPCameraLogic.AddRecoil(1.0f); 
-            }
-        }
-        else
-        {
-            m_FPCameraLogic.AddRecoil(2.0f); ;
+        switch (currentWeapon) {
+            case Weapon.AR :
+                m_FPCameraLogic.AddRecoil(m_isAiming ? (m_isUsingScope ? 0.5f : 1.0f) : 1.8f);
+                break;
+            case Weapon.handgun:
+                m_FPCameraLogic.AddRecoil(m_isAiming ? 1.5f : 2.5f); 
+                break;
         }
     }
 
     void Reload()
     {
-        if (m_mag > 0)
+        if (m_mag > 0 && m_ammo < MAX_AMMO)
         {
-            if (m_isAiming)
-            {
-                m_isAiming = !m_isAiming;
-                m_animator.SetBool("isAiming", m_isAiming);
-            }
+            QuitAim();
 
             m_isReloading = true;
             m_enableFire = false;
@@ -316,12 +344,24 @@ public class WeaponLogic : MonoBehaviour
         }
     }
 
+    public void QuitAim() {
+        if (m_isAiming)
+        {
+            m_isAiming = false;
+            m_animator.SetBool("isAiming", m_isAiming);
+        }
+    }
+
     public void endReload()
     {
-        m_ammo = MAX_AMMO;
-        currentGun.ammo = MAX_AMMO;
-        m_mag -= 1;
-        currentGun.mag -= 1;
+        m_mag += m_ammo;
+        currentGun.mag += m_ammo;
+
+        m_ammo = m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
+        currentGun.ammo = m_mag>MAX_AMMO?MAX_AMMO:m_mag;
+
+        m_mag -= m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
+        currentGun.mag -= m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
         UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
         m_isReloading = false;
         m_enableFire = true;
@@ -334,17 +374,26 @@ public class WeaponLogic : MonoBehaviour
             PlaySound(m_aimIn);
             if (currentWeapon == Weapon.AR)
             {
-                m_FPCameraLogic.changeFOVto(ARAimFOV);
-                m_FPCameraLogic.changePositionTo(ARAimPoint.position);
+                UIManager.Instance.hideCrosshair();
+                m_FPCameraLogic.changeFOVto(m_isUsingScope ? ARScopeAimFOV : ARAimFOV);
+                if (m_isUsingScope) {
+                    //Debug.Log("Scope aim!");
+                    UIManager.Instance.displayScopeCrosshair();
+                    m_FPCameraLogic.changePositionTo(ARAimPoint.position);
+                }
+                
             }
             else if (currentWeapon == Weapon.handgun)
             {
+                UIManager.Instance.hideCrosshair();
                 m_FPCameraLogic.changeFOVto(HandgunAimFOV);
                 m_FPCameraLogic.changePositionTo(HandgunAimPoint.position);
             }
         }
         else
         {
+            UIManager.Instance.displayCrosshair();
+            UIManager.Instance.hideScopeCrosshair();
             PlaySound(m_aimOut);
             m_FPCameraLogic.changeFOVto(originFOV);
             m_FPCameraLogic.changePositionTo(OriginAimPoint.position);
@@ -381,7 +430,9 @@ public class WeaponLogic : MonoBehaviour
                     DestroyImmediate(childList[i]);
                 }
                 Destroy(rayHit.collider.gameObject);
-                m_ARscope.SetActive(true);
+                //m_ARscope.SetActive(true);
+                m_hasScope = true;
+                useScope();
             }
             else if (hitTag == "healthPack" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
@@ -406,6 +457,17 @@ public class WeaponLogic : MonoBehaviour
                 m_saveManager.Save();
             }
             else if(hitTag == "key" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
+                List<GameObject> childList = new List<GameObject>();
+                int childCount = rayHit.transform.childCount;
+                for (int i = 0; i < childCount; i++)
+                {
+                    GameObject child = rayHit.transform.GetChild(i).gameObject;
+                    childList.Add(child);
+                }
+                for (int i = 0; i < childCount; i++)
+                {
+                    DestroyImmediate(childList[i]);
+                }
                 Destroy(rayHit.collider.gameObject);
                 m_hasKey = true;
             }
@@ -459,11 +521,7 @@ public class WeaponLogic : MonoBehaviour
             // currentGun.ammo = m_ammo;
             // currentGun.mag = m_mag;
 
-            if (m_isAiming)
-            {
-                m_isAiming = !m_isAiming;
-                m_animator.SetBool("isAiming", m_isAiming);
-            }
+            QuitAim();
 
             m_animator.SetTrigger("Holster");
 
@@ -482,6 +540,8 @@ public class WeaponLogic : MonoBehaviour
             m_mag = currentGun.mag;
             MAX_AMMO = currentGun.MAX_AMMO;
             MAX_SHOT_COOLDOWN = currentGun.MAX_COOL_DOWN;
+
+            m_isReloading = false;
         }
     }
 
@@ -554,9 +614,19 @@ public class WeaponLogic : MonoBehaviour
                 disableKnife();
             }
 
-        }
+        } 
+    }
 
-        
+    public void ThrowGrenade()
+    {
+        //GameObject bullet = Instantiate(m_bulletPrefab, m_bulletSpawnPoint.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
+        GameObject grenade = Instantiate(m_handGrenadeObj, m_grenadeSpawnPoint);
+        m_handGrenadeNum -= 1;
+    }
+
+    public bool isAiming()
+    {
+        return m_isAiming;
     }
     #endregion
 

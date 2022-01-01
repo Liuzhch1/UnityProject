@@ -22,8 +22,8 @@ public class UIManager : MonoBehaviour
     Transform m_ARPanel;
     Transform m_HandGunPanel;
     Transform m_crosshair;
+    Transform m_scopeCrosshair;
 
-    bool isAiming = false;
     UIState m_state = UIState.Game;
     public UIState State => m_state;
 
@@ -44,7 +44,8 @@ public class UIManager : MonoBehaviour
             m_healthPanel = m_canvas.GetChild(1);
             m_ARPanel = m_canvas.GetChild(2);
             m_HandGunPanel = m_canvas.GetChild(3);
-            m_crosshair = m_canvas.GetChild(4);
+            m_crosshair = m_canvas.GetChild(4).GetChild(0);
+            m_scopeCrosshair = m_canvas.GetChild(4).GetChild(2);
         }
         
     }
@@ -53,19 +54,26 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X)) { // for test
             Debug.Log("Test UI!");
-            displayHeal();
+            displayFeedbackCrosshair();
         }
+
         if (Input.GetButtonDown("Menu")) {
             if (m_state == UIState.Game) {
-                //transform.GetChild(2).gameObject.SetActive(true);
+                WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
+                if (weaponLogic) {
+                    weaponLogic.QuitAim();
+                }
                 switchState(UIState.Menu);
             } else if (m_state == UIState.Menu) {
-                //transform.GetChild(2).gameObject.SetActive(false);
                 switchState(UIState.Game);
             }
         }
         if (Input.GetButton("Inventory")) {
             if (m_state == UIState.Game) {
+                WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
+                if (weaponLogic) {
+                    weaponLogic.QuitAim();
+                }
                 switchState(UIState.Inventory);
             }
         } else {
@@ -73,14 +81,6 @@ public class UIManager : MonoBehaviour
                 switchState(UIState.Game);
             }
         }
-
-        if (m_state == UIState.Game) {
-            if (Input.GetButtonDown("Fire2")) {
-                isAiming = !isAiming;
-                m_crosshair.gameObject.SetActive(!isAiming);
-            } 
-        }
-
 
     }
 
@@ -96,6 +96,35 @@ public class UIManager : MonoBehaviour
     //     transform.GetChild(3).gameObject.SetActive(true);
     // }
 
+    public void setShootingCrosshair() {
+        m_canvas.GetChild(4).GetComponent<CrosshairLogic>().SetShooting();
+    }
+
+    public void displayFeedbackCrosshair() {
+        m_canvas.GetChild(4).GetComponent<CrosshairLogic>().SetFeedback();
+    }
+    
+    public void displayCrosshair() {
+        if (m_state == UIState.Game) {
+            m_crosshair.gameObject.SetActive(true);
+        }
+    }
+
+    public void hideCrosshair() {
+        m_crosshair.gameObject.SetActive(false);
+    }
+
+    public void displayScopeCrosshair() {
+        if (m_state == UIState.Game) {
+            m_scopeCrosshair.gameObject.SetActive(true);
+        }
+    }
+
+    public void hideScopeCrosshair() {
+        if (m_state == UIState.Game) {
+            m_scopeCrosshair.gameObject.SetActive(false);
+        }
+    }
     public void displayHurt() {
         transform.GetChild(0).GetComponent<Animator>().SetTrigger("Hurt");
     }
@@ -128,7 +157,6 @@ public class UIManager : MonoBehaviour
         m_state = state;
         switch (state) {
             case UIState.Game:
-                isAiming = false;
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 m_pieMenu.gameObject.SetActive(false);
@@ -140,12 +168,14 @@ public class UIManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 m_pieMenu.gameObject.SetActive(false);
                 m_crosshair.gameObject.SetActive(false);
+                m_scopeCrosshair.gameObject.SetActive(false);
                 break;
             case UIState.Inventory:
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
                 m_pieMenu.gameObject.SetActive(true);
                 m_crosshair.gameObject.SetActive(false);
+                m_scopeCrosshair.gameObject.SetActive(false);
                 break;
         }
     }

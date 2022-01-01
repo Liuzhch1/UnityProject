@@ -95,7 +95,8 @@ public class FPCameraLogic : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.rotation = Quaternion.Euler(m_rotationX, m_rotationY, 0);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(m_rotationX, m_rotationY, 0), Time.deltaTime * 10f);
+        //transform.rotation = Quaternion.Euler(m_rotationX, m_rotationY, 0);
     }
     #endregion
 
@@ -131,5 +132,19 @@ public class FPCameraLogic : MonoBehaviour
         //m_target = target;
     }
     #endregion
+
+    public void Save()
+    {
+        PlayerPrefs.SetFloat("CameraRotY", m_rotationY);
+        PlayerPrefs.SetFloat("CameraRotX", m_rotationX);
+    }
+
+    public void Load()
+    {
+
+        m_rotationY = PlayerPrefs.GetFloat("CameraRotY");
+        m_rotationX = PlayerPrefs.GetFloat("CameraRotX");
+
+    }
 
 }

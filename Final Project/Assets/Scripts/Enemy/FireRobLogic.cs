@@ -20,6 +20,7 @@ public class FireRobLogic : MonoBehaviour
     const float RUN_RADIUS = READY_RADIUS - 2.0f;
     const float STAND_RADIUS = 2 * READY_RADIUS / 3;
     const float BACK_RADIUS = READY_RADIUS / 3;
+    const float SETALERT_RADUIS = 1.1f * READY_RADIUS;
 
     // ?????н??????????н??????
     const float FIRE_ANGLE = 6.0f;
@@ -47,7 +48,9 @@ public class FireRobLogic : MonoBehaviour
 
     FireRobState m_fireRobState;
 
+    [SerializeField]
     int m_health = 100;
+    int m_maxHealth;
     bool isAlert = false;
     bool isDead = false;
 
@@ -61,11 +64,15 @@ public class FireRobLogic : MonoBehaviour
         m_animator = GetComponent<Animator>();
         m_animator.SetFloat("State", 0.0f);
         m_fireRobState = FireRobState.Idle;
+        m_maxHealth = m_health;
     }
     // Update is called once per frame
     void Update()
     {
-        EfficientDetectPlayer();
+        if (!isAlert)
+        {
+            EfficientDetectPlayer();
+        }
         if (!m_player || isDead)
         {
             //Debug.Log("This FireRob is dead!");
@@ -94,6 +101,11 @@ public class FireRobLogic : MonoBehaviour
     #region UpdateState
     void UpdateIdelState()
     {
+        if (isAlert)
+        {
+            m_fireRobState = FireRobState.Run;
+            return;
+        }
         if (Vector3.Distance(transform.position, m_player.transform.position) < READY_RADIUS && isAlert)
         {
             m_fireRobState = FireRobState.Ready;
@@ -105,6 +117,11 @@ public class FireRobLogic : MonoBehaviour
     }
     void UpdateReadyState()
     {
+        if (isAlert)
+        {
+            m_fireRobState = FireRobState.Run;
+            return;
+        }
         if (Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
         {
             m_fireRobState = FireRobState.Idle;
@@ -195,7 +212,7 @@ public class FireRobLogic : MonoBehaviour
             return;
         }
         Vector3 playerDir = m_player.transform.position - transform.position;
-        Vector3 playerDirPlane = new Vector3(playerDir.x, transform.position.y, playerDir.z);
+        Vector3 playerDirPlane = new Vector3(playerDir.x, 0, playerDir.z);
         //slowly trun to player
         transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(playerDir), ROTATION_SPEED * Time.deltaTime);
 
@@ -214,6 +231,10 @@ public class FireRobLogic : MonoBehaviour
     #region Detect
     void EfficientDetectPlayer()
     {
+        if (isAlert)
+        {
+            return;
+        }
         if(!m_player || Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
         {
             return;
@@ -229,13 +250,13 @@ public class FireRobLogic : MonoBehaviour
         RaycastHit hit;
         if((Physics.Raycast(ray,out hit, MAX_VIEWDISTANCE) || Vector3.Distance(transform.position, m_player.transform.position) < MINI_FIRE_RADIUS) && toPlayerAngle <= VIEW_ANGLE / 2)
         {
-            Debug.DrawLine(rayCastPoint.position, hit.transform.position,Color.red);
+            //Debug.DrawLine(rayCastPoint.position, hit.transform.position,Color.red);
             if (hit.transform.gameObject.tag == "Player")
             {
                 isAlert = true;
             }
         }
-        Debug.DrawLine(transform.position, m_player.transform.position);
+        //Debug.DrawLine(transform.position, m_player.transform.position);
     }
     #endregion
     public void TakeDamage(int damage)
@@ -251,6 +272,16 @@ public class FireRobLogic : MonoBehaviour
         }
 
         m_health -= damage;
+        m_health = Mathf.Clamp(m_health, 0, m_maxHealth);
+        UIManager.Instance.displayFeedbackCrosshair();
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy01");
+        foreach (GameObject enemy in enemies)
+        {
+            if (Vector3.Distance(transform.position, enemy.transform.position) <= SETALERT_RADUIS)
+            {
+                enemy.GetComponent<FireRobLogic>().SetAlert();
+            }
+        }
         if (m_health <= 0)
         {
             isDead = true;
@@ -258,6 +289,11 @@ public class FireRobLogic : MonoBehaviour
             m_collider.enabled = false;
             m_navMeshAgent.enabled = false;
         }
+    }
+    public void SetAlert()
+    {
+        Debug.Log("succ setalert");
+        isAlert = true;
     }
 
     public void Save(int index)

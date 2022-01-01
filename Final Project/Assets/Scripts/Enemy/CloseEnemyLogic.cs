@@ -8,7 +8,8 @@ enum CloseEnemyState
     Idle, // 1
     Patrol, //2
     Chase, //3
-    Attack //4
+    Attack, //4
+    Walk //5
 }
 
 enum CloseEnemyType
@@ -21,8 +22,8 @@ enum CloseEnemyType
 public class CloseEnemyLogic : MonoBehaviour
 {
     #region Parameter
-    const float PATROL_SPEED = 4.0f;
-    const float CHASE_SPEED = 12.0f;
+    const float PATROL_SPEED = 3.0f;
+    public const float CHASE_SPEED = 5.0f;
     const float ATTACK_RADIUS = 3.5f;
     const float CHASE_RADIUS = 18.0f;
     const float MAX_IDLETIME = 4.0f;
@@ -38,6 +39,11 @@ public class CloseEnemyLogic : MonoBehaviour
     const float VIEW_ANGLE = 120.0f;
 
     const int DAMAGE = 10;
+
+    const float SETALERT_RADUIS = CHASE_RADIUS * 1.2f;
+
+    const float MAX_WALKTIME=5.0f;
+    float walkTime = MAX_WALKTIME;
     #endregion
 
     GameObject m_player;
@@ -57,6 +63,7 @@ public class CloseEnemyLogic : MonoBehaviour
     int m_type;
     [SerializeField]
     int m_health;
+    int m_maxHealth;
     bool isAlert;
     bool isDead = false;
 
@@ -87,6 +94,7 @@ public class CloseEnemyLogic : MonoBehaviour
         m_animator.SetInteger("Type", m_type);
         m_enemyState = CloseEnemyState.Idle;
         m_collider = GetComponent<Collider>();
+        m_maxHealth = m_health;
     }
 
     // Update is called once per frame
@@ -109,6 +117,9 @@ public class CloseEnemyLogic : MonoBehaviour
                 break;
             case (CloseEnemyState.Attack):
                 UpdateAttackState();
+                break;
+            case (CloseEnemyState.Walk):
+                UpdateWalkState();
                 break;
         }
         EfficientDetectPlayer();
@@ -209,7 +220,38 @@ public class CloseEnemyLogic : MonoBehaviour
         LookAtPlayer();
         if (Vector3.Distance(transform.position, m_player.transform.position) > ATTACK_RADIUS+1.0f)
         {
+            m_enemyState = CloseEnemyState.Walk;
+            m_navMeshAgent.speed = PATROL_SPEED;
+        }
+    }
+    void UpdateWalkState()
+    {
+        if (!m_player)
+        {
+            m_enemyState = CloseEnemyState.Idle;
+            return;
+        }
+        if (Vector3.Distance(transform.position, m_player.transform.position) < ATTACK_RADIUS)
+        {
+            walkTime = MAX_WALKTIME;
+            m_enemyState = CloseEnemyState.Attack;
+            m_animator.SetInteger("State", 4);
+            return;
+        }
+        if (walkTime < 0.0f)
+        {
+            walkTime = MAX_WALKTIME;
+            m_navMeshAgent.speed = CHASE_SPEED;
             m_enemyState = CloseEnemyState.Chase;
+            m_animator.SetInteger("State",3);
+            return;
+        }
+        else
+        {
+            LookAtPlayer();
+            m_navMeshAgent.SetDestination(m_player.transform.position);
+            m_animator.SetInteger("State", 5);
+            walkTime -= Time.deltaTime;
         }
     }
     #endregion
@@ -258,13 +300,28 @@ public class CloseEnemyLogic : MonoBehaviour
             isAlert = true;
             m_enemyState = CloseEnemyState.Chase;
             m_health -= damage;
+            m_health = Mathf.Clamp(m_health, 0, m_maxHealth);
+            UIManager.Instance.displayFeedbackCrosshair();
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy02");
+            foreach (GameObject enemy in enemies)
+            {
+                if (Vector3.Distance(transform.position, enemy.transform.position) <= SETALERT_RADUIS)
+                {
+                    enemy.GetComponent<CloseEnemyLogic>().SetAlert();
+                }
+            }
         }
         else
         {
             m_navMeshAgent.enabled = false;
             m_collider.enabled = false;
             m_animator.SetTrigger("Dead");
+            isDead = true;
         }
+    }
+    public void SetAlert()
+    {
+        isAlert = true;
     }
     public void Attack()
     {

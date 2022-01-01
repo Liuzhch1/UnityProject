@@ -46,7 +46,7 @@ MonoBehaviour:
     value: 0.622
   smoothness:
     overrideState: 1
-    value: 0.402
+    value: 0.782
   roundness:
     overrideState: 1
     value: 0.817
@@ -129,9 +129,9 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   dirtTexture:
-    overrideState: 0
-    value: {fileID: 0}
+    overrideState: 1
+    value: {fileID: 2800000, guid: aeb9c6adc7c3b15489f7986476f74434, type: 3}
     defaultState: 1
   dirtIntensity:
-    overrideState: 0
+    overrideState: 1
     value: 0

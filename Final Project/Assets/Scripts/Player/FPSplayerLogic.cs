@@ -22,10 +22,10 @@ public class FPSplayerLogic : MonoBehaviour
     Vector3 m_horizontalMovement;
     Vector3 m_heightMovement;
 
-    float m_forwardMovementSpeed = 7.0f;
-    float m_backwardMovementSpeed = 2.5f;
-    float m_strafeMovementSpeed = 2.0f;
-    float m_crouchingSpeed = 2.0f;
+    public float m_forwardMovementSpeed = 7.0f;
+    public float m_backwardMovementSpeed = 4.0f;
+    public float m_strafeMovementSpeed = 4.0f;
+    public float m_crouchingSpeed = 2.0f;
 
     float m_rotationY;
 
@@ -170,18 +170,26 @@ public class FPSplayerLogic : MonoBehaviour
     #region Movement Methods
     float GetMovementSpeed()
     {
+        float v = 0.0f;
         if (m_isCrouching)
         {
-            return m_crouchingSpeed;
+            v = m_crouchingSpeed;
         }
         else if (m_verticalMovementInput >= 0.1f)
         {
-            return m_forwardMovementSpeed;
+            v = m_forwardMovementSpeed;
         }
         else
         {
-            return m_backwardMovementSpeed;
+            v = m_backwardMovementSpeed;
         }
+
+        if (m_weaponLogic.isAiming())
+        {
+            v /= 2.0f;
+        }
+
+        return v;
     }
 
     IEnumerator doCrouch(float target)
@@ -274,15 +282,15 @@ public class FPSplayerLogic : MonoBehaviour
         return true;
     }
     #endregion
+
+    #region Load and Save
     public void Save()
     {
         PlayerPrefs.SetFloat("PlayerPosX", transform.position.x);
         PlayerPrefs.SetFloat("PlayerPosY", transform.position.y);
         PlayerPrefs.SetFloat("PlayerPosZ", transform.position.z);
 
-        PlayerPrefs.SetFloat("PlayerRotX", transform.rotation.eulerAngles.x);
-        PlayerPrefs.SetFloat("PlayerRotY", transform.rotation.eulerAngles.y);
-        PlayerPrefs.SetFloat("PlayerRotZ", transform.rotation.eulerAngles.z);
+        PlayerPrefs.SetFloat("PlayerRotY", m_rotationY);
 
     }
 
@@ -292,9 +300,7 @@ public class FPSplayerLogic : MonoBehaviour
         float playerPosY = PlayerPrefs.GetFloat("PlayerPosY");
         float playerPosZ = PlayerPrefs.GetFloat("PlayerPosZ");
 
-        float playerRotX = PlayerPrefs.GetFloat("PlayerRotX");
-        float playerRotY = PlayerPrefs.GetFloat("PlayerRotY");
-        float playerRotZ = PlayerPrefs.GetFloat("PlayerRotZ");
+
 
         m_health = 100;
         UIManager.Instance.setHealth(m_health);
@@ -303,8 +309,10 @@ public class FPSplayerLogic : MonoBehaviour
         m_characterController.enabled = false;
 
         transform.position = new Vector3(playerPosX, playerPosY, playerPosZ);
-        transform.rotation = Quaternion.Euler(playerRotX, playerRotY, playerRotZ);
+        m_rotationY = PlayerPrefs.GetFloat("PlayerRotY");
 
         m_characterController.enabled = true;
     }
+    #endregion
+
 }
