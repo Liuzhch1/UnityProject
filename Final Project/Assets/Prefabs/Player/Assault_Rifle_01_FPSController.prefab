@@ -1,5 +1,117 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &871653598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 871653599}
+  - component: {fileID: 871653603}
+  - component: {fileID: 871653602}
+  - component: {fileID: 871653601}
+  - component: {fileID: 871653600}
+  m_Layer: 0
+  m_Name: Death Camera Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &871653599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871653598}
+  m_LocalRotation: {x: 0, y: 0, z: -0.2471682, w: 0.9689726}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5275552750996287993}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -28.62}
+--- !u!33 &871653603
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871653598}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &871653602
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871653598}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &871653601
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871653598}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &871653600
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871653598}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1577923687331047057
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,8 +476,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6204303870095375322}
-  - {fileID: 5275552752175582156}
   - {fileID: 5275552752483648660}
+  - {fileID: 871653599}
+  - {fileID: 5275552752175582156}
   m_Father: {fileID: 6198482114814915040}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -504,7 +617,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5275552750996287993}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &5275552752175582153
 Camera:
@@ -648,7 +761,7 @@ Transform:
   - {fileID: 5275552751936340622}
   - {fileID: 5275552751894842220}
   m_Father: {fileID: 5275552750996287993}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6199634211471258466
 GameObject:
@@ -1256,6 +1369,8 @@ MonoBehaviour:
   m_aimIn: {fileID: 8300000, guid: acaebc89b98b82142bd2b24edb6081e4, type: 3}
   m_aimOut: {fileID: 8300000, guid: afe80d867ef6b8c4fa45b07f1f99533c, type: 3}
   m_knifeAttackSound: {fileID: 8300000, guid: aac819a62aeb0f248a3ac9ad6a42bb8f, type: 3}
+  m_handGrenadeObj: {fileID: 0}
+  m_grenadeSpawnPoint: {fileID: 0}
 --- !u!82 &6200354025870844538
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12925,6 +13040,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6198509962060007568}
   - component: {fileID: 6332786228488302430}
+  - component: {fileID: 1814540711}
   m_Layer: 8
   m_Name: assault_rifle_01
   m_TagString: Untagged
@@ -13038,6 +13154,22 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.1455318, y: 0.260265, z: 0.40384156}
     m_Extent: {x: 0.33098134, y: 0.46379173, z: 0.305489}
   m_DirtyAABB: 0
+--- !u!54 &1814540711
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6201097358999602848}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6201099382987929046
 GameObject:
   m_ObjectHideFlags: 0
@@ -13065,14 +13197,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6201099382987929046}
-  m_LocalRotation: {x: 0, y: -0.84393245, z: 0, w: -0.53644955}
+  m_LocalRotation: {x: 0, y: 0.84393024, z: 0, w: 0.53645295}
   m_LocalPosition: {x: 12.798576, y: 5.181758, z: -39.580276}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6198482114814915040}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 172.612, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 115.115, z: 0}
 --- !u!136 &6336475915111527574
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13117,8 +13249,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed8e83d5895e284da2e8c9ce65606b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_forwardMovementSpeed: 7
+  m_backwardMovementSpeed: 4
+  m_strafeMovementSpeed: 4
+  m_crouchingSpeed: 2
   m_health: 100
-  m_IsAlive: 1
+  m_isAlive: 1
   m_moveSound: {fileID: 8300000, guid: 4aaa78b2722c0344cb0363a3980adf64, type: 3}
 --- !u!82 &6201099382987929043
 AudioSource:

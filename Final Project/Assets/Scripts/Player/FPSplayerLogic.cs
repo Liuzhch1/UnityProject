@@ -41,7 +41,7 @@ public class FPSplayerLogic : MonoBehaviour
 
     public int m_health = 100;
     int m_healthPack = 0;
-    public bool m_IsAlive = true;
+    public bool m_isAlive = true;
 
     Camera m_camera;
     FPCameraLogic m_cameraLogic;
@@ -78,7 +78,19 @@ public class FPSplayerLogic : MonoBehaviour
             return;
         }
 
-		if (!m_IsAlive)
+        if (Input.GetKeyDown(KeyCode.X)) { // for test
+            Debug.Log("Test Death!");
+            m_isAlive = false;
+            m_health = 0;
+            DisplayDeath();
+        } else if (Input.GetKeyDown(KeyCode.Z)) {
+            Debug.Log("Test Respawn!");
+            m_isAlive = true;
+            m_health = 100;
+            DisplayRespawn();
+        }
+
+		if (!m_isAlive)
 		{
             return;
 		}
@@ -127,6 +139,8 @@ public class FPSplayerLogic : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!m_isAlive) return;
+
         if( m_verticalMovementInput == 1)
         {
             m_weaponLogic.disanbleRunFire();
@@ -211,11 +225,46 @@ public class FPSplayerLogic : MonoBehaviour
         m_health = Mathf.Clamp(m_health, 0, 100);
         UIManager.Instance.setHealth(m_health);
         Debug.Log(m_health);
-        if (m_health <= 0)
+        if (m_health <= 0 && m_isAlive)
         {
-            m_IsAlive = false;
+            m_isAlive = false;
+            DisplayDeath();
         }
     }
+
+    public void DisplayDeath() {
+        UIManager.Instance.displayDeath();
+        // Disable character controller
+        m_characterController.enabled = false;
+        // Disable arms
+        Transform playerArms = transform.GetChild(0).GetChild(0).GetChild(0);
+        playerArms.gameObject.SetActive(false);
+        // enable gun rigidbody
+        Transform deathCameraHolder = transform.GetChild(0).GetChild(0).GetChild(2);
+        deathCameraHolder.gameObject.SetActive(true);
+        deathCameraHolder.GetComponent<Rigidbody>().AddForce((Vector3.up - transform.forward) * 80f);
+        Transform camera = transform.GetChild(0).GetChild(0).GetChild(3);
+        camera.parent = deathCameraHolder;
+    }
+
+    public void DisplayRespawn() {
+        UIManager.Instance.displayRespawn();
+        // Enable character controller
+        m_characterController.enabled = true;
+        Transform playerArms = transform.GetChild(0).GetChild(0).GetChild(0);
+        playerArms.gameObject.SetActive(true);
+        playerArms.GetComponent<Animator>().SetTrigger("Holster");
+        // disable gun rigidbody
+        Transform deathCameraHolder = transform.GetChild(0).GetChild(0).GetChild(2);
+        deathCameraHolder.gameObject.SetActive(false);
+        deathCameraHolder.localPosition = Vector3.zero;
+        deathCameraHolder.localRotation = Quaternion.Euler(0, 0, -28.62f);
+        Transform camera = deathCameraHolder.GetChild(0);
+        camera.parent = transform.GetChild(0).GetChild(0);
+        camera.localPosition = new Vector3(0, 0.03900003f, -0.099f);
+        camera.localRotation = Quaternion.Euler(0, 0, 0);
+    }
+
 
     public void RecoverHealth(int heal)
 	{
@@ -305,7 +354,7 @@ public class FPSplayerLogic : MonoBehaviour
         m_health = 100;
         UIManager.Instance.setHealth(m_health);
 
-        m_IsAlive = true;
+        m_isAlive = true;
         m_characterController.enabled = false;
 
         transform.position = new Vector3(playerPosX, playerPosY, playerPosZ);

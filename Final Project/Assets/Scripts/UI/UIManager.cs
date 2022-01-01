@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X)) { // for test
+        if (Input.GetKeyDown(KeyCode.U)) { // for test
             Debug.Log("Test UI!");
             displayFeedbackCrosshair();
         }
@@ -103,7 +103,7 @@ public class UIManager : MonoBehaviour
     public void displayFeedbackCrosshair() {
         m_canvas.GetChild(4).GetComponent<CrosshairLogic>().SetFeedback();
     }
-    
+
     public void displayCrosshair() {
         if (m_state == UIState.Game) {
             m_crosshair.gameObject.SetActive(true);
@@ -130,6 +130,14 @@ public class UIManager : MonoBehaviour
     }
     public void displayHeal() {
         transform.GetChild(1).GetComponent<Animator>().SetTrigger("Heal");
+    }
+
+    public void displayDeath() {
+        transform.GetChild(2).GetComponent<Animator>().SetBool("Death", true);
+    }
+
+    public void displayRespawn() {
+        transform.GetChild(2).GetComponent<Animator>().SetBool("Death", false);
     }
 
     public void displayWeapon(Weapon weapon) {
