@@ -22,10 +22,10 @@ public class FPSplayerLogic : MonoBehaviour
     Vector3 m_horizontalMovement;
     Vector3 m_heightMovement;
 
-    float m_forwardMovementSpeed = 7.0f;
-    float m_backwardMovementSpeed = 2.5f;
-    float m_strafeMovementSpeed = 2.0f;
-    float m_crouchingSpeed = 2.0f;
+    public float m_forwardMovementSpeed = 7.0f;
+    public float m_backwardMovementSpeed = 4.0f;
+    public float m_strafeMovementSpeed = 4.0f;
+    public float m_crouchingSpeed = 2.0f;
 
     float m_rotationY;
 
@@ -170,18 +170,26 @@ public class FPSplayerLogic : MonoBehaviour
     #region Movement Methods
     float GetMovementSpeed()
     {
+        float v = 0.0f;
         if (m_isCrouching)
         {
-            return m_crouchingSpeed;
+            v = m_crouchingSpeed;
         }
         else if (m_verticalMovementInput >= 0.1f)
         {
-            return m_forwardMovementSpeed;
+            v = m_forwardMovementSpeed;
         }
         else
         {
-            return m_backwardMovementSpeed;
+            v = m_backwardMovementSpeed;
         }
+
+        if (m_weaponLogic.isAiming())
+        {
+            v /= 2.0f;
+        }
+
+        return v;
     }
 
     IEnumerator doCrouch(float target)
@@ -274,6 +282,8 @@ public class FPSplayerLogic : MonoBehaviour
         return true;
     }
     #endregion
+
+    #region Load and Save
     public void Save()
     {
         PlayerPrefs.SetFloat("PlayerPosX", transform.position.x);
@@ -307,4 +317,6 @@ public class FPSplayerLogic : MonoBehaviour
 
         m_characterController.enabled = true;
     }
+    #endregion
+
 }

@@ -59,6 +59,8 @@ public class WeaponLogic : MonoBehaviour
 
     public bool m_hasKey = false;
 
+    int m_handGrenadeNum = 3;
+
     public Gun m_AR;
     public Gun m_Handgun;
     Gun currentGun;
@@ -120,6 +122,12 @@ public class WeaponLogic : MonoBehaviour
     [SerializeField]
     AudioClip m_knifeAttackSound;
 
+    [SerializeField]
+    GameObject m_handGrenadeObj;
+
+    [SerializeField]
+    Transform m_grenadeSpawnPoint;
+
     #endregion
 
     #region Unity
@@ -137,12 +145,12 @@ public class WeaponLogic : MonoBehaviour
         m_AR.MAX_AMMO = 30;
         m_AR.MAX_COOL_DOWN = 0.15f;
         m_AR.ammo = 30;
-        m_AR.mag = 5;
+        m_AR.mag = 150;
 
         m_Handgun.MAX_AMMO = 10;
         m_Handgun.MAX_COOL_DOWN = 0.35f;
         m_Handgun.ammo = 10;
-        m_Handgun.mag = 3;
+        m_Handgun.mag = 30;
 
         currentGun = m_AR;
 
@@ -153,7 +161,6 @@ public class WeaponLogic : MonoBehaviour
 
         m_healthPack = 3;
 
-        
         m_ARscope.SetActive(false);
     }
 
@@ -243,6 +250,14 @@ public class WeaponLogic : MonoBehaviour
 
             m_animator.SetTrigger("KnifeAttack");
         }
+
+        if(Input.GetButtonDown("HandGrenade") && !m_isReloading)
+        {
+            if (m_handGrenadeNum > 0)
+            {
+                m_animator.SetTrigger("ThrowHandGrenade");
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -266,9 +281,17 @@ public class WeaponLogic : MonoBehaviour
         {
             string hitTag = rayHit.collider.gameObject.tag;
             Debug.Log("Bullet Hit Object: " + hitTag);
-            if (hitTag == "Enemy01")
+            switch (hitTag)
             {
-                rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(10);
+                case "Enemy01":
+                    rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(10);
+                    break;
+                case "Enemy02":
+                    rayHit.collider.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(10);
+                    break;
+                case "Boss":
+                    rayHit.collider.gameObject.GetComponent<BossLogic>().TakeDamage(10);
+                    break;
             }
 
             // Spawn Bullet Impact VFX
@@ -320,10 +343,14 @@ public class WeaponLogic : MonoBehaviour
 
     public void endReload()
     {
-        m_ammo = MAX_AMMO;
-        currentGun.ammo = MAX_AMMO;
-        m_mag -= 1;
-        currentGun.mag -= 1;
+        m_mag += m_ammo;
+        currentGun.mag += m_ammo;
+
+        m_ammo = m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
+        currentGun.ammo = m_mag>MAX_AMMO?MAX_AMMO:m_mag;
+
+        m_mag -= m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
+        currentGun.mag -= m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
         UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
         m_isReloading = false;
         m_enableFire = true;
@@ -565,9 +592,19 @@ public class WeaponLogic : MonoBehaviour
                 disableKnife();
             }
 
-        }
+        } 
+    }
 
-        
+    public void ThrowGrenade()
+    {
+        //GameObject bullet = Instantiate(m_bulletPrefab, m_bulletSpawnPoint.position, Quaternion.LookRotation(m_player.transform.position - transform.position));
+        GameObject grenade = Instantiate(m_handGrenadeObj, m_grenadeSpawnPoint);
+        m_handGrenadeNum -= 1;
+    }
+
+    public bool isAiming()
+    {
+        return m_isAiming;
     }
     #endregion
 

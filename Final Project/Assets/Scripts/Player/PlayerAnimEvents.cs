@@ -68,5 +68,10 @@ public class PlayerAnimEvents : MonoBehaviour
     {
         m_weaponLogic.disableKnife();
     }
+
+    public void ThrowGrenade()
+    {
+        m_weaponLogic.ThrowGrenade();
+    }
     #endregion
 }
