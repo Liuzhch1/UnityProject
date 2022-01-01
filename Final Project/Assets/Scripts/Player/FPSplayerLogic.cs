@@ -228,6 +228,7 @@ public class FPSplayerLogic : MonoBehaviour
         if (m_health <= 0)
         {
             m_isAlive = false;
+            DisplayDeath();
         }
     }
 
