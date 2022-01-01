@@ -75,10 +75,8 @@ public class FireRobLogic : MonoBehaviour
         }
         if (!m_player || isDead)
         {
-            //Debug.Log("This FireRob is dead!");
             return;
         }
-        Debug.Log("RobState: " + m_fireRobState);
         switch (m_fireRobState)
         {
             case (FireRobState.Idle):
@@ -293,7 +291,6 @@ public class FireRobLogic : MonoBehaviour
     }
     public void SetAlert()
     {
-        Debug.Log("succ setalert");
         isAlert = true;
     }
 

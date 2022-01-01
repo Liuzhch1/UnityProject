@@ -22,9 +22,9 @@ public class FPSplayerLogic : MonoBehaviour
     Vector3 m_horizontalMovement;
     Vector3 m_heightMovement;
 
-    public float m_forwardMovementSpeed = 7.0f;
-    public float m_backwardMovementSpeed = 4.0f;
-    public float m_strafeMovementSpeed = 4.0f;
+    public float m_forwardMovementSpeed = 10.0f;
+    public float m_backwardMovementSpeed = 8.0f;
+    public float m_strafeMovementSpeed = 8.0f;
     public float m_crouchingSpeed = 2.0f;
 
     float m_rotationY;
