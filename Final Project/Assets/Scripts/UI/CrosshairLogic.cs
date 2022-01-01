@@ -35,9 +35,7 @@ public class CrosshairLogic : MonoBehaviour
         m_shootingTimer -= (m_shootingTimer > 0) ? Time.deltaTime : 0;
         if (m_feedbackTimer > 0) {
             m_feedbackTimer -= Time.deltaTime;
-            if (m_feedbackTimer <= 0) {
-                transform.GetChild(4).gameObject.SetActive(false);
-            }
+            transform.GetChild(4).gameObject.SetActive(!((m_feedbackTimer <= 0.14f && m_feedbackTimer > 0.07f) || (m_feedbackTimer < 0f)));
         }
         //Debug.Log("Moving@" + m_playerController.velocity.magnitude);
         bool isShooting = m_shootingTimer > 0;
@@ -57,7 +55,7 @@ public class CrosshairLogic : MonoBehaviour
     }
 
     public void SetFeedback() {
-        m_feedbackTimer = 0.1f;
+        m_feedbackTimer = 0.21f;
         transform.GetChild(4).gameObject.SetActive(true);
     }
 
