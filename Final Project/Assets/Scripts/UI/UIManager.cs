@@ -44,8 +44,8 @@ public class UIManager : MonoBehaviour
             m_healthPanel = m_canvas.GetChild(1);
             m_ARPanel = m_canvas.GetChild(2);
             m_HandGunPanel = m_canvas.GetChild(3);
-            m_crosshair = m_canvas.GetChild(4);
-            m_scopeCrosshair = m_canvas.GetChild(5);
+            m_crosshair = m_canvas.GetChild(4).GetChild(0);
+            m_scopeCrosshair = m_canvas.GetChild(4).GetChild(2);
         }
         
     }
@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X)) { // for test
             Debug.Log("Test UI!");
-            displayHeal();
+            displayFeedbackCrosshair();
         }
 
         if (Input.GetButtonDown("Menu")) {
@@ -96,6 +96,14 @@ public class UIManager : MonoBehaviour
     //     transform.GetChild(3).gameObject.SetActive(true);
     // }
 
+    public void setShootingCrosshair() {
+        m_canvas.GetChild(4).GetComponent<CrosshairLogic>().SetShooting();
+    }
+
+    public void displayFeedbackCrosshair() {
+        m_canvas.GetChild(4).GetComponent<CrosshairLogic>().SetFeedback();
+    }
+    
     public void displayCrosshair() {
         if (m_state == UIState.Game) {
             m_crosshair.gameObject.SetActive(true);
@@ -117,11 +125,6 @@ public class UIManager : MonoBehaviour
             m_scopeCrosshair.gameObject.SetActive(false);
         }
     }
-
-    public void setShootingCrosshair() {
-        m_crosshair.GetComponent<CrosshairLogic>().SetShooting();
-    }
-
     public void displayHurt() {
         transform.GetChild(0).GetComponent<Animator>().SetTrigger("Hurt");
     }

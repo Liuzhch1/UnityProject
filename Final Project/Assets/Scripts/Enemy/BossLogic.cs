@@ -20,9 +20,9 @@ enum BossState
 public class BossLogic : MonoBehaviour
 {
     #region Parameter
-    const float WALK_SPEED = 4.0f;
-    const float FASTRUN_SPEED = 18.0f;
-    const float ATTACK_RADIUS = 3.5f;
+    const float WALK_SPEED = 2.5f;
+    const float FASTRUN_SPEED = 10.0f;
+    const float ATTACK_RADIUS = 3.2f;
     const float MAX_WALKTIME = 4.0f;
 
     float walkTime = MAX_WALKTIME;
@@ -74,6 +74,8 @@ public class BossLogic : MonoBehaviour
     GameObject mainBody;
     [SerializeField]
     GameObject tail;
+    [SerializeField]
+    Transform RoomCenter;
     //there will be no this type when Roar
     int noType = 1;
     #endregion
@@ -97,7 +99,7 @@ public class BossLogic : MonoBehaviour
         }
         if (!isAlert)
         {
-            if (ToPlayerDistance() < 20.0f)
+            if (Vector3.Distance(m_player.transform.position,RoomCenter.transform.position)<20.0f)
             {
                 isAlert = true;
             }

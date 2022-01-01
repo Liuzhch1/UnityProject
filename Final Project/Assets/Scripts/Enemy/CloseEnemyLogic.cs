@@ -21,8 +21,8 @@ enum CloseEnemyType
 public class CloseEnemyLogic : MonoBehaviour
 {
     #region Parameter
-    const float PATROL_SPEED = 4.0f;
-    const float CHASE_SPEED = 12.0f;
+    const float PATROL_SPEED = 3.0f;
+    const float CHASE_SPEED = 8.0f;
     const float ATTACK_RADIUS = 3.5f;
     const float CHASE_RADIUS = 18.0f;
     const float MAX_IDLETIME = 4.0f;
@@ -38,6 +38,8 @@ public class CloseEnemyLogic : MonoBehaviour
     const float VIEW_ANGLE = 120.0f;
 
     const int DAMAGE = 10;
+
+    const float SETALERT_RADUIS = CHASE_RADIUS * 3;
     #endregion
 
     GameObject m_player;
@@ -258,6 +260,14 @@ public class CloseEnemyLogic : MonoBehaviour
             isAlert = true;
             m_enemyState = CloseEnemyState.Chase;
             m_health -= damage;
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy02");
+            foreach (GameObject enemy in enemies)
+            {
+                if (Vector3.Distance(transform.position, enemy.transform.position) <= SETALERT_RADUIS)
+                {
+                    enemy.GetComponent<CloseEnemyLogic>().SetAlert();
+                }
+            }
         }
         else
         {
@@ -265,6 +275,10 @@ public class CloseEnemyLogic : MonoBehaviour
             m_collider.enabled = false;
             m_animator.SetTrigger("Dead");
         }
+    }
+    public void SetAlert()
+    {
+        isAlert = true;
     }
     public void Attack()
     {
