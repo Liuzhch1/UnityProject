@@ -172,7 +172,7 @@ public class WeaponLogic : MonoBehaviour
         }
 
 		// Shoot logics
-		if (!m_FPSplayerLogic.m_IsAlive)
+		if (!m_FPSplayerLogic.m_isAlive)
 		{
             return;
 		}

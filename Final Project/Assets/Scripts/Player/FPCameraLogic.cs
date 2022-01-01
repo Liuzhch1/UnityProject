@@ -50,7 +50,7 @@ public class FPCameraLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!m_FPSplayerLogic.m_IsAlive)
+        if (!m_FPSplayerLogic.m_isAlive)
 		{
             return;
 		}
