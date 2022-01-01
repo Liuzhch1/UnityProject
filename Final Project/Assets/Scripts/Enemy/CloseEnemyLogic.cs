@@ -173,6 +173,7 @@ public class CloseEnemyLogic : MonoBehaviour
             patrolTime = MAX_PATROL_TIME;
         }
         patrolTime -= Time.deltaTime;
+        m_animator.SetInteger("State", 2);
     }
     void UpdateChaseState()
     {
