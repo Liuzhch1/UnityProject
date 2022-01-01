@@ -69,7 +69,12 @@
   </Entry>
 
   <Entry>
-    <Key>Dialogue Welcome</Key>
+    <Key>DialogueWelcomeCommander</Key>
     <Value>欢迎你，新特工！</Value>
   </Entry>
+  <Entry>
+    <Key>DialogueWelcomeAgent</Key>
+    <Value>很荣幸与你共事，长官。</Value>
+  </Entry>
+
 </Localization>

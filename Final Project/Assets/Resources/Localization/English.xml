@@ -69,7 +69,11 @@
   </Entry>
 
   <Entry>
-    <Key>Dialogue Welcome</Key>
+    <Key>DialogueWelcomeCommander</Key>
     <Value>Welcome, new agent!</Value>
+  </Entry>
+  <Entry>
+    <Key>DialogueWelcomeAgent</Key>
+    <Value>It is an honor to work with you, commander.</Value>
   </Entry>
 </Localization>

@@ -61,13 +61,13 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U)) { // for test
             Debug.Log("Test UI!");
             //displayDialogue(Speaker.Agent, "Dialogue Welcome", 3f);
-            displayDialogue(Speaker.Commander, "Dialogue Welcome");
+            displayDialogue(Speaker.Commander, "DialogueWelcomeCommander");
         }
 
         if (Input.GetKeyDown(KeyCode.I)) { // for test
             Debug.Log("Test UI!");
             //displayDialogue(Speaker.Agent, "Dialogue Welcome", 3f);
-            displayDialogue(Speaker.Agent, "Dialogue Welcome");
+            displayDialogue(Speaker.Agent, "DialogueWelcomeAgent");
         }
         
         if (Input.GetButton("Inventory")) {

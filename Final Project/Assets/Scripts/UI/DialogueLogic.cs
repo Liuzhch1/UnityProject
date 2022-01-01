@@ -36,7 +36,7 @@ public class DialogueLogic : MonoBehaviour
     float m_charDisplayTimer = 0;
 
     [SerializeField]
-    float m_charDisplayTime = 0.02f;
+    float m_charDisplayTime = 0.05f;
 
     void Start()
     {
@@ -46,6 +46,9 @@ public class DialogueLogic : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetButtonDown("Skip")) {
+            m_displayTimer = 0;
+        }
         if (m_displayTimer > 0) {
             // Dialogue queue is busy
             if (m_charIndex < m_currentDialogue.Content.Length) {
@@ -59,21 +62,21 @@ public class DialogueLogic : MonoBehaviour
                 // Display whole sentence for a duration
                 m_displayTimer -= Time.deltaTime;
                 if (m_displayTimer <= 0) {
-                    m_playerDialogue.gameObject.SetActive(false);
-                    m_npcDialogue.gameObject.SetActive(false);
+                    
                 }
             }
         } else {
+            m_playerDialogue.gameObject.SetActive(false);
+            m_npcDialogue.gameObject.SetActive(false);
             // Dialogue queue is idle
             if (m_queue.Count > 0) {
                 m_currentDialogue = m_queue.Dequeue();
                 m_displayTimer = m_currentDialogue.DisplayTime;
                 m_charIndex = 0;
                 Transform m_dialogue = (m_currentDialogue.Speaker == Speaker.Agent) ? m_playerDialogue : m_npcDialogue;
+                m_dialogue.gameObject.SetActive(true);
                 m_dialogueText = m_dialogue.GetChild(2).GetComponent<Text>();
                 m_dialogueText.text = "";
-                m_playerDialogue.gameObject.SetActive(m_currentDialogue.Speaker == Speaker.Agent);
-                m_npcDialogue.gameObject.SetActive(m_currentDialogue.Speaker == Speaker.Commander);
             }
         }
     }
