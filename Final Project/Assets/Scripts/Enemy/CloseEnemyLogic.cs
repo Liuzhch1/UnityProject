@@ -8,7 +8,8 @@ enum CloseEnemyState
     Idle, // 1
     Patrol, //2
     Chase, //3
-    Attack //4
+    Attack, //4
+    Walk //5
 }
 
 enum CloseEnemyType
@@ -22,7 +23,7 @@ public class CloseEnemyLogic : MonoBehaviour
 {
     #region Parameter
     const float PATROL_SPEED = 3.0f;
-    const float CHASE_SPEED = 8.0f;
+    public const float CHASE_SPEED = 6.0f;
     const float ATTACK_RADIUS = 3.5f;
     const float CHASE_RADIUS = 18.0f;
     const float MAX_IDLETIME = 4.0f;
@@ -39,7 +40,10 @@ public class CloseEnemyLogic : MonoBehaviour
 
     const int DAMAGE = 10;
 
-    const float SETALERT_RADUIS = CHASE_RADIUS * 3;
+    const float SETALERT_RADUIS = CHASE_RADIUS * 1.2f;
+
+    const float MAX_WALKTIME=5.0f;
+    float walkTime = MAX_WALKTIME;
     #endregion
 
     GameObject m_player;
@@ -113,6 +117,8 @@ public class CloseEnemyLogic : MonoBehaviour
                 break;
             case (CloseEnemyState.Attack):
                 UpdateAttackState();
+                break;
+            case (CloseEnemyState.Walk):
                 break;
         }
         EfficientDetectPlayer();
