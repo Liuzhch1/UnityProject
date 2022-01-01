@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X)) { // for test
             Debug.Log("Test UI!");
-            displayHeal();
+            displayFeedbackCrosshair();
         }
 
         if (Input.GetButtonDown("Menu")) {
@@ -96,6 +96,9 @@ public class UIManager : MonoBehaviour
     //     transform.GetChild(3).gameObject.SetActive(true);
     // }
 
+    public void displayFeedbackCrosshair() {
+        m_crosshair.GetComponent<CrosshairLogic>().SetFeedback();
+    }
     public void displayCrosshair() {
         if (m_state == UIState.Game) {
             m_crosshair.gameObject.SetActive(true);
