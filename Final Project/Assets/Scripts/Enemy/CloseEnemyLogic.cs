@@ -106,26 +106,21 @@ public class CloseEnemyLogic : MonoBehaviour
         {
             return;
         }
-        Debug.Log("isAlert: " + isAlert);
         switch (m_enemyState)
         {
             case (CloseEnemyState.Idle):
                 UpdateIdleState();
                 break;
             case (CloseEnemyState.Patrol):
-                Debug.Log("CloseEnemyState: " + m_enemyState);
                 UpdatePatrolState();
                 break;
             case (CloseEnemyState.Chase):
-                Debug.Log("CloseEnemyState: " + m_enemyState);
                 UpdateChaseState();
                 break;
             case (CloseEnemyState.Attack):
-                Debug.Log("CloseEnemyState: " + m_enemyState);
                 UpdateAttackState();
                 break;
             case (CloseEnemyState.Walk):
-                Debug.Log("CloseEnemyState: " + m_enemyState);
                 UpdateWalkState();
                 break;
         }
