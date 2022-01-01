@@ -59,6 +59,7 @@ public class CloseEnemyLogic : MonoBehaviour
     int m_type;
     [SerializeField]
     int m_health;
+    int m_maxHealth;
     bool isAlert;
     bool isDead = false;
 
@@ -89,6 +90,7 @@ public class CloseEnemyLogic : MonoBehaviour
         m_animator.SetInteger("Type", m_type);
         m_enemyState = CloseEnemyState.Idle;
         m_collider = GetComponent<Collider>();
+        m_maxHealth = m_health;
     }
 
     // Update is called once per frame
@@ -260,6 +262,8 @@ public class CloseEnemyLogic : MonoBehaviour
             isAlert = true;
             m_enemyState = CloseEnemyState.Chase;
             m_health -= damage;
+            m_health = Mathf.Clamp(m_health, 0, m_maxHealth);
+            UIManager.Instance.displayFeedbackCrosshair();
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy02");
             foreach (GameObject enemy in enemies)
             {
