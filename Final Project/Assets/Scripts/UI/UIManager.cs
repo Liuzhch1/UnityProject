@@ -24,9 +24,12 @@ public class UIManager : MonoBehaviour
     Transform m_crosshair;
     Transform m_scopeCrosshair;
     Transform m_dialogue;
+    Transform m_menu;
 
     UIState m_state = UIState.Game;
     public UIState State => m_state;
+
+    Weapon m_displayWeapon = Weapon.AR;
 
     void Awake() {
         if(m_instance == null) {
@@ -48,6 +51,7 @@ public class UIManager : MonoBehaviour
             m_crosshair = m_canvas.GetChild(4).GetChild(0);
             m_scopeCrosshair = m_canvas.GetChild(4).GetChild(2);
             m_dialogue = m_canvas.GetChild(5).GetChild(0);
+            m_menu = m_canvas.GetChild(6);
         }
         
     }
@@ -58,18 +62,7 @@ public class UIManager : MonoBehaviour
             Debug.Log("Test UI!");
             displayDialogue("Dialogue Welcome", 3f);
         }
-
-        if (Input.GetButtonDown("Menu")) {
-            if (m_state == UIState.Game) {
-                WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
-                if (weaponLogic) {
-                    weaponLogic.QuitAim();
-                }
-                switchState(UIState.Menu);
-            } else if (m_state == UIState.Menu) {
-                switchState(UIState.Game);
-            }
-        }
+        
         if (Input.GetButton("Inventory")) {
             if (m_state == UIState.Game) {
                 WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
@@ -80,6 +73,18 @@ public class UIManager : MonoBehaviour
             }
         } else {
             if (m_state == UIState.Inventory) {
+                switchState(UIState.Game);
+            }
+        }
+
+        if (Input.GetButtonDown("Menu")) {
+            if (m_state == UIState.Game) {
+                WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
+                if (weaponLogic) {
+                    weaponLogic.QuitAim();
+                }
+                switchState(UIState.Menu);
+            } else if (m_state == UIState.Menu) {
                 switchState(UIState.Game);
             }
         }
@@ -135,6 +140,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void displayDeath() {
+        switchState(UIState.Menu);
         transform.GetChild(2).GetComponent<Animator>().SetBool("Death", true);
     }
 
@@ -147,14 +153,12 @@ public class UIManager : MonoBehaviour
     }
 
     public void displayWeapon(Weapon weapon) {
+        m_displayWeapon = weapon;
         m_ARPanel.gameObject.SetActive(weapon == Weapon.AR);
         m_HandGunPanel.gameObject.SetActive(weapon == Weapon.handgun);
     }
     
     public void setAmmoNumber(Weapon weapon, int ammoNumber, int magNumber) {
-        // PieMenuLogic pieMenuLogic = FindObjectOfType<PieMenuLogic>();
-        // if (pieMenuLogic)
-        //     pieMenuLogic.setAmmoNumber(weapon, ammoNumber, magNumber);
         Transform weaponPanel = (weapon == Weapon.AR) ? m_ARPanel : m_HandGunPanel;
         Text ammoNumberText = weaponPanel.GetChild(1).GetComponent<Text>();
         Text magNumberText = weaponPanel.GetChild(2).GetComponent<Text>();
@@ -173,21 +177,27 @@ public class UIManager : MonoBehaviour
             case UIState.Game:
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                m_pieMenu.gameObject.SetActive(false);
+                m_pieMenu.gameObject.SetActive(false);m_menu.gameObject.SetActive(false);
                 m_crosshair.gameObject.SetActive(true);
+                m_healthPanel.gameObject.SetActive(true);
+                displayWeapon(m_displayWeapon);
                 break;
             case UIState.Menu:
-                //TODO: setactive menu ui
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                m_pieMenu.gameObject.SetActive(false);
+                m_pieMenu.gameObject.SetActive(false);m_menu.gameObject.SetActive(true);
                 m_crosshair.gameObject.SetActive(false);
                 m_scopeCrosshair.gameObject.SetActive(false);
+                m_dialogue.gameObject.SetActive(false);
+                m_healthPanel.gameObject.SetActive(false);
+                m_ARPanel.gameObject.SetActive(false);
+                m_HandGunPanel.gameObject.SetActive(false);
                 break;
             case UIState.Inventory:
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
                 m_pieMenu.gameObject.SetActive(true);
+                m_menu.gameObject.SetActive(false);
                 m_crosshair.gameObject.SetActive(false);
                 m_scopeCrosshair.gameObject.SetActive(false);
                 break;
