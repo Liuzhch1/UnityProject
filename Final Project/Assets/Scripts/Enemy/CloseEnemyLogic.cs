@@ -40,7 +40,7 @@ public class CloseEnemyLogic : MonoBehaviour
 
     const int DAMAGE = 10;
 
-    const float SETALERT_RADUIS = CHASE_RADIUS * 1.2f;
+    const float SETALERT_RADUIS = CHASE_RADIUS * 0.5f;
 
     const float MAX_WALKTIME=5.0f;
     float walkTime = MAX_WALKTIME;

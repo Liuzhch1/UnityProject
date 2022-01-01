@@ -59,7 +59,7 @@ public class WeaponLogic : MonoBehaviour
 
     public bool m_hasKey = false;
 
-    int m_handGrenadeNum = 3;
+    public int m_handGrenadeNum = 3;
 
     public Gun m_AR;
     public Gun m_Handgun;
@@ -150,7 +150,7 @@ public class WeaponLogic : MonoBehaviour
         m_Handgun.MAX_AMMO = 10;
         m_Handgun.MAX_COOL_DOWN = 0.35f;
         m_Handgun.ammo = 10;
-        m_Handgun.mag = 30;
+        m_Handgun.mag = 50;
 
         currentGun = m_AR;
 
@@ -401,8 +401,10 @@ public class WeaponLogic : MonoBehaviour
             if (hitTag == "mag" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
                 Destroy(rayHit.collider.gameObject);
-                m_mag += 1;
-                currentGun.mag += 1;
+                m_mag += 30;
+                m_AR.mag += 30;
+                m_Handgun.mag += 30;
+                m_handGrenadeNum += 2;
                 UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
             }
             else if (hitTag == "scope" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
