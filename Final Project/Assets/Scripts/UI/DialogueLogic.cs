@@ -47,13 +47,16 @@ public class DialogueLogic : MonoBehaviour
     void Update()
     {
         if (m_displayTimer > 0) {
+            // Dialogue queue is busy
             if (m_charIndex < m_currentDialogue.Content.Length) {
+                // Display each character
                 m_charDisplayTimer -= Time.deltaTime;
                 if (m_charDisplayTimer <= 0) {
                     m_dialogueText.text += m_currentDialogue.Content[m_charIndex++]; 
                     m_charDisplayTimer = m_charDisplayTime;
                 }
             } else {
+                // Display whole sentence for a duration
                 m_displayTimer -= Time.deltaTime;
                 if (m_displayTimer <= 0) {
                     m_playerDialogue.gameObject.SetActive(false);
@@ -61,6 +64,7 @@ public class DialogueLogic : MonoBehaviour
                 }
             }
         } else {
+            // Dialogue queue is idle
             if (m_queue.Count > 0) {
                 m_currentDialogue = m_queue.Dequeue();
                 m_displayTimer = m_currentDialogue.DisplayTime;
@@ -76,13 +80,5 @@ public class DialogueLogic : MonoBehaviour
 
     public void Display(Speaker speaker, string key, float displayTime) {
         m_queue.Enqueue(new Dialogue(speaker, LocalizationManager.Instance.GetLocalizedValue(key), displayTime));
-        // m_displayTimer = displayTime;
-        // m_fullMessage = LocalizationManager.Instance.GetLocalizedValue(key);
-        // Transform m_dialogue = (speaker == Speaker.Agent) ? m_playerDialogue : m_npcDialogue;
-        // m_playerDialogue.gameObject.SetActive(speaker == Speaker.Agent);
-        // m_npcDialogue.gameObject.SetActive(speaker == Speaker.Commander);
-        // m_dialogueText = m_dialogue.GetChild(2).GetComponent<Text>();
-        // m_dialogueText.text = "";
-        // m_charIndex = 0;
     }
 }

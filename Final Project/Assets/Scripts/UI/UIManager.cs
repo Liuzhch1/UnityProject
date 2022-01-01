@@ -155,7 +155,7 @@ public class UIManager : MonoBehaviour
         transform.GetChild(2).GetComponent<Animator>().SetBool("Death", false);
     }
 
-    public void displayDialogue(Speaker speaker, string key, float displayTime = 5.0f) {
+    public void displayDialogue(Speaker speaker, string key, float displayTime = 3.0f) {
         m_dialogue.GetComponent<DialogueLogic>().Display(speaker, key, displayTime);
     }
 
