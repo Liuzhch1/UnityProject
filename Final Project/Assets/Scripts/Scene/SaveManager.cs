@@ -8,6 +8,7 @@ public class SaveManager : MonoBehaviour
     static SaveManager m_instance;
 
     FPSplayerLogic m_playerLogic;
+    FPCameraLogic m_cameraLogic;
     CloseEnemyLogic[] m_closeEnemynemyLogic;
     FireRobLogic[] m_fireRobLogic;
 
@@ -29,6 +30,7 @@ public class SaveManager : MonoBehaviour
         m_playerLogic = FindObjectOfType<FPSplayerLogic>();
         m_closeEnemynemyLogic = FindObjectsOfType<CloseEnemyLogic>();
         m_fireRobLogic = FindObjectsOfType<FireRobLogic>();
+        m_cameraLogic = FindObjectOfType<FPCameraLogic>();
         Save();
     }
 
@@ -51,6 +53,7 @@ public class SaveManager : MonoBehaviour
     public void Save()
     {
         m_playerLogic.Save();
+        m_cameraLogic.Save();
 
         for (int index = 0; index < m_closeEnemynemyLogic.Length; ++index)
         {
@@ -67,6 +70,7 @@ public class SaveManager : MonoBehaviour
     public void Load()
     {
         m_playerLogic.Load();
+        m_cameraLogic.Load();
 
         for (int index = 0; index < m_closeEnemynemyLogic.Length; ++index)
         {

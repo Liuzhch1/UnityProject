@@ -133,4 +133,18 @@ public class FPCameraLogic : MonoBehaviour
     }
     #endregion
 
+    public void Save()
+    {
+        PlayerPrefs.SetFloat("CameraRotY", m_rotationY);
+        PlayerPrefs.SetFloat("CameraRotX", m_rotationX);
+    }
+
+    public void Load()
+    {
+
+        m_rotationY = PlayerPrefs.GetFloat("CameraRotY");
+        m_rotationX = PlayerPrefs.GetFloat("CameraRotX");
+
+    }
+
 }

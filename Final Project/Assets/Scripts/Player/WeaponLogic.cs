@@ -79,6 +79,12 @@ public class WeaponLogic : MonoBehaviour
     GameObject m_bulletImpactObj;
 
     [SerializeField]
+    GameObject m_bulletImpactBlood;
+
+    [SerializeField]
+    GameObject m_bulletImpactDust;
+
+    [SerializeField]
     GameObject m_ironSight;
 
     [SerializeField]
@@ -270,22 +276,27 @@ public class WeaponLogic : MonoBehaviour
         {
             string hitTag = rayHit.collider.gameObject.tag;
             Debug.Log("Bullet Hit Object: " + hitTag);
-            switch (hitTag)
-            {
-                case "Enemy01":
-                    rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(10);
-                    break;
-                case "Enemy02":
-                    rayHit.collider.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(10);
-                    break;
-                case "Boss":
-                    rayHit.collider.gameObject.GetComponent<BossLogic>().TakeDamage(10);
-                    break;
+            if(hitTag == "Enemy01")
+			{
+                rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(10);
+
+                Object obj =  GameObject.Instantiate(m_bulletImpactDust, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, Random.value * 180, 0));
+                Destroy(obj, 1.0f);
             }
-
-            // Spawn Bullet Impact VFX
-            GameObject.Instantiate(m_bulletImpactObj, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, 0, 0));
-
+            else if(hitTag == "Enemy02")
+			{
+                rayHit.collider.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(10);
+                GameObject.Instantiate(m_bulletImpactBlood, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, Random.value * 180, 0));
+            }
+            else if(hitTag == "Boss")
+			{
+                rayHit.collider.gameObject.GetComponent<BossLogic>().TakeDamage(10);
+                GameObject.Instantiate(m_bulletImpactBlood, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, Random.value * 180, 0));
+            }
+			else
+			{
+                GameObject.Instantiate(m_bulletImpactObj, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, 0, 0));
+            }
         }
 
         // Play Muzzle VFX & Turn light on
@@ -431,6 +442,17 @@ public class WeaponLogic : MonoBehaviour
                 m_saveManager.Save();
             }
             else if(hitTag == "key" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
+                List<GameObject> childList = new List<GameObject>();
+                int childCount = rayHit.transform.childCount;
+                for (int i = 0; i < childCount; i++)
+                {
+                    GameObject child = rayHit.transform.GetChild(i).gameObject;
+                    childList.Add(child);
+                }
+                for (int i = 0; i < childCount; i++)
+                {
+                    DestroyImmediate(childList[i]);
+                }
                 Destroy(rayHit.collider.gameObject);
                 m_hasKey = true;
             }
