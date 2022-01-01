@@ -61,7 +61,13 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U)) { // for test
             Debug.Log("Test UI!");
             //displayDialogue(Speaker.Agent, "Dialogue Welcome", 3f);
-            displayDialogue(Speaker.Commander, "Dialogue Welcome", 5f);
+            displayDialogue(Speaker.Commander, "Dialogue Welcome");
+        }
+
+        if (Input.GetKeyDown(KeyCode.I)) { // for test
+            Debug.Log("Test UI!");
+            //displayDialogue(Speaker.Agent, "Dialogue Welcome", 3f);
+            displayDialogue(Speaker.Agent, "Dialogue Welcome");
         }
         
         if (Input.GetButton("Inventory")) {
@@ -149,7 +155,7 @@ public class UIManager : MonoBehaviour
         transform.GetChild(2).GetComponent<Animator>().SetBool("Death", false);
     }
 
-    public void displayDialogue(Speaker speaker, string key, float displayTime = 3.0f) {
+    public void displayDialogue(Speaker speaker, string key, float displayTime = 5.0f) {
         m_dialogue.GetComponent<DialogueLogic>().Display(speaker, key, displayTime);
     }
 
