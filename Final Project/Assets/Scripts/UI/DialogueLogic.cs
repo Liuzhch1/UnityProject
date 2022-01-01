@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum Speaker{
+    Agent,
+    Commander
+}
 
 public class DialogueLogic : MonoBehaviour
 {
+    Transform m_playerDialogue;
+    Transform m_npcDialogue;
+    
     Text m_dialogueText;
     string m_fullMessage;
     int m_charIndex = 0;
@@ -17,7 +24,8 @@ public class DialogueLogic : MonoBehaviour
 
     void Start()
     {
-        m_dialogueText = transform.GetChild(2).GetComponent<Text>();
+        m_playerDialogue = transform.GetChild(0);
+        m_npcDialogue = transform.GetChild(1);
     }
 
     void Update()
@@ -31,19 +39,22 @@ public class DialogueLogic : MonoBehaviour
             }
         } else {
             if (m_displayTimer < 0) {
-                transform.gameObject.SetActive(false);
+                m_playerDialogue.gameObject.SetActive(false);
+            m_npcDialogue.gameObject.SetActive(false);
             } else {
                 m_displayTimer -= Time.deltaTime;
             }
-
         }
     }
 
-    public void Display(string key, float displayTime) {
+    public void Display(Speaker speaker, string key, float displayTime) {
         m_displayTimer = displayTime;
         m_fullMessage = LocalizationManager.Instance.GetLocalizedValue(key);
+        Transform m_dialogue = (speaker == Speaker.Agent) ? m_playerDialogue : m_npcDialogue;
+        m_playerDialogue.gameObject.SetActive(speaker == Speaker.Agent);
+        m_npcDialogue.gameObject.SetActive(speaker == Speaker.Commander);
+        m_dialogueText = m_dialogue.GetChild(2).GetComponent<Text>();
         m_dialogueText.text = "";
-        transform.gameObject.SetActive(true);
         m_charIndex = 0;
     }
 }

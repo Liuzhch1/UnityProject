@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
             m_HandGunPanel = m_canvas.GetChild(3);
             m_crosshair = m_canvas.GetChild(4).GetChild(0);
             m_scopeCrosshair = m_canvas.GetChild(4).GetChild(2);
-            m_dialogue = m_canvas.GetChild(5).GetChild(0);
+            m_dialogue = m_canvas.GetChild(5);
             m_menu = m_canvas.GetChild(6);
         }
         
@@ -60,7 +60,8 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U)) { // for test
             Debug.Log("Test UI!");
-            displayDialogue("Dialogue Welcome", 3f);
+            //displayDialogue(Speaker.Agent, "Dialogue Welcome", 3f);
+            displayDialogue(Speaker.Commander, "Dialogue Welcome", 5f);
         }
         
         if (Input.GetButton("Inventory")) {
@@ -148,8 +149,8 @@ public class UIManager : MonoBehaviour
         transform.GetChild(2).GetComponent<Animator>().SetBool("Death", false);
     }
 
-    public void displayDialogue(string key, float displayTime = 3.0f) {
-        m_dialogue.GetComponent<DialogueLogic>().Display(key, displayTime);
+    public void displayDialogue(Speaker speaker, string key, float displayTime = 3.0f) {
+        m_dialogue.GetComponent<DialogueLogic>().Display(speaker, key, displayTime);
     }
 
     public void displayWeapon(Weapon weapon) {
