@@ -19,21 +19,26 @@ public class CrosshairLogic : MonoBehaviour
     [SerializeField]
     float m_movingThreshold = 3f;
 
-    float m_timer = 0;
+    float m_shootingTimer = 0;
+    float m_feedbackTimer = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         m_playerController = FindObjectOfType<CharacterController>();
-        m_reticle = GetComponent<RectTransform>();
+        m_reticle = transform.GetChild(0).GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_timer -= (m_timer > 0) ? Time.deltaTime : 0;
+        m_shootingTimer -= (m_shootingTimer > 0) ? Time.deltaTime : 0;
+        if (m_feedbackTimer > 0) {
+            m_feedbackTimer -= Time.deltaTime;
+            transform.GetChild(1).gameObject.SetActive(!((m_feedbackTimer <= 0.14f && m_feedbackTimer > 0.07f) || (m_feedbackTimer < 0f)));
+        }
         //Debug.Log("Moving@" + m_playerController.velocity.magnitude);
-        bool isShooting = m_timer > 0;
+        bool isShooting = m_shootingTimer > 0;
         bool isMoving = m_playerController.velocity.magnitude > m_movingThreshold;
         if (isShooting) {
             m_size = Mathf.Lerp(m_size, m_shootSize, Time.deltaTime * 5f);
@@ -46,8 +51,12 @@ public class CrosshairLogic : MonoBehaviour
     }
 
     public void SetShooting() {
-        m_timer = 0.2f;
+        m_shootingTimer = 0.2f;
     }
 
+    public void SetFeedback() {
+        m_feedbackTimer = 0.21f;
+        transform.GetChild(1).gameObject.SetActive(true);
+    }
 
 }
