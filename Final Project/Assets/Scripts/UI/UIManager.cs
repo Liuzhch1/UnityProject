@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     Transform m_HandGunPanel;
     Transform m_crosshair;
     Transform m_scopeCrosshair;
+    Transform m_dialogue;
 
     UIState m_state = UIState.Game;
     public UIState State => m_state;
@@ -46,6 +47,7 @@ public class UIManager : MonoBehaviour
             m_HandGunPanel = m_canvas.GetChild(3);
             m_crosshair = m_canvas.GetChild(4).GetChild(0);
             m_scopeCrosshair = m_canvas.GetChild(4).GetChild(2);
+            m_dialogue = m_canvas.GetChild(5).GetChild(0);
         }
         
     }
@@ -54,7 +56,7 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U)) { // for test
             Debug.Log("Test UI!");
-            displayFeedbackCrosshair();
+            displayDialogue("Dialogue Welcome", 3f);
         }
 
         if (Input.GetButtonDown("Menu")) {
@@ -138,6 +140,10 @@ public class UIManager : MonoBehaviour
 
     public void displayRespawn() {
         transform.GetChild(2).GetComponent<Animator>().SetBool("Death", false);
+    }
+
+    public void displayDialogue(string key, float displayTime = 3.0f) {
+        m_dialogue.GetComponent<DialogueLogic>().Display(key, displayTime);
     }
 
     public void displayWeapon(Weapon weapon) {
