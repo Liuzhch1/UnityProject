@@ -48,7 +48,9 @@ public class FireRobLogic : MonoBehaviour
 
     FireRobState m_fireRobState;
 
+    [SerializeField]
     int m_health = 100;
+    int m_maxHealth;
     bool isAlert = false;
     bool isDead = false;
 
@@ -62,6 +64,7 @@ public class FireRobLogic : MonoBehaviour
         m_animator = GetComponent<Animator>();
         m_animator.SetFloat("State", 0.0f);
         m_fireRobState = FireRobState.Idle;
+        m_maxHealth = m_health;
     }
     // Update is called once per frame
     void Update()
@@ -269,6 +272,8 @@ public class FireRobLogic : MonoBehaviour
         }
 
         m_health -= damage;
+        m_health = Mathf.Clamp(m_health, 0, m_maxHealth);
+        UIManager.Instance.displayFeedbackCrosshair();
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy01");
         foreach (GameObject enemy in enemies)
         {

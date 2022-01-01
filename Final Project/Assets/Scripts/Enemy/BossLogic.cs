@@ -53,6 +53,7 @@ public class BossLogic : MonoBehaviour
 
     [SerializeField]
     int m_health=500;
+    int m_maxHealth;
     bool isDead = false;
     bool isAlert = false;
     bool invisible = false;
@@ -88,6 +89,7 @@ public class BossLogic : MonoBehaviour
         m_animator = GetComponent<Animator>();
         m_animator.SetInteger("State", 1);
         m_bossState = BossState.Idle1;
+        m_maxHealth = m_health;
     }
 
     // Update is called once per frame
@@ -350,6 +352,8 @@ public class BossLogic : MonoBehaviour
         if (m_health > 0)
         {
             m_health -= damage;
+            m_health = Mathf.Clamp(m_health, 0, m_maxHealth);
+            UIManager.Instance.displayFeedbackCrosshair();
         }
         else
         {
