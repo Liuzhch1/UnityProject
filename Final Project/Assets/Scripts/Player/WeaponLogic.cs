@@ -591,10 +591,16 @@ public class WeaponLogic : MonoBehaviour
             Debug.Log("Knife Hit Object: " + hitTag);
             if (hitTag == "Enemy01")
             {
-                rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(5);
-                disableKnife();
+                rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(20);
+                
+            } else if(hitTag == "Enemy02") {
+                rayHit.collider.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(20);
             }
-
+            else if(hitTag == "Boss")
+			{
+                rayHit.collider.gameObject.GetComponent<BossLogic>().TakeDamage(50);
+            }
+            disableKnife();
         } 
     }
 

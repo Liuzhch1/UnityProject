@@ -9,7 +9,7 @@
   </Entry>
   <Entry>
     <Key>Continue</Key>
-    <Value>继续冒险</Value>
+    <Value>继续游戏</Value>
   </Entry>
   <Entry>
     <Key>Language</Key>
@@ -19,17 +19,10 @@
     <Key>Quit</Key>
     <Value>退出游戏</Value>
   </Entry>
-  <Entry>
-    <Key>Help</Key>
-    <Value>按键帮助</Value>
-  </Entry>
+
   <Entry>
     <Key>Move</Key>
-    <Value>角色移动</Value>
-  </Entry>
-  <Entry>
-    <Key>Rotate</Key>
-    <Value>旋转视角</Value>
+    <Value>移动</Value>
   </Entry>
   <Entry>
     <Key>Shoot</Key>
@@ -40,7 +33,11 @@
     <Value>瞄准</Value>
   </Entry>
   <Entry>
-    <Key>Attack</Key>
+    <Key>ScopeAim</Key>
+    <Value>开镜瞄准</Value>
+  </Entry>
+  <Entry>
+    <Key>Knife</Key>
     <Value>近战</Value>
   </Entry>
   <Entry>
@@ -52,20 +49,41 @@
     <Value>换弹</Value>
   </Entry>
   <Entry>
-    <Key>Roll</Key>
-    <Value>翻滚</Value>
+    <Key>Grenade</Key>
+    <Value>手雷</Value>
   </Entry>
   <Entry>
-    <Key>RetryInfo</Key>
+    <Key>Weapon</Key>
+    <Value>切枪</Value>
+  </Entry>
+  <Entry>
+    <Key>Interact</Key>
+    <Value>交互</Value>
+  </Entry>
+  <Entry>
+    <Key>Inventory</Key>
+    <Value>查看背包</Value>
+  </Entry>
+  <Entry>
+    <Key>HelpMenu</Key>
+    <Value>帮助菜单</Value>
+  </Entry>
+  <Entry>
+    <Key>SkipDialogue</Key>
+    <Value>跳过对话</Value>
+  </Entry>
+
+  <Entry>
+    <Key>Death</Key>
     <Value>你没能幸存！</Value>
   </Entry>
   <Entry>
     <Key>Menu</Key>
-    <Value>返回菜单</Value>
+    <Value>退回菜单</Value>
   </Entry>
   <Entry>
-    <Key>Retry</Key>
-    <Value>重新挑战</Value>
+    <Key>Load</Key>
+    <Value>读取数据</Value>
   </Entry>
 
   <Entry>

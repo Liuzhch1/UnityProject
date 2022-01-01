@@ -222,7 +222,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 927027517965956200}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 33
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 1
@@ -13450,11 +13450,14 @@ MonoBehaviour:
   m_healthPack: 0
   m_hasScope: 1
   m_hasKey: 0
+  m_handGrenadeNum: 3
   Wp_AR: {fileID: 1433632227032643844}
   Wp_handgun: {fileID: 5768575525611591991}
   ARController: {fileID: 9100000, guid: 3fe143ba8a02b1d4ab60722d79653427, type: 2}
   handGunController: {fileID: 9100000, guid: 97e4573aff14c564ba85455054643afb, type: 2}
   m_bulletImpactObj: {fileID: 1067471869909948, guid: 5e02303289b3c494e8e185be0fbbd405, type: 3}
+  m_bulletImpactBlood: {fileID: 1026642433091512, guid: ed67c2cb8e3a7fb418c6fbb1b001dce2, type: 3}
+  m_bulletImpactDust: {fileID: 1067536016464596, guid: 57e18706e2792ff4bb5561ed74b796e2, type: 3}
   m_ironSight: {fileID: 1433275885172327278}
   m_ARscope: {fileID: 1433463342165702708}
   ARAimPoint: {fileID: 927027517493077471}
@@ -14289,7 +14292,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6076513857727190501}
   m_LocalRotation: {x: -0, y: -0, z: -0.24716824, w: 0.9689726}
-  m_LocalPosition: {x: 177.07751, y: -3.1682425, z: 32.50084}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 927027519266885213}
@@ -14355,7 +14358,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7733044622706186457
 Rigidbody:
