@@ -78,6 +78,7 @@ public class FireRobLogic : MonoBehaviour
             //Debug.Log("This FireRob is dead!");
             return;
         }
+        Debug.Log("RobState: " + m_fireRobState);
         switch (m_fireRobState)
         {
             case (FireRobState.Idle):
