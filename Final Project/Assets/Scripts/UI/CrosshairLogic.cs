@@ -26,7 +26,7 @@ public class CrosshairLogic : MonoBehaviour
     void Start()
     {
         m_playerController = FindObjectOfType<CharacterController>();
-        m_reticle = GetComponent<RectTransform>();
+        m_reticle = transform.GetChild(0).GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
@@ -35,7 +35,7 @@ public class CrosshairLogic : MonoBehaviour
         m_shootingTimer -= (m_shootingTimer > 0) ? Time.deltaTime : 0;
         if (m_feedbackTimer > 0) {
             m_feedbackTimer -= Time.deltaTime;
-            transform.GetChild(4).gameObject.SetActive(!((m_feedbackTimer <= 0.14f && m_feedbackTimer > 0.07f) || (m_feedbackTimer < 0f)));
+            transform.GetChild(1).gameObject.SetActive(!((m_feedbackTimer <= 0.14f && m_feedbackTimer > 0.07f) || (m_feedbackTimer < 0f)));
         }
         //Debug.Log("Moving@" + m_playerController.velocity.magnitude);
         bool isShooting = m_shootingTimer > 0;
@@ -56,7 +56,7 @@ public class CrosshairLogic : MonoBehaviour
 
     public void SetFeedback() {
         m_feedbackTimer = 0.21f;
-        transform.GetChild(4).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(true);
     }
 
 }
