@@ -23,7 +23,7 @@ public class CloseEnemyLogic : MonoBehaviour
 {
     #region Parameter
     const float PATROL_SPEED = 3.0f;
-    public const float CHASE_SPEED = 6.0f;
+    public const float CHASE_SPEED = 5.0f;
     const float ATTACK_RADIUS = 3.5f;
     const float CHASE_RADIUS = 18.0f;
     const float MAX_IDLETIME = 4.0f;
@@ -119,6 +119,7 @@ public class CloseEnemyLogic : MonoBehaviour
                 UpdateAttackState();
                 break;
             case (CloseEnemyState.Walk):
+                UpdateWalkState();
                 break;
         }
         EfficientDetectPlayer();
@@ -219,7 +220,38 @@ public class CloseEnemyLogic : MonoBehaviour
         LookAtPlayer();
         if (Vector3.Distance(transform.position, m_player.transform.position) > ATTACK_RADIUS+1.0f)
         {
+            m_enemyState = CloseEnemyState.Walk;
+            m_navMeshAgent.speed = PATROL_SPEED;
+        }
+    }
+    void UpdateWalkState()
+    {
+        if (!m_player)
+        {
+            m_enemyState = CloseEnemyState.Idle;
+            return;
+        }
+        if (Vector3.Distance(transform.position, m_player.transform.position) < ATTACK_RADIUS)
+        {
+            walkTime = MAX_WALKTIME;
+            m_enemyState = CloseEnemyState.Attack;
+            m_animator.SetInteger("State", 4);
+            return;
+        }
+        if (walkTime < 0.0f)
+        {
+            walkTime = MAX_WALKTIME;
+            m_navMeshAgent.speed = CHASE_SPEED;
             m_enemyState = CloseEnemyState.Chase;
+            m_animator.SetInteger("State",3);
+            return;
+        }
+        else
+        {
+            LookAtPlayer();
+            m_navMeshAgent.SetDestination(m_player.transform.position);
+            m_animator.SetInteger("State", 5);
+            walkTime -= Time.deltaTime;
         }
     }
     #endregion
@@ -284,6 +316,7 @@ public class CloseEnemyLogic : MonoBehaviour
             m_navMeshAgent.enabled = false;
             m_collider.enabled = false;
             m_animator.SetTrigger("Dead");
+            isDead = true;
         }
     }
     public void SetAlert()

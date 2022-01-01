@@ -105,6 +105,7 @@ public class BossLogic : MonoBehaviour
             {
                 isAlert = true;
             }
+            return;
         }
         if (skillCooldown > 0.0f)
         {
