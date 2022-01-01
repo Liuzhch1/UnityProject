@@ -242,6 +242,7 @@ public class FPSplayerLogic : MonoBehaviour
         // enable gun rigidbody
         Transform deathCameraHolder = transform.GetChild(0).GetChild(0).GetChild(2);
         deathCameraHolder.gameObject.SetActive(true);
+        deathCameraHolder.GetComponent<Rigidbody>().AddForce((Vector3.up - transform.forward) * 80f);
         Transform camera = transform.GetChild(0).GetChild(0).GetChild(3);
         camera.parent = deathCameraHolder;
     }

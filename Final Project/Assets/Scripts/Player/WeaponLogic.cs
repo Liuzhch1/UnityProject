@@ -34,12 +34,7 @@ public class WeaponLogic : MonoBehaviour
 
     Weapon currentWeapon = Weapon.AR;
 
-    float MAX_SHOT_COOLDOWN = 0.15f;
-    int MAX_AMMO = 30;
-
     float m_shotCooldown = 0;
-    int m_ammo;
-    int m_mag;
     public int m_healthPack;
 
     bool m_isReloading = false;
@@ -154,11 +149,6 @@ public class WeaponLogic : MonoBehaviour
 
         currentGun = m_AR;
 
-        m_ammo = currentGun.ammo;
-        m_mag = currentGun.mag;
-        MAX_SHOT_COOLDOWN = currentGun.MAX_COOL_DOWN;
-        MAX_AMMO = currentGun.MAX_AMMO;
-
         m_healthPack = 3;
 
         m_ARscope.SetActive(false);
@@ -181,7 +171,7 @@ public class WeaponLogic : MonoBehaviour
         {
             if (m_shotCooldown <= 0.0f)
             {
-                if (m_ammo > 0)
+                if (currentGun.ammo > 0)
                 {
                     
 
@@ -190,10 +180,9 @@ public class WeaponLogic : MonoBehaviour
 
                     Shoot();
 
-                    --m_ammo;
                     --currentGun.ammo;
 
-                    UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
+                    UIManager.Instance.setAmmoNumber(currentWeapon, currentGun.ammo, currentGun.mag);
 
                     PlayShootSound(0.3f);
                 }
@@ -204,7 +193,7 @@ public class WeaponLogic : MonoBehaviour
                     PlaySound(m_shootEmptySound);
                 }
 
-                m_shotCooldown = MAX_SHOT_COOLDOWN;
+                m_shotCooldown = currentGun.MAX_COOL_DOWN;
             }
         }
 
@@ -316,7 +305,7 @@ public class WeaponLogic : MonoBehaviour
 
     void Reload()
     {
-        if (m_mag > 0 && m_ammo < MAX_AMMO)
+        if (currentGun.mag > 0 && currentGun.ammo < currentGun.MAX_AMMO)
         {
             QuitAim();
 
@@ -343,15 +332,10 @@ public class WeaponLogic : MonoBehaviour
 
     public void endReload()
     {
-        m_mag += m_ammo;
-        currentGun.mag += m_ammo;
-
-        m_ammo = m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
-        currentGun.ammo = m_mag>MAX_AMMO?MAX_AMMO:m_mag;
-
-        m_mag -= m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
-        currentGun.mag -= m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
-        UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
+        currentGun.mag += currentGun.ammo;
+        currentGun.ammo = currentGun.mag > currentGun.MAX_AMMO ? currentGun.MAX_AMMO : currentGun.mag;
+        currentGun.mag -= currentGun.ammo = currentGun.mag > currentGun.MAX_AMMO ? currentGun.MAX_AMMO : currentGun.mag;
+        UIManager.Instance.setAmmoNumber(currentWeapon, currentGun.ammo, currentGun.mag);
         m_isReloading = false;
         m_enableFire = true;
     }
@@ -401,11 +385,10 @@ public class WeaponLogic : MonoBehaviour
             if (hitTag == "mag" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
                 Destroy(rayHit.collider.gameObject);
-                m_mag += 30;
                 m_AR.mag += 30;
-                m_Handgun.mag += 30;
+                m_Handgun.mag += 15;
                 m_handGrenadeNum += 2;
-                UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
+                UIManager.Instance.setAmmoNumber(currentWeapon, currentGun.ammo, currentGun.mag);
             }
             else if (hitTag == "scope" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
@@ -516,12 +499,8 @@ public class WeaponLogic : MonoBehaviour
                 currentGun = m_Handgun;
             }
 
-            m_ammo = currentGun.ammo;
-            m_mag = currentGun.mag;
-            MAX_AMMO = currentGun.MAX_AMMO;
-            MAX_SHOT_COOLDOWN = currentGun.MAX_COOL_DOWN;
-
             m_isReloading = false;
+            m_enableFire = true;
         }
     }
 
