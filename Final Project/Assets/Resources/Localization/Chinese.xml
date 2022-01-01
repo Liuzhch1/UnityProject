@@ -67,4 +67,9 @@
     <Key>Retry</Key>
     <Value>重新挑战</Value>
   </Entry>
+
+  <Entry>
+    <Key>Dialogue Welcome</Key>
+    <Value>欢迎你，新特工！</Value>
+  </Entry>
 </Localization>

@@ -67,4 +67,9 @@
     <Key>Retry</Key>
     <Value>Retry</Value>
   </Entry>
+
+  <Entry>
+    <Key>Dialogue Welcome</Key>
+    <Value>Welcome, new agent!</Value>
+  </Entry>
 </Localization>
