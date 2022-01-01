@@ -112,6 +112,7 @@ public class UIManager : MonoBehaviour
                 m_deathMenu.gameObject.SetActive(false);
                 m_crosshair.gameObject.SetActive(true);
                 m_healthPanel.gameObject.SetActive(true);
+                m_dialogue.gameObject.SetActive(true);
                 displayWeapon(m_displayWeapon);
                 break;
             case UIState.Menu:
@@ -205,6 +206,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void displayRespawn() {
+        switchState(UIState.Game);
         transform.GetChild(2).GetComponent<Animator>().SetBool("Death", false);
     }
 
