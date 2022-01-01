@@ -225,7 +225,7 @@ public class FPSplayerLogic : MonoBehaviour
         m_health = Mathf.Clamp(m_health, 0, 100);
         UIManager.Instance.setHealth(m_health);
         Debug.Log(m_health);
-        if (m_health <= 0)
+        if (m_health <= 0 && m_isAlive)
         {
             m_isAlive = false;
             DisplayDeath();
