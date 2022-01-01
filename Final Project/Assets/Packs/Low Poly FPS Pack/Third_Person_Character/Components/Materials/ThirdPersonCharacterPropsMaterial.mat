@@ -35,19 +35,67 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Emission:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emissive_01:
+        m_Texture: {fileID: 2800000, guid: 03db659f8a637b744943d87d1a6d7c5e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Glow_Texture:
+        m_Texture: {fileID: 2800000, guid: 5337fcdcdfb4ee84da7302c25621db92, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GroundMask:
+        m_Texture: {fileID: 2800000, guid: 1b35185671c1afb4cb44f0ff9e46e3d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HoloLines:
+        m_Texture: {fileID: 2800000, guid: 54b3339ded3457f42945715232faa0bc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: c71bb2ed9323ca34ea499f563e65c0ec, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Main_Normals:
+        m_Texture: {fileID: 2800000, guid: 2ee8591f903c8aa4382ef533fa1a51af, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Main_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Noise:
+        m_Texture: {fileID: 2800000, guid: d4500c634f3a0684783559e1222d3ab5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: 63d3b2d11a818734eb3a55461e2c2f61, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal_Rocks:
+        m_Texture: {fileID: 2800000, guid: ed3b6c1d3e78c9f478c1753a9ab5f2a0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal_Triplanar:
+        m_Texture: {fileID: 2800000, guid: 99e0b922816cbe64799f178686a4f5d5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Overlay:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -55,24 +103,107 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Planet_Texture:
+        m_Texture: {fileID: 2800000, guid: 0cff01051e6502246b75931fe5e9451d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Plant_Mask:
+        m_Texture: {fileID: 2800000, guid: 1fcd00d11947d51428515be1a2f64679, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Rim_Texture:
+        m_Texture: {fileID: 2800000, guid: 00d0df43882e89644bb0e0901843d05c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Rock_Mask_Triplanar:
+        m_Texture: {fileID: 2800000, guid: 4c63ce07744d12e40bcac47b1c0f7c6d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Side_Triplanar:
+        m_Texture: {fileID: 2800000, guid: 358612fdf9c718f4fa6f01d88164b407, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 6c2c1457696dd074d955805ba1175e78, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample2:
+        m_Texture: {fileID: 2800000, guid: a6cf282deec624741b185ff6bfae5cc6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tree_NoiseTexture1:
+        m_Texture: {fileID: 2800000, guid: 661313bdb77fa944882bb60df3b5cfb8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _White_Triplanar:
+        m_Texture: {fileID: 2800000, guid: 4cdae8663588a164f93c95e734dcb6f2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Big_WindAmount: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DirtAmount: 1
+    - _Distance: 0
     - _DstBlend: 0
+    - _Emission_Power: 0
+    - _FallOff: 0
+    - _Falloff: 0.001
     - _GlossMapScale: 1
     - _Glossiness: 0.321
     - _GlossyReflections: 1
+    - _Glow_Intensity: 1
+    - _Ground_Detail_Power: 0.5
+    - _Ground_Detail_Scale: 0.1
+    - _Ground_Falloff: 5
+    - _Ground_Pebble_Scale: 0.05
     - _Metallic: 0.71
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _Offset: 0
+    - _Opacity: 0.8
     - _Parallax: 0.02
+    - _Planet_Light: 1
+    - _Rim_Intensity: 1
+    - _Scroll_Speed: 0.1
+    - _Small_Wave: 0
+    - _Small_WindSpeed: 0
+    - _SmoothnessSpec: 0.2
     - _SmoothnessTextureChannel: 0
+    - _Soft_Blend_Switch: 0
+    - _Spec_Metallic: 0.5
+    - _Spec_Smoothness: 0.5
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Tiling: 0
     - _UVSec: 0
+    - _UV_Based_Toggle: 0
     - _ZWrite: 1
+    - __dirty: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorBottom: {r: 0.8161765, g: 0.9087222, b: 1, a: 0}
+    - _ColorTop: {r: 0, g: 1, b: 0.7517242, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Emissive_Colour: {r: 0, g: 0, b: 0, a: 0}
+    - _Glow_Tint: {r: 1, g: 0, b: 0, a: 0}
+    - _Ground_Colour: {r: 0.4603157, g: 0.4718575, b: 0.4852941, a: 0}
+    - _Neon_Colour_01: {r: 0.6965517, g: 1, b: 0, a: 0}
+    - _Planet_Tint: {r: 1, g: 0.821501, b: 0.5955882, a: 0}
+    - _Plant_Colour: {r: 0.3235835, g: 0.5864827, b: 0.7720588, a: 0}
+    - _Road_Colour: {r: 0.3161765, g: 0.2836289, b: 0.2836289, a: 0}
+    - _Rock_Colour: {r: 0.3161765, g: 0.2836289, b: 0.2836289, a: 0}
   m_BuildTextureStacks: []
