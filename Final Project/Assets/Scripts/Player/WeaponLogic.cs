@@ -248,12 +248,11 @@ public class WeaponLogic : MonoBehaviour
 
         if(Input.GetButtonDown("HandGrenade") && !m_isReloading)
         {
-            if (m_handGrenadeNum > 0)
-            {
-                m_animator.SetTrigger("ThrowHandGrenade");
-            }
+            ThrowHandGrenade();
+            
         }
     }
+
 
     private void FixedUpdate()
     {
@@ -332,7 +331,13 @@ public class WeaponLogic : MonoBehaviour
             // reload empty
         }
     }
-
+    public void ThrowHandGrenade() {
+        if (m_handGrenadeNum > 0)
+        {
+            m_animator.SetTrigger("ThrowHandGrenade");
+        }
+    }
+    
     public void QuitAim() {
         if (m_isAiming)
         {

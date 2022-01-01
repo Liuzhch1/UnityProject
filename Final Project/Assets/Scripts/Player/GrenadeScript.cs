@@ -93,16 +93,16 @@ public class GrenadeScript : MonoBehaviour {
             switch(hit.GetComponent<Collider>().tag)
             {
                 case "Enemy01":
-                    hit.gameObject.GetComponent<FireRobLogic>().TakeDamage(20);
+                    hit.gameObject.GetComponent<FireRobLogic>().TakeDamage(50);
                     break;
                 case "Enemy02":
-                    hit.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(20);
+                    hit.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(50);
                     break;
                 case "Boss":
-                    hit.gameObject.GetComponent<BossLogic>().TakeDamage(20);
+                    hit.gameObject.GetComponent<BossLogic>().TakeDamage(100);
                     break;
                 case "Player":
-                    hit.gameObject.GetComponent<FPSplayerLogic>().TakeDamage(20);
+                    hit.gameObject.GetComponent<FPSplayerLogic>().TakeDamage(30);
                     break;
             }
 
