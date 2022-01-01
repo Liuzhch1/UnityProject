@@ -2209,7 +2209,7 @@ GameObject:
   - component: {fileID: 9194107424576517155}
   m_Layer: 0
   m_Name: Type1CloseEnemy
-  m_TagString: Enemy01
+  m_TagString: Enemy02
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

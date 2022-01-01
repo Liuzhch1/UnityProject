@@ -16,6 +16,8 @@ TagManager:
   - Target
   - Concrete
   - key
+  - Boss
+  - Enemy02
   layers:
   - Default
   - TransparentFX

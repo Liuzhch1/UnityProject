@@ -1695,7 +1695,7 @@ GameObject:
   - component: {fileID: 4929505667926118384}
   m_Layer: 0
   m_Name: Type3CloseEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy02
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
