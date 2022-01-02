@@ -1754,7 +1754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_closeEnemyType: 2
   rayCastPoint: {fileID: 4928649380530213839}
-  m_health: 170
+  m_health: 100
 --- !u!195 &4929505667926118384
 NavMeshAgent:
   m_ObjectHideFlags: 0

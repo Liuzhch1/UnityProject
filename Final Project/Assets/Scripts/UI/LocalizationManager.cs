@@ -74,12 +74,12 @@ public class LocalizationManager : MonoBehaviour
             if(!m_localizationData.ContainsKey(key))
             {
                 // Add the key
-                Debug.Log("Adding key: " + key + " with value: " + value);
+                // Debug.Log("Adding key: " + key + " with value: " + value);
                 m_localizationData[key] = value;
             }
             else
             {
-                Debug.LogError("Already existing key: " + key);
+                // Debug.LogError("Already existing key: " + key);
             }
         }
     }

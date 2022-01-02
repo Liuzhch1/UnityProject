@@ -25,12 +25,6 @@ public class SaveManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Save();
-    }
-
     // Update is called once per frame
     void Update()
     {

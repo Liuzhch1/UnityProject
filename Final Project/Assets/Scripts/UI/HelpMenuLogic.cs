@@ -8,7 +8,7 @@ public class HelpMenuLogic : MonoBehaviour
     public void Continue() {
         UIManager.Instance.switchState(UIState.Game);
     }
-
+    
     public void Load() {
         FPSplayerLogic playerLogic = FindObjectOfType<FPSplayerLogic>();
         SaveManager.Instance.Load();
@@ -17,5 +17,6 @@ public class HelpMenuLogic : MonoBehaviour
 
     public void Menu() {
         SceneManager.LoadScene("MainMenuScene");
+
     }
 }

@@ -152,18 +152,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // public void Retry() {
-    //     SceneManager.LoadScene("GameScene");
-    // }
-
-    // public void Menu() {
-    //     SceneManager.LoadScene("MenuScene");
-    // }
-
-    // public void DisplayRetryPanel() {
-    //     transform.GetChild(3).gameObject.SetActive(true);
-    // }
-
     public void setShootingCrosshair() {
         m_canvas.GetChild(4).GetComponent<CrosshairLogic>().SetShooting();
     }
@@ -229,8 +217,11 @@ public class UIManager : MonoBehaviour
     }
 
     public void setHealth(int health) {
-        Slider healthSlider = m_healthPanel.GetChild(1).GetComponent<Slider>();
-        healthSlider.value = health;
+        if (m_healthPanel) {
+            Slider healthSlider = m_healthPanel.GetChild(1).GetComponent<Slider>();
+            healthSlider.value = health;
+        }
+        
     }
 
 
