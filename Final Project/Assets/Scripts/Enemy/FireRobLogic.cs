@@ -73,12 +73,6 @@ public class FireRobLogic : MonoBehaviour
         {
             EfficientDetectPlayer();
         }
-        if (!m_player.GetComponent<FPSplayerLogic>().m_isAlive || isDead)
-        {
-            m_animator.SetFloat("State",0.0f);
-            isAlert=false;
-            return;
-        }
         switch (m_fireRobState)
         {
             case (FireRobState.Idle):
@@ -232,15 +226,11 @@ public class FireRobLogic : MonoBehaviour
     #region Detect
     void EfficientDetectPlayer()
     {
-        if (isAlert)
-        {
-            return;
-        }
-        if(!m_player.GetComponent<FPSplayerLogic>().m_isAlive || Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
-        {
-            return;
-        }
         isAlert = false;
+        if (!m_player.GetComponent<FPSplayerLogic>().m_isAlive || Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
+        {
+            return;
+        }
         Vector3 dir = m_player.transform.position - transform.position;
         dir.y = 0;
         float toPlayerAngle = Vector3.Angle(transform.forward, dir);
