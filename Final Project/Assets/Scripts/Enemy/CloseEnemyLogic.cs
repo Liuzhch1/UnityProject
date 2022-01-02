@@ -169,7 +169,7 @@ public class CloseEnemyLogic : MonoBehaviour
             m_navMeshAgent.speed = CHASE_SPEED;
             return;
         }
-        if (m_navMeshAgent.isStopped || m_navMeshAgent.remainingDistance < 1.0f || patrolTime < 0.0f)
+        if (m_navMeshAgent.isStopped || Vector3.Distance(transform.position,m_navMeshAgent.destination) < 1.0f || patrolTime < 0.0f)
         {
             m_enemyState = CloseEnemyState.Idle;
             m_animator.SetInteger("State", 1);
@@ -384,9 +384,12 @@ public class CloseEnemyLogic : MonoBehaviour
         transform.rotation = Quaternion.Euler(closeEnemyRotX, closeEnemyRotY, closeEnemyRotZ);
         m_enemyState = CloseEnemyState.Idle;
         m_animator.SetInteger("State", 1);
+        m_animator.SetTrigger("Load");
+        m_navMeshAgent.SetDestination(transform.position);
+        patrolTime = MAX_PATROL_TIME;
+        idleTime = MAX_IDLETIME;
         isAlert=false;
         isDead = false;
         m_collider.enabled = true;
-        m_navMeshAgent.enabled = true;
     }
 }
