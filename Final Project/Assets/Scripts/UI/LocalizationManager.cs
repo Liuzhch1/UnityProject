@@ -86,6 +86,7 @@ public class LocalizationManager : MonoBehaviour
 
     public string GetLocalizedValue(string key)
     {
+        //Debug.Log("key="+key);
         return m_localizationData[key];
     }
 

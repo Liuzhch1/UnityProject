@@ -22,15 +22,12 @@ public class SaveManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        m_playerLogic = FindObjectOfType<FPSplayerLogic>();
-        m_closeEnemynemyLogic = FindObjectsOfType<CloseEnemyLogic>();
-        m_fireRobLogic = FindObjectsOfType<FireRobLogic>();
-        m_cameraLogic = FindObjectOfType<FPCameraLogic>();
         Save();
     }
 
@@ -52,6 +49,13 @@ public class SaveManager : MonoBehaviour
 
     public void Save()
     {
+        m_playerLogic = FindObjectOfType<FPSplayerLogic>();
+        m_closeEnemynemyLogic = FindObjectsOfType<CloseEnemyLogic>();
+        m_fireRobLogic = FindObjectsOfType<FireRobLogic>();
+        m_cameraLogic = FindObjectOfType<FPCameraLogic>();
+
+        if (!m_playerLogic) return;
+
         m_playerLogic.Save();
         m_cameraLogic.Save();
 
@@ -69,6 +73,13 @@ public class SaveManager : MonoBehaviour
 
     public void Load()
     {
+        m_playerLogic = FindObjectOfType<FPSplayerLogic>();
+        m_closeEnemynemyLogic = FindObjectsOfType<CloseEnemyLogic>();
+        m_fireRobLogic = FindObjectsOfType<FireRobLogic>();
+        m_cameraLogic = FindObjectOfType<FPCameraLogic>();
+
+        if (!m_playerLogic) return;
+        
         m_playerLogic.Load();
         m_cameraLogic.Load();
 

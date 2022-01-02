@@ -96,15 +96,15 @@
   </Entry>
   <Entry>
     <Key>OpenDialogue1</Key>
-    <Value>测试，测试。你能听到吗，Nail特工？这里是指挥官。</Value>
+    <Value>测试，测试。你能听到吗，新特工？这里是指挥官。</Value>
   </Entry>
   <Entry>
     <Key>OpenDialogue2</Key>
-    <Value>是的，长官。这里是Nail。</Value>
+    <Value>收到，长官。</Value>
   </Entry>
   <Entry>
     <Key>OpenDialogue3</Key>
-    <Value>听着，这所实验基地里发生了严重的事故，制造出了一头变异怪兽。</Value>
+    <Value>听着，这所实验基地里发生了严重的事故，制造出了许多变异怪兽。</Value>
   </Entry>
   <Entry>
     <Key>OpenDialogue4</Key>
