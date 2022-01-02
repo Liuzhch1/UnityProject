@@ -136,6 +136,15 @@ public class WeaponLogic : MonoBehaviour
     [SerializeField]
     Transform m_grenadeSpawnPoint;
 
+    [SerializeField]
+    ParticleSystem m_muzzleFlash;
+
+    [SerializeField]
+    Light m_muzzleFlashLight;
+
+    [SerializeField]
+    ParticleSystem m_SparkParticles;
+
     #endregion
 
     #region Unity
@@ -150,17 +159,7 @@ public class WeaponLogic : MonoBehaviour
         m_AR = new Gun();
         m_Handgun = new Gun();
 
-        m_AR.MAX_AMMO = 30;
-        m_AR.MAX_COOL_DOWN = 0.15f;
-        m_AR.ammo = 30;
-        m_AR.mag = 150;
-
-        m_Handgun.MAX_AMMO = 10;
-        m_Handgun.MAX_COOL_DOWN = 0.35f;
-        m_Handgun.ammo = 10;
-        m_Handgun.mag = 50;
-
-        currentGun = m_AR;
+        InitGun();
 
         m_healthPack = 3;
 
@@ -260,13 +259,14 @@ public class WeaponLogic : MonoBehaviour
         }
     }
 
-
     private void FixedUpdate()
     {
         if (m_isKnifeAttacking)
         {
             KnifeAttack();
         }
+
+        m_muzzleFlashLight.enabled = false;
     }
     #endregion
 
@@ -306,8 +306,17 @@ public class WeaponLogic : MonoBehaviour
         }
 
         // Play Muzzle VFX & Turn light on
-        //m_muzzleFlash.Play(true);
-        //m_muzzleFlashLight.enabled = true;
+        if(currentWeapon == Weapon.AR)
+        {
+            m_muzzleFlash.Play(true);
+        }
+        else
+        {
+            m_SparkParticles.Play(true);
+        }
+        
+        m_muzzleFlashLight.enabled = true;
+        
 
         // Add recoil to Camera
         switch (currentWeapon) {
@@ -574,6 +583,7 @@ public class WeaponLogic : MonoBehaviour
 
     public void disanbleRunFire()
     {
+        if (m_isAiming) return;
         m_enableFire = false;
         m_isRunning = true;
     }
@@ -650,6 +660,21 @@ public class WeaponLogic : MonoBehaviour
     {
         return m_isAiming;
     }
+
+    void InitGun()
+    {
+        m_AR.MAX_AMMO = 30;
+        m_AR.MAX_COOL_DOWN = 0.15f;
+        m_AR.ammo = 30;
+        m_AR.mag = 150;
+
+        m_Handgun.MAX_AMMO = 10;
+        m_Handgun.MAX_COOL_DOWN = 0.35f;
+        m_Handgun.ammo = 10;
+        m_Handgun.mag = 50;
+
+        currentGun = m_AR;
+    }
     #endregion
 
     #region Sounds Methods
@@ -683,6 +708,65 @@ public class WeaponLogic : MonoBehaviour
     {
         m_audioSource.volume = volume;
         m_audioSource.PlayOneShot(tmp);
+    }
+    #endregion
+
+    #region Load and Save
+    public void Load()
+    {
+        m_isReloading = false;
+        m_enableFire = true;
+        m_isRunning = false;
+        m_isKnifeAttacking = false;
+        m_isAiming = false;
+        m_isUsingScope = false;
+        
+        m_healthPack = 3;
+        m_handGrenadeNum = 3;
+        
+
+        InitGun();
+
+        int hasScope = PlayerPrefs.GetInt("hasScope");
+        if (hasScope == 1)
+        {
+            m_hasScope = true;
+        }
+        else
+        {
+            m_hasScope = false;
+        }
+
+        int hasKey = PlayerPrefs.GetInt("hasKey");
+        if (hasKey == 1)
+        {
+            m_hasKey = true;
+        }
+        else
+        {
+            m_hasKey = false;
+        }
+    }
+
+    public void Save()
+    {
+        if (m_hasScope)
+        {
+            PlayerPrefs.SetInt("hasScope", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("hasScope", 0);
+        }
+
+        if (m_hasKey)
+        {
+            PlayerPrefs.SetInt("hasKey", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("hasKey", 0);
+        }
     }
     #endregion
 }
