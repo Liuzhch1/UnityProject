@@ -73,8 +73,10 @@ public class FireRobLogic : MonoBehaviour
         {
             EfficientDetectPlayer();
         }
-        if (!m_player || isDead)
+        if (!m_player.GetComponent<FPSplayerLogic>().m_isAlive || isDead)
         {
+            m_animator.SetFloat("State",0.0f);
+            isAlert=false;
             return;
         }
         switch (m_fireRobState)
@@ -234,7 +236,7 @@ public class FireRobLogic : MonoBehaviour
         {
             return;
         }
-        if(!m_player || Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
+        if(!m_player.GetComponent<FPSplayerLogic>().m_isAlive || Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
         {
             return;
         }
@@ -326,6 +328,7 @@ public class FireRobLogic : MonoBehaviour
         transform.rotation = Quaternion.Euler(playerRotX, playerRotY, playerRotZ);
         m_fireRobState = FireRobState.Idle;
         m_animator.SetFloat("State", 0.0f);
+        isAlert=false;
         isDead = false;
         m_collider.enabled = true;
         m_navMeshAgent.enabled = true;

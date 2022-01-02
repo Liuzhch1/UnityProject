@@ -97,6 +97,14 @@ public class CloseEnemyLogic : MonoBehaviour
         m_enemyState = CloseEnemyState.Idle;
         m_collider = GetComponent<Collider>();
         m_maxHealth = m_health;
+
+        bool requireLoad = PlayerPrefs.GetInt("Load") == 1;
+        if (requireLoad) {
+            SaveManager.Instance.Load();
+        } else {
+            SaveManager.Instance.Save();
+        }
+
     }
 
     // Update is called once per frame
@@ -106,6 +114,7 @@ public class CloseEnemyLogic : MonoBehaviour
         {
             return;
         }
+        
         switch (m_enemyState)
         {
             case (CloseEnemyState.Idle):
@@ -210,9 +219,10 @@ public class CloseEnemyLogic : MonoBehaviour
     }
     void UpdateAttackState()
     {
-        if (!m_player)
-        {
-            m_enemyState = CloseEnemyState.Idle;
+        if(!m_player.GetComponent<FPSplayerLogic>().m_isAlive){
+            isAlert=false;
+            m_enemyState=CloseEnemyState.Patrol;
+            m_animator.SetInteger("State",2);
             return;
         }
         if (!isAlert)
@@ -374,8 +384,9 @@ public class CloseEnemyLogic : MonoBehaviour
         transform.rotation = Quaternion.Euler(playerRotX, playerRotY, playerRotZ);
         m_enemyState = CloseEnemyState.Idle;
         m_animator.SetInteger("State", 1);
+        isAlert=false;
         isDead = false;
-        m_collider.enabled = false;
+        m_collider.enabled = true;
         m_navMeshAgent.enabled = true;
     }
 }

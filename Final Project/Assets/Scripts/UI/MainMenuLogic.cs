@@ -12,13 +12,14 @@ public class MainMenuLogic : MonoBehaviour
 
     public void OnStartClicked()
     {
+        PlayerPrefs.SetInt("Load", 0);
         SceneManager.LoadScene("MainMapScene");
     }
 
     public void OnContinueClicked()
     {
+        PlayerPrefs.SetInt("Load", 1);
         SceneManager.LoadScene("MainMapScene");
-        SaveManager.Instance.Load();
     }
 
     public void OnLanguageClicked()

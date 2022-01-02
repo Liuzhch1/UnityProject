@@ -67,6 +67,13 @@ public class FPSplayerLogic : MonoBehaviour
         m_camera = GetComponentInChildren<Camera>();
         m_cameraLogic = GetComponentInChildren<FPCameraLogic>();
         m_weaponLogic = FindObjectOfType<WeaponLogic>();
+
+        bool requireLoad = PlayerPrefs.GetInt("Load") == 1;
+        if (requireLoad) {
+            SaveManager.Instance.Load();
+        } else {
+            SaveManager.Instance.Save();
+        }
     }
 
     // Update is called once per frame
@@ -228,6 +235,7 @@ public class FPSplayerLogic : MonoBehaviour
         if (m_health <= 0 && m_isAlive)
         {
             m_isAlive = false;
+            gameObject.GetComponent<CapsuleCollider>().enabled=false;
             DisplayDeath();
         }
     }
@@ -361,6 +369,7 @@ public class FPSplayerLogic : MonoBehaviour
         m_rotationY = PlayerPrefs.GetFloat("PlayerRotY");
 
         m_characterController.enabled = true;
+        gameObject.GetComponent<CapsuleCollider>().enabled=true;
     }
     #endregion
 

@@ -45,6 +45,13 @@ public class FPCameraLogic : MonoBehaviour
         m_camera = m_cameraObj.GetComponent<Camera>();
         m_FPSplayerLogic = FindObjectOfType<FPSplayerLogic>();
         m_FOV = m_camera.fieldOfView;
+
+        bool requireLoad = PlayerPrefs.GetInt("Load") == 1;
+        if (requireLoad) {
+            Load();
+        } else {
+            Save();
+        }
     }
 
     // Update is called once per frame
