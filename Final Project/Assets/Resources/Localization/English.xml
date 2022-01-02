@@ -1,4 +1,4 @@
-﻿<Localization>
+<Localization>
   <Entry>
     <Key>Title</Key>
     <Value>The Adventure</Value>
@@ -25,16 +25,16 @@
     <Value>Move</Value>
   </Entry>
   <Entry>
-    <Key>Rotate</Key>
-    <Value>Rotate</Value>
-  </Entry>
-  <Entry>
     <Key>Shoot</Key>
     <Value>Shoot</Value>
   </Entry>
   <Entry>
     <Key>Aim</Key>
     <Value>Aim</Value>
+  </Entry>
+  <Entry>
+    <Key>ScopeAim</Key>
+    <Value>Scope Aim</Value>
   </Entry>
   <Entry>
     <Key>Knife</Key>
@@ -96,15 +96,15 @@
   </Entry>
   <Entry>
     <Key>OpenDialogue1</Key>
-    <Value>Test, test. Can you hear me, Agent Nail? This is commander.</Value>
+    <Value>Test, test. Can you hear me, new agent? This is commander.</Value>
   </Entry>
   <Entry>
     <Key>OpenDialogue2</Key>
-    <Value>Yes, sir. This is Nail.</Value>
+    <Value>Copy that, sir. </Value>
   </Entry>
   <Entry>
     <Key>OpenDialogue3</Key>
-    <Value>Listen, a serious accident has occurred in this experimental base, which made a mutated beast.</Value>
+    <Value>Listen, a serious accident has occurred in this experimental base, which made many mutated beasts.</Value>
   </Entry>
   <Entry>
     <Key>OpenDialogue4</Key>
