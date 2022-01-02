@@ -44,6 +44,8 @@ public class CloseEnemyLogic : MonoBehaviour
 
     const float MAX_WALKTIME=5.0f;
     float walkTime = MAX_WALKTIME;
+    const float MAX_PATROL_TIME = 5.0f;
+    float patrolTime = MAX_PATROL_TIME;
     #endregion
 
     GameObject m_player;
@@ -158,12 +160,15 @@ public class CloseEnemyLogic : MonoBehaviour
             m_navMeshAgent.speed = CHASE_SPEED;
             return;
         }
-        if (m_navMeshAgent.isStopped || m_navMeshAgent.remainingDistance < 1.0f)
+        if (m_navMeshAgent.isStopped || m_navMeshAgent.remainingDistance < 1.0f || patrolTime < 0.0f)
         {
             m_enemyState = CloseEnemyState.Idle;
             m_animator.SetInteger("State", 1);
             m_navMeshAgent.SetDestination(transform.position);
+            patrolTime = MAX_PATROL_TIME;
         }
+        patrolTime -= Time.deltaTime;
+        m_animator.SetInteger("State", 2);
     }
     void UpdateChaseState()
     {
@@ -266,6 +271,10 @@ public class CloseEnemyLogic : MonoBehaviour
         if (!m_player)
         {
             isAlert = false;
+            return;
+        }
+        if (isAlert)
+        {
             return;
         }
         isAlert = false;

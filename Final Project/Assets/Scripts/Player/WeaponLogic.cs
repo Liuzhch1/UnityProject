@@ -426,6 +426,7 @@ public class WeaponLogic : MonoBehaviour
             }
             else if (hitTag == "radiationCloudController" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
+                UIManager.Instance.displayDialogue(Speaker.Agent, "TriggerDialogue", 3.0f);
                 List<GameObject> childList = new List<GameObject>();
                 int childCount = rayHit.transform.childCount;
                 for (int i = 0; i < childCount; i++)
@@ -439,9 +440,11 @@ public class WeaponLogic : MonoBehaviour
                 }
             }
             else if(hitTag == "CheckPoint" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
+                UIManager.Instance.displayDialogue(Speaker.Agent, "SaveDialogue", 3.0f);
                 m_saveManager.Save();
             }
             else if(hitTag == "key" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
+                UIManager.Instance.displayDialogue(Speaker.Agent, "KeyDialogue", 3.0f);
                 List<GameObject> childList = new List<GameObject>();
                 int childCount = rayHit.transform.childCount;
                 for (int i = 0; i < childCount; i++)
