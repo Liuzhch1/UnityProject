@@ -69,6 +69,10 @@ public class FireRobLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
         if (!isAlert)
         {
             EfficientDetectPlayer();
@@ -295,9 +299,6 @@ public class FireRobLogic : MonoBehaviour
         PlayerPrefs.SetFloat("FireRobRotX" + index, transform.rotation.eulerAngles.x);
         PlayerPrefs.SetFloat("FireRobRotY" + index, transform.rotation.eulerAngles.y);
         PlayerPrefs.SetFloat("FireRobRotZ" + index, transform.rotation.eulerAngles.z);
-
-
-        PlayerPrefs.SetInt("FireRobHealth" + index, m_health);
         
     }
 
@@ -311,17 +312,18 @@ public class FireRobLogic : MonoBehaviour
         float fireRobRotY = PlayerPrefs.GetFloat("FireRobRotY" + index);
         float fireRobRotZ = PlayerPrefs.GetFloat("FireRobRotZ" + index);
 
-        m_health = PlayerPrefs.GetInt("FireRobHealth" + index);
+        m_health = m_maxHealth;
 
         m_navMeshAgent.enabled = false;
         transform.position = new Vector3(fireRobPosX, fireRobPosY, fireRobPosZ);
         transform.rotation = Quaternion.Euler(fireRobRotX, fireRobRotY, fireRobRotZ);
+        m_navMeshAgent.enabled = true;
+        m_navMeshAgent.SetDestination(transform.position);
         m_fireRobState = FireRobState.Idle;
         m_animator.SetFloat("State", 0.0f);
         m_animator.SetTrigger("Load");
         isAlert =false;
         isDead = false;
         m_collider.enabled = true;
-        m_navMeshAgent.enabled = true;
     }
 }

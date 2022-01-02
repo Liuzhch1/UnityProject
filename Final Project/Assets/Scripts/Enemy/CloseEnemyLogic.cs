@@ -180,15 +180,9 @@ public class CloseEnemyLogic : MonoBehaviour
     }
     void UpdateChaseState()
     {
-        if (!m_player)
-        {
-            m_enemyState = CloseEnemyState.Idle;
-            m_navMeshAgent.speed = PATROL_SPEED;
-            return;
-        }
         if(!isAlert)
         {
-            if(chaseTime >= 0)
+            if(chaseTime >= 0 && m_playerLogic.m_isAlive)
             {
                 chaseTime -= Time.deltaTime;
                 m_navMeshAgent.SetDestination(m_player.transform.position);
@@ -198,6 +192,7 @@ public class CloseEnemyLogic : MonoBehaviour
                 // to long lose player, turn to idle state
                 m_enemyState = CloseEnemyState.Idle;
                 m_animator.SetInteger("State", 1);
+                idleTime = 0.0f;
                 m_navMeshAgent.SetDestination(transform.position);
                 m_navMeshAgent.speed = PATROL_SPEED;
                 chaseTime = MAX_OUTRADIUS_CHASETIME;
@@ -218,18 +213,12 @@ public class CloseEnemyLogic : MonoBehaviour
     }
     void UpdateAttackState()
     {
-        if(!m_player.GetComponent<FPSplayerLogic>().m_isAlive){
-            isAlert=false;
-            m_enemyState=CloseEnemyState.Patrol;
-            m_animator.SetInteger("State",2);
-            return;
-        }
         if (!isAlert)
         {
-            m_enemyState = CloseEnemyState.Chase;
+            m_enemyState = CloseEnemyState.Idle;
+            m_animator.SetInteger("State", 3);
             return;
         }
-        
         m_animator.SetInteger("State", 4);
         LookAtPlayer();
         if (Vector3.Distance(transform.position, m_player.transform.position) > ATTACK_RADIUS+1.0f)
@@ -240,7 +229,7 @@ public class CloseEnemyLogic : MonoBehaviour
     }
     void UpdateWalkState()
     {
-        if (!m_player)
+        if (!isAlert)
         {
             m_enemyState = CloseEnemyState.Idle;
             return;
@@ -339,7 +328,10 @@ public class CloseEnemyLogic : MonoBehaviour
     }
     public void Attack()
     {
-        m_playerLogic.TakeDamage(DAMAGE);
+        if (Vector3.Distance(transform.position, m_player.transform.position) < ATTACK_RADIUS + 0.6f)
+        {
+            m_playerLogic.TakeDamage(DAMAGE);
+        }
     }
     public void LookAtPlayer()
     {
@@ -377,6 +369,7 @@ public class CloseEnemyLogic : MonoBehaviour
         m_navMeshAgent.enabled = false;
         transform.position = new Vector3(closeEnemyPosX, closeEnemyPosY, closeEnemyPosZ);
         transform.rotation = Quaternion.Euler(closeEnemyRotX, closeEnemyRotY, closeEnemyRotZ);
+        m_navMeshAgent.enabled = true;
         m_enemyState = CloseEnemyState.Idle;
         m_animator.SetInteger("State", 1);
         m_animator.SetTrigger("Load");

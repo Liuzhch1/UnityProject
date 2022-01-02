@@ -19,7 +19,7 @@ enum BossState
 public class BossLogic : MonoBehaviour
 {
     #region Parameter
-    const float WALK_SPEED = 1.6f;
+    const float WALK_SPEED = 2.0f;
     const float FASTRUN_SPEED = 7.0f;
     const float ATTACK_RADIUS = 3.2f;
 
@@ -34,7 +34,7 @@ public class BossLogic : MonoBehaviour
     const float JUMPATTACK_SPEED = 3.0f;
     const float JUMPATTACK_DISTANCE = 3.7f * JUMPATTACK_SPEED;
     const float JUMPATTACK_BIAS = 0.1f;
-    const float JUMP_ATTACKRADUIS = 5.0f;
+    public const float JUMP_ATTACKRADUIS = 7.0f;
 
     const float MAX_INVISIBLE_TIME = 5.0f;
     float invisibleTime = MAX_INVISIBLE_TIME;
@@ -323,7 +323,10 @@ public class BossLogic : MonoBehaviour
     }
     public void Attack()
     {
-        m_playerLogic.TakeDamage(ATTACK_DAMAGE);
+        if (ToPlayerDistance() < ATTACK_RADIUS + 1.0f)
+        {
+            m_playerLogic.TakeDamage(ATTACK_DAMAGE);
+        }
     }
     public void JumpAttack()
     {
