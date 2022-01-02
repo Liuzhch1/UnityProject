@@ -115,6 +115,12 @@ public class WeaponLogic : MonoBehaviour
     AudioClip m_shootEmptySound;
 
     [SerializeField]
+    AudioClip m_pickUp;
+
+    [SerializeField]
+    AudioClip m_trigger;
+
+    [SerializeField]
     AudioClip m_aimIn;
 
     [SerializeField]
@@ -400,6 +406,7 @@ public class WeaponLogic : MonoBehaviour
             Debug.Log("Try to pick: " + hitTag);
             if (hitTag == "mag" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
+                PlaySound(m_pickUp);
                 Destroy(rayHit.collider.gameObject);
                 m_AR.mag += 30;
                 m_Handgun.mag += 15;
@@ -408,6 +415,7 @@ public class WeaponLogic : MonoBehaviour
             }
             else if (hitTag == "scope" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
+                PlaySound(m_pickUp);
                 List<GameObject> childList = new List<GameObject>();
                 int childCount = rayHit.transform.childCount;
                 for (int i = 0; i < childCount; i++)
@@ -426,11 +434,13 @@ public class WeaponLogic : MonoBehaviour
             }
             else if (hitTag == "healthPack" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
+                PlaySound(m_pickUp);
                 Destroy(rayHit.collider.gameObject);
                 m_healthPack += 1;
             }
             else if (hitTag == "radiationCloudController" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
+                PlaySound(m_trigger);
                 UIManager.Instance.displayDialogue(Speaker.Agent, "TriggerDialogue", 3.0f);
                 List<GameObject> childList = new List<GameObject>();
                 int childCount = rayHit.transform.childCount;
@@ -449,6 +459,7 @@ public class WeaponLogic : MonoBehaviour
                 m_saveManager.Save();
             }
             else if(hitTag == "key" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
+                PlaySound(m_pickUp);
                 UIManager.Instance.displayDialogue(Speaker.Agent, "KeyDialogue", 3.0f);
                 List<GameObject> childList = new List<GameObject>();
                 int childCount = rayHit.transform.childCount;

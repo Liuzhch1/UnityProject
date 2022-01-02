@@ -24,7 +24,7 @@ public class DialogueLogic : MonoBehaviour
 {
     Transform m_playerDialogue;
     Transform m_npcDialogue;
-    
+    AudioSource m_audioSource;
     Queue<Dialogue> m_queue = new Queue<Dialogue>();
     Dialogue m_currentDialogue;
 
@@ -38,10 +38,14 @@ public class DialogueLogic : MonoBehaviour
     [SerializeField]
     float m_charDisplayTime = 0.05f;
 
+    [SerializeField]
+    AudioClip m_dialogueSound;
+
     void Start()
     {
         m_playerDialogue = transform.GetChild(0);
         m_npcDialogue = transform.GetChild(1);
+        m_audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -71,6 +75,7 @@ public class DialogueLogic : MonoBehaviour
             // Dialogue queue is idle
             if (m_queue.Count > 0) {
                 m_currentDialogue = m_queue.Dequeue();
+                m_audioSource.PlayOneShot(m_dialogueSound);
                 m_displayTimer = m_currentDialogue.DisplayTime;
                 m_charIndex = 0;
                 Transform m_dialogue = (m_currentDialogue.Speaker == Speaker.Agent) ? m_playerDialogue : m_npcDialogue;
@@ -83,5 +88,11 @@ public class DialogueLogic : MonoBehaviour
 
     public void Display(Speaker speaker, string key, float displayTime) {
         m_queue.Enqueue(new Dialogue(speaker, LocalizationManager.Instance.GetLocalizedValue(key), displayTime));
+    }
+
+    void PlaySound(AudioClip tmp, float volume = 1.0f)
+    {
+        m_audioSource.volume = volume;
+        m_audioSource.PlayOneShot(tmp);
     }
 }
