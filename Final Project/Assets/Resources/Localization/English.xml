@@ -19,10 +19,7 @@
     <Key>Quit</Key>
     <Value>Quit</Value>
   </Entry>
-  <Entry>
-    <Key>Help</Key>
-    <Value>How to Play</Value>
-  </Entry>
+
   <Entry>
     <Key>Move</Key>
     <Value>Move</Value>
@@ -40,8 +37,8 @@
     <Value>Aim</Value>
   </Entry>
   <Entry>
-    <Key>Attack</Key>
-    <Value>Attack</Value>
+    <Key>Knife</Key>
+    <Value>Knife</Value>
   </Entry>
   <Entry>
     <Key>Crouch</Key>
@@ -52,11 +49,32 @@
     <Value>Reload</Value>
   </Entry>
   <Entry>
-    <Key>Roll</Key>
-    <Value>Roll</Value>
+    <Key>Grenade</Key>
+    <Value>Grenade</Value>
   </Entry>
   <Entry>
-    <Key>RetryInfo</Key>
+    <Key>Weapon</Key>
+    <Value>Switch Weapon</Value>
+  </Entry>
+  <Entry>
+    <Key>Interact</Key>
+    <Value>Interact</Value>
+  </Entry>
+  <Entry>
+    <Key>Inventory</Key>
+    <Value>Inventory</Value>
+  </Entry>
+  <Entry>
+    <Key>HelpMenu</Key>
+    <Value>Help Menu</Value>
+  </Entry>
+  <Entry>
+    <Key>SkipDialogue</Key>
+    <Value>Skip Dialogue</Value>
+  </Entry>
+
+  <Entry>
+    <Key>Death</Key>
     <Value>You Died!</Value>
   </Entry>
   <Entry>
@@ -64,7 +82,68 @@
     <Value>Menu</Value>
   </Entry>
   <Entry>
-    <Key>Retry</Key>
-    <Value>Retry</Value>
+    <Key>Load</Key>
+    <Value>Load</Value>
+  </Entry>
+
+  <Entry>
+    <Key>DialogueWelcomeCommander</Key>
+    <Value>Welcome, new agent!</Value>
+  </Entry>
+  <Entry>
+    <Key>DialogueWelcomeAgent</Key>
+    <Value>It is an honor to work with you, commander.</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue1</Key>
+    <Value>Test, test. Can you hear me, Agent Nail? This is commander.</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue2</Key>
+    <Value>Yes, sir. This is Nail.</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue3</Key>
+    <Value>Listen, a serious accident has occurred in this experimental base, which made a mutated beast.</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue4</Key>
+    <Value>Your mission is to eliminate the monster before things go worse, am I clear?</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue5</Key>
+    <Value>Roger that.</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue6</Key>
+    <Value>You need to find the ID card to enter the lab. By the way, watch out for radiation!</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue7</Key>
+    <Value>Aye, aye. Captain.</Value>
+  </Entry>
+  <Entry>
+    <Key>DoorDialogue</Key>
+    <Value>I need to find the ID card first.</Value>
+  </Entry>
+  <Entry>
+    <Key>KeyDialogue</Key>
+    <Value>That's the ID card I'm looking for.</Value>
+  </Entry>
+  <Entry>
+    <Key>SaveDialogue</Key>
+    <Value>Let me have some rest hear.</Value>
+  </Entry>
+  <Entry>
+    <Key>TriggerDialogue</Key>
+    <Value>That may wipe out the radiation clouds.</Value>
+  </Entry>
+  <Entry>
+    <Key>CompleteDialogue1</Key>
+    <Value>Mission accomplished, heading back to base.</Value>
+  </Entry>
+  <Entry>
+    <Key>CompleteDialogue2</Key>
+    <Value>Congratulations, you've done great, agent.</Value>
   </Entry>
 </Localization>

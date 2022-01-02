@@ -9,7 +9,7 @@
   </Entry>
   <Entry>
     <Key>Continue</Key>
-    <Value>继续冒险</Value>
+    <Value>继续游戏</Value>
   </Entry>
   <Entry>
     <Key>Language</Key>
@@ -19,17 +19,10 @@
     <Key>Quit</Key>
     <Value>退出游戏</Value>
   </Entry>
-  <Entry>
-    <Key>Help</Key>
-    <Value>按键帮助</Value>
-  </Entry>
+
   <Entry>
     <Key>Move</Key>
-    <Value>角色移动</Value>
-  </Entry>
-  <Entry>
-    <Key>Rotate</Key>
-    <Value>旋转视角</Value>
+    <Value>移动</Value>
   </Entry>
   <Entry>
     <Key>Shoot</Key>
@@ -40,7 +33,11 @@
     <Value>瞄准</Value>
   </Entry>
   <Entry>
-    <Key>Attack</Key>
+    <Key>ScopeAim</Key>
+    <Value>开镜瞄准</Value>
+  </Entry>
+  <Entry>
+    <Key>Knife</Key>
     <Value>近战</Value>
   </Entry>
   <Entry>
@@ -52,19 +49,101 @@
     <Value>换弹</Value>
   </Entry>
   <Entry>
-    <Key>Roll</Key>
-    <Value>翻滚</Value>
+    <Key>Grenade</Key>
+    <Value>手雷</Value>
   </Entry>
   <Entry>
-    <Key>RetryInfo</Key>
+    <Key>Weapon</Key>
+    <Value>切枪</Value>
+  </Entry>
+  <Entry>
+    <Key>Interact</Key>
+    <Value>交互</Value>
+  </Entry>
+  <Entry>
+    <Key>Inventory</Key>
+    <Value>查看背包</Value>
+  </Entry>
+  <Entry>
+    <Key>HelpMenu</Key>
+    <Value>帮助菜单</Value>
+  </Entry>
+  <Entry>
+    <Key>SkipDialogue</Key>
+    <Value>跳过对话</Value>
+  </Entry>
+
+  <Entry>
+    <Key>Death</Key>
     <Value>你没能幸存！</Value>
   </Entry>
   <Entry>
     <Key>Menu</Key>
-    <Value>返回菜单</Value>
+    <Value>退回菜单</Value>
   </Entry>
   <Entry>
-    <Key>Retry</Key>
-    <Value>重新挑战</Value>
+    <Key>Load</Key>
+    <Value>读取数据</Value>
+  </Entry>
+
+  <Entry>
+    <Key>DialogueWelcomeCommander</Key>
+    <Value>欢迎你，新特工！</Value>
+  </Entry>
+  <Entry>
+    <Key>DialogueWelcomeAgent</Key>
+    <Value>很荣幸与你共事，长官。</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue1</Key>
+    <Value>测试，测试。你能听到吗，Nail特工？这里是指挥官。</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue2</Key>
+    <Value>是的，长官。这里是Nail。</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue3</Key>
+    <Value>听着，这所实验基地里发生了严重的事故，制造出了一头变异怪兽。</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue4</Key>
+    <Value>你的任务是在事情变得更糟之前消灭它，明白了吗？</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue5</Key>
+    <Value>收到收到收到。</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue6</Key>
+    <Value>你需要找到ID卡才能进入实验室。另外，小心辐射！</Value>
+  </Entry>
+  <Entry>
+    <Key>OpenDialogue7</Key>
+    <Value>是，长官。</Value>
+  </Entry>
+  <Entry>
+    <Key>DoorDialogue</Key>
+    <Value>我必须先找到ID卡。</Value>
+  </Entry>
+  <Entry>
+    <Key>KeyDialogue</Key>
+    <Value>这就是我要找到ID卡了。</Value>
+  </Entry>
+  <Entry>
+    <Key>SaveDialogue</Key>
+    <Value>暂且在这里休整一下吧。</Value>
+  </Entry>
+  <Entry>
+    <Key>TriggerDialogue</Key>
+    <Value>这样一来辐射就清除了。</Value>
+  </Entry>
+  <Entry>
+    <Key>CompleteDialogue1</Key>
+    <Value>任务已完成，正在返回基地。</Value>
+  </Entry>
+  <Entry>
+    <Key>CompleteDialogue2</Key>
+    <Value>恭喜，你做的很好，特工。</Value>
   </Entry>
 </Localization>

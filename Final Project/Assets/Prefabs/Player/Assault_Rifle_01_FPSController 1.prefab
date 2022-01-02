@@ -121,7 +121,7 @@ Transform:
   - {fileID: 927027517257022762}
   - {fileID: 927027517147788488}
   m_Father: {fileID: 927027519266885213}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &927027517965956201
 GameObject:
@@ -154,7 +154,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 927027519266885213}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &927027517965956205
 Camera:
@@ -222,7 +222,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 927027517965956200}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 33
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 1
@@ -296,8 +296,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1437189945855853694}
-  - {fileID: 927027517965956200}
   - {fileID: 927027517800495920}
+  - {fileID: 794868391574236104}
+  - {fileID: 927027517965956200}
   m_Father: {fileID: 1436260699561676356}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1711,14 +1712,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433634330411682418}
-  m_LocalRotation: {x: 0, y: -0.84393245, z: 0, w: -0.53644955}
+  m_LocalRotation: {x: 0, y: 0.84393024, z: 0, w: 0.53645295}
   m_LocalPosition: {x: 8.553723, y: 1.33, z: 8.823068}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1436260699561676356}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 172.612, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 115.115, z: 0}
 --- !u!136 &1298266627604187954
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1768,7 +1769,7 @@ MonoBehaviour:
   m_strafeMovementSpeed: 4
   m_crouchingSpeed: 2
   m_health: 100
-  m_IsAlive: 1
+  m_isAlive: 1
   m_moveSound: {fileID: 8300000, guid: 4aaa78b2722c0344cb0363a3980adf64, type: 3}
 --- !u!82 &1433634330411682423
 AudioSource:
@@ -13449,11 +13450,14 @@ MonoBehaviour:
   m_healthPack: 0
   m_hasScope: 1
   m_hasKey: 0
+  m_handGrenadeNum: 3
   Wp_AR: {fileID: 1433632227032643844}
   Wp_handgun: {fileID: 5768575525611591991}
   ARController: {fileID: 9100000, guid: 3fe143ba8a02b1d4ab60722d79653427, type: 2}
   handGunController: {fileID: 9100000, guid: 97e4573aff14c564ba85455054643afb, type: 2}
   m_bulletImpactObj: {fileID: 1067471869909948, guid: 5e02303289b3c494e8e185be0fbbd405, type: 3}
+  m_bulletImpactBlood: {fileID: 1026642433091512, guid: ed67c2cb8e3a7fb418c6fbb1b001dce2, type: 3}
+  m_bulletImpactDust: {fileID: 1067536016464596, guid: 57e18706e2792ff4bb5561ed74b796e2, type: 3}
   m_ironSight: {fileID: 1433275885172327278}
   m_ARscope: {fileID: 1433463342165702708}
   ARAimPoint: {fileID: 927027517493077471}
@@ -14260,3 +14264,115 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.1455318, y: 0.260265, z: 0.40384156}
     m_Extent: {x: 0.33098134, y: 0.46379173, z: 0.305489}
   m_DirtyAABB: 0
+--- !u!1 &6076513857727190501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 794868391574236104}
+  - component: {fileID: 5637957954459158204}
+  - component: {fileID: 6527827643398326678}
+  - component: {fileID: 7015728155095031975}
+  - component: {fileID: 7733044622706186457}
+  m_Layer: 0
+  m_Name: Death Camera Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &794868391574236104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6076513857727190501}
+  m_LocalRotation: {x: -0, y: -0, z: -0.24716824, w: 0.9689726}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 927027519266885213}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -28.62}
+--- !u!33 &5637957954459158204
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6076513857727190501}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6527827643398326678
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6076513857727190501}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7015728155095031975
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6076513857727190501}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7733044622706186457
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6076513857727190501}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

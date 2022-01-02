@@ -224,8 +224,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grenadeTimer: 2
   explosionPrefab: {fileID: 4811645123968692, guid: bbc6eb939151e3d45b5e8ea55b2e45b9, type: 3}
-  radius: 3
+  radius: 8
   power: 300
-  minimumForce: 1500
-  maximumForce: 2500
+  minimumForce: 1000
+  maximumForce: 1500
   impactSound: {fileID: 6661701914021547103}

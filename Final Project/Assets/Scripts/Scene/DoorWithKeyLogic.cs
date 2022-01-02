@@ -17,7 +17,11 @@ public class DoorWithKeyLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isOpen == false && Input.GetKeyDown(KeyCode.E) && Vector3.Distance(transform.position, m_player.transform.position) < 3.0f && m_weaponLogic.m_hasKey){
+        if (isOpen == false && Input.GetKeyDown(KeyCode.E) && Vector3.Distance(transform.position, m_player.transform.position) < 3.0f && !m_weaponLogic.m_hasKey)
+        {
+            UIManager.Instance.displayDialogue(Speaker.Agent, "DoorDialogue", 3.0f);
+        }
+        if (isOpen == false && Input.GetKeyDown(KeyCode.E) && Vector3.Distance(transform.position, m_player.transform.position) < 3.0f && m_weaponLogic.m_hasKey){
             m_animator.SetBool("isOpen",true);
             isOpen = true;
         }

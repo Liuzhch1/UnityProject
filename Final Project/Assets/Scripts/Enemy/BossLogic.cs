@@ -9,23 +9,19 @@ enum BossState
     // Invisiable and Roar are skill attack
     Idle1,
     Walk2,
-    FastRun3,
-    FastAttack4,
-    Attack5,
-    Invisible,
-    JumpAttack,
-    SkillAttack
+    FastAttack3,
+    Attack4,
+    Invisible,//5
+    JumpAttack,//6
+    RoarAttack//7
 }
 
 public class BossLogic : MonoBehaviour
 {
     #region Parameter
-    const float WALK_SPEED = 2.5f;
-    const float FASTRUN_SPEED = 10.0f;
+    const float WALK_SPEED = 1.6f;
+    const float FASTRUN_SPEED = 7.0f;
     const float ATTACK_RADIUS = 3.2f;
-    const float MAX_WALKTIME = 4.0f;
-
-    float walkTime = MAX_WALKTIME;
 
     const int ATTACK_DAMAGE = 7;
     const int FAST_ATTACK_DAMAGE = 13;
@@ -35,9 +31,10 @@ public class BossLogic : MonoBehaviour
     // first time cool down
     float skillCooldown = 1.5f*SKILL_COOLDOWN;
 
-    const float JUMPATTACK_SPEED = 2.0f;
+    const float JUMPATTACK_SPEED = 3.0f;
     const float JUMPATTACK_DISTANCE = 3.7f * JUMPATTACK_SPEED;
-    const float JUMPATTACK_BIAS = 0.7f;
+    const float JUMPATTACK_BIAS = 0.1f;
+    const float JUMP_ATTACKRADUIS = 5.0f;
 
     const float MAX_INVISIBLE_TIME = 5.0f;
     float invisibleTime = MAX_INVISIBLE_TIME;
@@ -52,7 +49,7 @@ public class BossLogic : MonoBehaviour
     Transform rayCastPoint;
 
     [SerializeField]
-    int m_health=500;
+    int m_health=1000;
     int m_maxHealth;
     bool isDead = false;
     bool isAlert = false;
@@ -95,16 +92,18 @@ public class BossLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log("Time: " + invisibleTime);
         if (isDead)
         {
             return;
         }
         if (!isAlert)
         {
-            if (Vector3.Distance(m_player.transform.position,RoomCenter.transform.position)<20.0f)
+            if (Vector3.Distance(m_player.transform.position, RoomCenter.transform.position) < 20.0f)
             {
                 isAlert = true;
             }
+            return;
         }
         if (skillCooldown > 0.0f)
         {
@@ -115,12 +114,13 @@ public class BossLogic : MonoBehaviour
         }
         else
         {
-            m_bossState = BossState.SkillAttack;
             float skillType = Random.Range(0.0f, 1.0f);
-            if (skillType > 0.5f)
+            if (skillType > 0.4f)
             {
                 //Roar
+                m_bossState = BossState.RoarAttack;
                 m_animator.SetTrigger("Roar");
+                m_animator.SetInteger("State", 7);
                 m_navMeshAgent.SetDestination(transform.position);
                 isAttacking = true;
             }
@@ -129,6 +129,7 @@ public class BossLogic : MonoBehaviour
                 //Invisible
                 TurnInvisible(false);
                 m_animator.SetTrigger("Invisible");
+                m_animator.SetInteger("State", 5);
                 m_bossState = BossState.Invisible;
                 invisible = true;
                 m_navMeshAgent.SetDestination(transform.position);
@@ -139,7 +140,7 @@ public class BossLogic : MonoBehaviour
         }
         switch (m_bossState)
         {
-            case (BossState.SkillAttack):
+            case (BossState.RoarAttack):
                 break;
             case (BossState.Idle1):
                 UpdateIdle();
@@ -147,10 +148,7 @@ public class BossLogic : MonoBehaviour
             case (BossState.Walk2):
                 UpdateWalk();
                 break;
-            case (BossState.FastRun3):
-                UpdateFastRun();
-                break;
-            case (BossState.Attack5):
+            case (BossState.Attack4):
                 UpdateAttack();
                 break;
             case (BossState.JumpAttack):
@@ -174,45 +172,26 @@ public class BossLogic : MonoBehaviour
     }
     void UpdateWalk()
     {
-        if (walkTime < 0.0f)
+        if (ToPlayerDistance() <= ATTACK_RADIUS)
         {
-            m_bossState = BossState.FastRun3;
-            walkTime = MAX_WALKTIME;
-            m_navMeshAgent.speed = FASTRUN_SPEED;
-            return;
-        }
-        else if (ToPlayerDistance() <= ATTACK_RADIUS)
-        {
-            m_bossState = BossState.Attack5;
+            m_bossState = BossState.Attack4;
             m_navMeshAgent.SetDestination(transform.position);
             return;
         }
-        walkTime -= Time.deltaTime;
-        LookAtPlayer();
-        m_animator.SetInteger("State", 2);
-        m_navMeshAgent.speed = WALK_SPEED;
-        m_navMeshAgent.SetDestination(m_player.transform.position);
-    }
-    void UpdateFastRun()
-    {
-        if (ToPlayerDistance() > JUMPATTACK_DISTANCE + JUMPATTACK_BIAS && ToPlayerDistance() < JUMPATTACK_DISTANCE +JUMPATTACK_BIAS+0.1f)
+        if (ToPlayerDistance() > JUMPATTACK_DISTANCE + JUMPATTACK_BIAS && ToPlayerDistance() < JUMPATTACK_DISTANCE + JUMPATTACK_BIAS + 0.05f)
         {
             isAttacking = true;
             m_bossState = BossState.JumpAttack;
             m_animator.SetTrigger("JumpAttack");
+            m_animator.SetInteger("State", 6);
             m_navMeshAgent.speed = JUMPATTACK_SPEED;
             m_navMeshAgent.destination = m_player.transform.position;
             return;
         }
-        if (ToPlayerDistance() < ATTACK_RADIUS)
-        {
-            m_bossState = BossState.Attack5;
-            m_navMeshAgent.SetDestination(transform.position);
-            return;
-        }
-        m_animator.SetInteger("State", 3);
-        m_navMeshAgent.SetDestination(m_player.transform.position);
         LookAtPlayer();
+        m_animator.SetInteger("State", 2);
+        m_navMeshAgent.speed = WALK_SPEED;
+        m_navMeshAgent.SetDestination(m_player.transform.position);
     }
     void UpdateAttack()
     {
@@ -315,6 +294,7 @@ public class BossLogic : MonoBehaviour
     public void FinishSkillAttack()
     {
         m_bossState = BossState.Walk2;
+        m_animator.SetInteger("State", 2);
         isAttacking = false;
     }
     public void FinishJumpAttack()
@@ -331,8 +311,10 @@ public class BossLogic : MonoBehaviour
     }
     public void FinishFastAttack()
     {
+        Debug.Log("FUCK!!!");
         m_bossState = BossState.Walk2;
         m_animator.SetInteger("State", 2);
+        invisibleTime = MAX_INVISIBLE_TIME;
         isAttacking = false;
     }
     float ToPlayerDistance()
@@ -345,7 +327,10 @@ public class BossLogic : MonoBehaviour
     }
     public void JumpAttack()
     {
-        m_playerLogic.TakeDamage(JUMP_ATTACK_DAMAGE);
+        if (ToPlayerDistance() < JUMP_ATTACKRADUIS)
+        {
+            m_playerLogic.TakeDamage(JUMP_ATTACK_DAMAGE);
+        }
     }
     public void TakeDamage(int damage)
     {
@@ -360,6 +345,8 @@ public class BossLogic : MonoBehaviour
             m_navMeshAgent.enabled = false;
             transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             m_animator.SetTrigger("Dead");
+            UIManager.Instance.displayDialogue(Speaker.Agent, "CompleteDialogue1", 3.0f);
+            UIManager.Instance.displayDialogue(Speaker.Commander, "CompleteDialogue2", 3.0f);
             Destroy(gameObject, 10.0f);
         }
     }

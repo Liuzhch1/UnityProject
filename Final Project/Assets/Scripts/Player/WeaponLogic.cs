@@ -35,12 +35,7 @@ public class WeaponLogic : MonoBehaviour
 
     Weapon currentWeapon = Weapon.AR;
 
-    float MAX_SHOT_COOLDOWN = 0.15f;
-    int MAX_AMMO = 30;
-
     float m_shotCooldown = 0;
-    int m_ammo;
-    int m_mag;
     public int m_healthPack;
 
     bool m_isReloading = false;
@@ -60,7 +55,7 @@ public class WeaponLogic : MonoBehaviour
 
     public bool m_hasKey = false;
 
-    int m_handGrenadeNum = 3;
+    public int m_handGrenadeNum = 3;
 
     public Gun m_AR;
     public Gun m_Handgun;
@@ -83,6 +78,12 @@ public class WeaponLogic : MonoBehaviour
 
     [SerializeField]
     GameObject m_bulletImpactObj;
+
+    [SerializeField]
+    GameObject m_bulletImpactBlood;
+
+    [SerializeField]
+    GameObject m_bulletImpactDust;
 
     [SerializeField]
     GameObject m_ironSight;
@@ -151,14 +152,9 @@ public class WeaponLogic : MonoBehaviour
         m_Handgun.MAX_AMMO = 10;
         m_Handgun.MAX_COOL_DOWN = 0.35f;
         m_Handgun.ammo = 10;
-        m_Handgun.mag = 30;
+        m_Handgun.mag = 50;
 
         currentGun = m_AR;
-
-        m_ammo = currentGun.ammo;
-        m_mag = currentGun.mag;
-        MAX_SHOT_COOLDOWN = currentGun.MAX_COOL_DOWN;
-        MAX_AMMO = currentGun.MAX_AMMO;
 
         m_healthPack = 3;
 
@@ -173,7 +169,7 @@ public class WeaponLogic : MonoBehaviour
         }
 
 		// Shoot logics
-		if (!m_FPSplayerLogic.m_IsAlive)
+		if (!m_FPSplayerLogic.m_isAlive)
 		{
             return;
 		}
@@ -182,7 +178,7 @@ public class WeaponLogic : MonoBehaviour
         {
             if (m_shotCooldown <= 0.0f)
             {
-                if (m_ammo > 0)
+                if (currentGun.ammo > 0)
                 {
                     
 
@@ -191,10 +187,9 @@ public class WeaponLogic : MonoBehaviour
 
                     Shoot();
 
-                    --m_ammo;
                     --currentGun.ammo;
 
-                    UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
+                    UIManager.Instance.setAmmoNumber(currentWeapon, currentGun.ammo, currentGun.mag);
 
                     PlayShootSound(0.3f);
                 }
@@ -205,7 +200,7 @@ public class WeaponLogic : MonoBehaviour
                     PlaySound(m_shootEmptySound);
                 }
 
-                m_shotCooldown = MAX_SHOT_COOLDOWN;
+                m_shotCooldown = currentGun.MAX_COOL_DOWN;
             }
         }
 
@@ -254,12 +249,11 @@ public class WeaponLogic : MonoBehaviour
 
         if(Input.GetButtonDown("HandGrenade") && !m_isReloading)
         {
-            if (m_handGrenadeNum > 0)
-            {
-                m_animator.SetTrigger("ThrowHandGrenade");
-            }
+            ThrowHandGrenade();
+            
         }
     }
+
 
     private void FixedUpdate()
     {
@@ -282,22 +276,27 @@ public class WeaponLogic : MonoBehaviour
         {
             string hitTag = rayHit.collider.gameObject.tag;
             Debug.Log("Bullet Hit Object: " + hitTag);
-            switch (hitTag)
-            {
-                case "Enemy01":
-                    rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(10);
-                    break;
-                case "Enemy02":
-                    rayHit.collider.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(10);
-                    break;
-                case "Boss":
-                    rayHit.collider.gameObject.GetComponent<BossLogic>().TakeDamage(10);
-                    break;
+            if(hitTag == "Enemy01")
+			{
+                rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(10);
+
+                Object obj =  GameObject.Instantiate(m_bulletImpactDust, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, Random.value * 180, 0));
+                Destroy(obj, 1.0f);
             }
-
-            // Spawn Bullet Impact VFX
-            GameObject.Instantiate(m_bulletImpactObj, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, 0, 0));
-
+            else if(hitTag == "Enemy02")
+			{
+                rayHit.collider.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(10);
+                GameObject.Instantiate(m_bulletImpactBlood, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, Random.value * 180, 0));
+            }
+            else if(hitTag == "Boss")
+			{
+                rayHit.collider.gameObject.GetComponent<BossLogic>().TakeDamage(10);
+                GameObject.Instantiate(m_bulletImpactBlood, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, Random.value * 180, 0));
+            }
+			else
+			{
+                GameObject.Instantiate(m_bulletImpactObj, rayHit.point, Quaternion.FromToRotation(Vector3.up, rayHit.normal) * Quaternion.Euler(-90, 0, 0));
+            }
         }
 
         // Play Muzzle VFX & Turn light on
@@ -317,7 +316,7 @@ public class WeaponLogic : MonoBehaviour
 
     void Reload()
     {
-        if (m_mag > 0 && m_ammo < MAX_AMMO)
+        if (currentGun.mag > 0 && currentGun.ammo < currentGun.MAX_AMMO)
         {
             QuitAim();
 
@@ -333,7 +332,13 @@ public class WeaponLogic : MonoBehaviour
             // reload empty
         }
     }
-
+    public void ThrowHandGrenade() {
+        if (m_handGrenadeNum > 0)
+        {
+            m_animator.SetTrigger("ThrowHandGrenade");
+        }
+    }
+    
     public void QuitAim() {
         if (m_isAiming)
         {
@@ -344,15 +349,10 @@ public class WeaponLogic : MonoBehaviour
 
     public void endReload()
     {
-        m_mag += m_ammo;
-        currentGun.mag += m_ammo;
-
-        m_ammo = m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
-        currentGun.ammo = m_mag>MAX_AMMO?MAX_AMMO:m_mag;
-
-        m_mag -= m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
-        currentGun.mag -= m_mag > MAX_AMMO ? MAX_AMMO : m_mag;
-        UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
+        currentGun.mag += currentGun.ammo;
+        currentGun.ammo = currentGun.mag > currentGun.MAX_AMMO ? currentGun.MAX_AMMO : currentGun.mag;
+        currentGun.mag -= currentGun.ammo = currentGun.mag > currentGun.MAX_AMMO ? currentGun.MAX_AMMO : currentGun.mag;
+        UIManager.Instance.setAmmoNumber(currentWeapon, currentGun.ammo, currentGun.mag);
         m_isReloading = false;
         m_enableFire = true;
     }
@@ -402,9 +402,10 @@ public class WeaponLogic : MonoBehaviour
             if (hitTag == "mag" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
                 Destroy(rayHit.collider.gameObject);
-                m_mag += 1;
-                currentGun.mag += 1;
-                UIManager.Instance.setAmmoNumber(currentWeapon, m_ammo, m_mag);
+                m_AR.mag += 30;
+                m_Handgun.mag += 15;
+                m_handGrenadeNum += 2;
+                UIManager.Instance.setAmmoNumber(currentWeapon, currentGun.ammo, currentGun.mag);
             }
             else if (hitTag == "scope" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
@@ -431,6 +432,7 @@ public class WeaponLogic : MonoBehaviour
             }
             else if (hitTag == "radiationCloudController" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f)
             {
+                UIManager.Instance.displayDialogue(Speaker.Agent, "TriggerDialogue", 3.0f);
                 List<GameObject> childList = new List<GameObject>();
                 int childCount = rayHit.transform.childCount;
                 for (int i = 0; i < childCount; i++)
@@ -444,9 +446,22 @@ public class WeaponLogic : MonoBehaviour
                 }
             }
             else if(hitTag == "CheckPoint" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
+                UIManager.Instance.displayDialogue(Speaker.Agent, "SaveDialogue", 3.0f);
                 m_saveManager.Save();
             }
             else if(hitTag == "key" && Vector3.Distance(transform.position, rayHit.transform.position) < 5.0f){
+                UIManager.Instance.displayDialogue(Speaker.Agent, "KeyDialogue", 3.0f);
+                List<GameObject> childList = new List<GameObject>();
+                int childCount = rayHit.transform.childCount;
+                for (int i = 0; i < childCount; i++)
+                {
+                    GameObject child = rayHit.transform.GetChild(i).gameObject;
+                    childList.Add(child);
+                }
+                for (int i = 0; i < childCount; i++)
+                {
+                    DestroyImmediate(childList[i]);
+                }
                 Destroy(rayHit.collider.gameObject);
                 m_hasKey = true;
             }
@@ -515,12 +530,8 @@ public class WeaponLogic : MonoBehaviour
                 currentGun = m_Handgun;
             }
 
-            m_ammo = currentGun.ammo;
-            m_mag = currentGun.mag;
-            MAX_AMMO = currentGun.MAX_AMMO;
-            MAX_SHOT_COOLDOWN = currentGun.MAX_COOL_DOWN;
-
             m_isReloading = false;
+            m_enableFire = true;
         }
     }
 

@@ -23,7 +23,7 @@ public class CloseEnemyLogic : MonoBehaviour
 {
     #region Parameter
     const float PATROL_SPEED = 3.0f;
-    public const float CHASE_SPEED = 6.0f;
+    public const float CHASE_SPEED = 5.0f;
     const float ATTACK_RADIUS = 3.5f;
     const float CHASE_RADIUS = 18.0f;
     const float MAX_IDLETIME = 4.0f;
@@ -40,10 +40,12 @@ public class CloseEnemyLogic : MonoBehaviour
 
     const int DAMAGE = 10;
 
-    const float SETALERT_RADUIS = CHASE_RADIUS * 1.2f;
+    const float SETALERT_RADUIS = CHASE_RADIUS * 0.5f;
 
     const float MAX_WALKTIME=5.0f;
     float walkTime = MAX_WALKTIME;
+    const float MAX_PATROL_TIME = 5.0f;
+    float patrolTime = MAX_PATROL_TIME;
     #endregion
 
     GameObject m_player;
@@ -119,6 +121,7 @@ public class CloseEnemyLogic : MonoBehaviour
                 UpdateAttackState();
                 break;
             case (CloseEnemyState.Walk):
+                UpdateWalkState();
                 break;
         }
         EfficientDetectPlayer();
@@ -157,12 +160,15 @@ public class CloseEnemyLogic : MonoBehaviour
             m_navMeshAgent.speed = CHASE_SPEED;
             return;
         }
-        if (m_navMeshAgent.isStopped || m_navMeshAgent.remainingDistance < 1.0f)
+        if (m_navMeshAgent.isStopped || m_navMeshAgent.remainingDistance < 1.0f || patrolTime < 0.0f)
         {
             m_enemyState = CloseEnemyState.Idle;
             m_animator.SetInteger("State", 1);
             m_navMeshAgent.SetDestination(transform.position);
+            patrolTime = MAX_PATROL_TIME;
         }
+        patrolTime -= Time.deltaTime;
+        m_animator.SetInteger("State", 2);
     }
     void UpdateChaseState()
     {
@@ -219,7 +225,38 @@ public class CloseEnemyLogic : MonoBehaviour
         LookAtPlayer();
         if (Vector3.Distance(transform.position, m_player.transform.position) > ATTACK_RADIUS+1.0f)
         {
+            m_enemyState = CloseEnemyState.Walk;
+            m_navMeshAgent.speed = PATROL_SPEED;
+        }
+    }
+    void UpdateWalkState()
+    {
+        if (!m_player)
+        {
+            m_enemyState = CloseEnemyState.Idle;
+            return;
+        }
+        if (Vector3.Distance(transform.position, m_player.transform.position) < ATTACK_RADIUS)
+        {
+            walkTime = MAX_WALKTIME;
+            m_enemyState = CloseEnemyState.Attack;
+            m_animator.SetInteger("State", 4);
+            return;
+        }
+        if (walkTime < 0.0f)
+        {
+            walkTime = MAX_WALKTIME;
+            m_navMeshAgent.speed = CHASE_SPEED;
             m_enemyState = CloseEnemyState.Chase;
+            m_animator.SetInteger("State",3);
+            return;
+        }
+        else
+        {
+            LookAtPlayer();
+            m_navMeshAgent.SetDestination(m_player.transform.position);
+            m_animator.SetInteger("State", 5);
+            walkTime -= Time.deltaTime;
         }
     }
     #endregion
@@ -234,6 +271,10 @@ public class CloseEnemyLogic : MonoBehaviour
         if (!m_player)
         {
             isAlert = false;
+            return;
+        }
+        if (isAlert)
+        {
             return;
         }
         isAlert = false;
@@ -284,6 +325,7 @@ public class CloseEnemyLogic : MonoBehaviour
             m_navMeshAgent.enabled = false;
             m_collider.enabled = false;
             m_animator.SetTrigger("Dead");
+            isDead = true;
         }
     }
     public void SetAlert()

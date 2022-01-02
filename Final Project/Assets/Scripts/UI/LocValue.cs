@@ -13,6 +13,11 @@ public class LocValue : MonoBehaviour
         LoadLocalizationData();
     }
 
+    public void setKey(string newKey) {
+        m_key = newKey;
+        LoadLocalizationData();
+    }
+    
     public void LoadLocalizationData() {
         Text text = GetComponent<Text>();
         if(text && m_key != "")

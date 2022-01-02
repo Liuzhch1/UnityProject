@@ -50,7 +50,7 @@ public class FPCameraLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!m_FPSplayerLogic.m_IsAlive)
+        if (!m_FPSplayerLogic.m_isAlive)
 		{
             return;
 		}
@@ -132,5 +132,19 @@ public class FPCameraLogic : MonoBehaviour
         //m_target = target;
     }
     #endregion
+
+    public void Save()
+    {
+        PlayerPrefs.SetFloat("CameraRotY", m_rotationY);
+        PlayerPrefs.SetFloat("CameraRotX", m_rotationX);
+    }
+
+    public void Load()
+    {
+
+        m_rotationY = PlayerPrefs.GetFloat("CameraRotY");
+        m_rotationX = PlayerPrefs.GetFloat("CameraRotX");
+
+    }
 
 }
