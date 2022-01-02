@@ -169,7 +169,7 @@ public class CloseEnemyLogic : MonoBehaviour
             m_navMeshAgent.speed = CHASE_SPEED;
             return;
         }
-        if (m_navMeshAgent.isStopped || m_navMeshAgent.remainingDistance < 1.0f || patrolTime < 0.0f)
+        if (m_navMeshAgent.isStopped || Vector3.Distance(transform.position,m_navMeshAgent.destination) < 1.0f || patrolTime < 0.0f)
         {
             m_enemyState = CloseEnemyState.Idle;
             m_animator.SetInteger("State", 1);
@@ -355,38 +355,41 @@ public class CloseEnemyLogic : MonoBehaviour
 
     public void Save(int index)
     {
-        PlayerPrefs.SetFloat("EnemyPosX" + index, transform.position.x);
-        PlayerPrefs.SetFloat("EnemyPosY" + index, transform.position.y);
-        PlayerPrefs.SetFloat("EnemyPosZ" + index, transform.position.z);
+        PlayerPrefs.SetFloat("CloseEnemyPosX" + index, transform.position.x);
+        PlayerPrefs.SetFloat("CloseEnemyPosY" + index, transform.position.y);
+        PlayerPrefs.SetFloat("CloseEnemyPosZ" + index, transform.position.z);
 
-        PlayerPrefs.SetFloat("EnemyRotX" + index, transform.rotation.eulerAngles.x);
-        PlayerPrefs.SetFloat("EnemyRotY" + index, transform.rotation.eulerAngles.y);
-        PlayerPrefs.SetFloat("EnemyRotZ" + index, transform.rotation.eulerAngles.z);
+        PlayerPrefs.SetFloat("CloseEnemyRotX" + index, transform.rotation.eulerAngles.x);
+        PlayerPrefs.SetFloat("CloseEnemyRotY" + index, transform.rotation.eulerAngles.y);
+        PlayerPrefs.SetFloat("CloseEnemyRotZ" + index, transform.rotation.eulerAngles.z);
 
 
-        PlayerPrefs.SetInt("EnemyHealth" + index, m_health);
+        PlayerPrefs.SetInt("CloseEnemyHealth" + index, m_health);
     }
 
     public void Load(int index)
     {
-        float playerPosX = PlayerPrefs.GetFloat("EnemyPosX" + index);
-        float playerPosY = PlayerPrefs.GetFloat("EnemyPosY" + index);
-        float playerPosZ = PlayerPrefs.GetFloat("EnemyPosZ" + index);
+        float closeEnemyPosX = PlayerPrefs.GetFloat("CloseEnemyPosX" + index);
+        float closeEnemyPosY = PlayerPrefs.GetFloat("CloseEnemyPosY" + index);
+        float closeEnemyPosZ = PlayerPrefs.GetFloat("CloseEnemyPosZ" + index);
 
-        float playerRotX = PlayerPrefs.GetFloat("EnemyRotX" + index);
-        float playerRotY = PlayerPrefs.GetFloat("EnemyRotY" + index);
-        float playerRotZ = PlayerPrefs.GetFloat("EnemyRotZ" + index);
+        float closeEnemyRotX = PlayerPrefs.GetFloat("CloseEnemyRotX" + index);
+        float closeEnemyRotY = PlayerPrefs.GetFloat("CloseEnemyRotY" + index);
+        float closeEnemyRotZ = PlayerPrefs.GetFloat("CloseEnemyRotZ" + index);
 
-        m_health = PlayerPrefs.GetInt("EnemyHealth" + index);
+        m_health = PlayerPrefs.GetInt("CloseEnemyHealth" + index);
 
         m_navMeshAgent.enabled = false;
-        transform.position = new Vector3(playerPosX, playerPosY, playerPosZ);
-        transform.rotation = Quaternion.Euler(playerRotX, playerRotY, playerRotZ);
+        transform.position = new Vector3(closeEnemyPosX, closeEnemyPosY, closeEnemyPosZ);
+        transform.rotation = Quaternion.Euler(closeEnemyRotX, closeEnemyRotY, closeEnemyRotZ);
         m_enemyState = CloseEnemyState.Idle;
         m_animator.SetInteger("State", 1);
+        m_animator.SetTrigger("Load");
+        m_navMeshAgent.SetDestination(transform.position);
+        patrolTime = MAX_PATROL_TIME;
+        idleTime = MAX_IDLETIME;
         isAlert=false;
         isDead = false;
         m_collider.enabled = true;
-        m_navMeshAgent.enabled = true;
     }
 }

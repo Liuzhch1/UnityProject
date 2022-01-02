@@ -73,12 +73,6 @@ public class FireRobLogic : MonoBehaviour
         {
             EfficientDetectPlayer();
         }
-        if (!m_player.GetComponent<FPSplayerLogic>().m_isAlive || isDead)
-        {
-            m_animator.SetFloat("State",0.0f);
-            isAlert=false;
-            return;
-        }
         switch (m_fireRobState)
         {
             case (FireRobState.Idle):
@@ -232,15 +226,11 @@ public class FireRobLogic : MonoBehaviour
     #region Detect
     void EfficientDetectPlayer()
     {
-        if (isAlert)
-        {
-            return;
-        }
-        if(!m_player.GetComponent<FPSplayerLogic>().m_isAlive || Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
-        {
-            return;
-        }
         isAlert = false;
+        if (!m_player.GetComponent<FPSplayerLogic>().m_isAlive || Vector3.Distance(transform.position, m_player.transform.position) > READY_RADIUS)
+        {
+            return;
+        }
         Vector3 dir = m_player.transform.position - transform.position;
         dir.y = 0;
         float toPlayerAngle = Vector3.Angle(transform.forward, dir);
@@ -298,37 +288,38 @@ public class FireRobLogic : MonoBehaviour
 
     public void Save(int index)
     {
-        PlayerPrefs.SetFloat("EnemyPosX" + index, transform.position.x);
-        PlayerPrefs.SetFloat("EnemyPosY" + index, transform.position.y);
-        PlayerPrefs.SetFloat("EnemyPosZ" + index, transform.position.z);
+        PlayerPrefs.SetFloat("FireRobPosX" + index, transform.position.x);
+        PlayerPrefs.SetFloat("FireRobPosY" + index, transform.position.y);
+        PlayerPrefs.SetFloat("FireRobPosZ" + index, transform.position.z);
 
-        PlayerPrefs.SetFloat("EnemyRotX" + index, transform.rotation.eulerAngles.x);
-        PlayerPrefs.SetFloat("EnemyRotY" + index, transform.rotation.eulerAngles.y);
-        PlayerPrefs.SetFloat("EnemyRotZ" + index, transform.rotation.eulerAngles.z);
+        PlayerPrefs.SetFloat("FireRobRotX" + index, transform.rotation.eulerAngles.x);
+        PlayerPrefs.SetFloat("FireRobRotY" + index, transform.rotation.eulerAngles.y);
+        PlayerPrefs.SetFloat("FireRobRotZ" + index, transform.rotation.eulerAngles.z);
 
 
-        PlayerPrefs.SetInt("EnemyHealth" + index, m_health);
+        PlayerPrefs.SetInt("FireRobHealth" + index, m_health);
         
     }
 
     public void Load(int index)
     {
-        float playerPosX = PlayerPrefs.GetFloat("EnemyPosX" + index);
-        float playerPosY = PlayerPrefs.GetFloat("EnemyPosY" + index);
-        float playerPosZ = PlayerPrefs.GetFloat("EnemyPosZ" + index);
+        float fireRobPosX = PlayerPrefs.GetFloat("FireRobPosX" + index);
+        float fireRobPosY = PlayerPrefs.GetFloat("FireRobPosY" + index);
+        float fireRobPosZ = PlayerPrefs.GetFloat("FireRobPosZ" + index);
 
-        float playerRotX = PlayerPrefs.GetFloat("EnemyRotX" + index);
-        float playerRotY = PlayerPrefs.GetFloat("EnemyRotY" + index);
-        float playerRotZ = PlayerPrefs.GetFloat("EnemyRotZ" + index);
+        float fireRobRotX = PlayerPrefs.GetFloat("FireRobRotX" + index);
+        float fireRobRotY = PlayerPrefs.GetFloat("FireRobRotY" + index);
+        float fireRobRotZ = PlayerPrefs.GetFloat("FireRobRotZ" + index);
 
-        m_health = PlayerPrefs.GetInt("EnemyHealth" + index);
+        m_health = PlayerPrefs.GetInt("FireRobHealth" + index);
 
         m_navMeshAgent.enabled = false;
-        transform.position = new Vector3(playerPosX, playerPosY, playerPosZ);
-        transform.rotation = Quaternion.Euler(playerRotX, playerRotY, playerRotZ);
+        transform.position = new Vector3(fireRobPosX, fireRobPosY, fireRobPosZ);
+        transform.rotation = Quaternion.Euler(fireRobRotX, fireRobRotY, fireRobRotZ);
         m_fireRobState = FireRobState.Idle;
         m_animator.SetFloat("State", 0.0f);
-        isAlert=false;
+        m_animator.SetTrigger("Load");
+        isAlert =false;
         isDead = false;
         m_collider.enabled = true;
         m_navMeshAgent.enabled = true;
