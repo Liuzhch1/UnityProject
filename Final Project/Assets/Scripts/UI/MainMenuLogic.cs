@@ -17,7 +17,8 @@ public class MainMenuLogic : MonoBehaviour
 
     public void OnContinueClicked()
     {
-        //SceneManager.LoadScene("MainMapScene", );
+        SceneManager.LoadScene("MainMapScene");
+        SaveManager.Instance.Load();
     }
 
     public void OnLanguageClicked()
