@@ -685,4 +685,5 @@ public class WeaponLogic : MonoBehaviour
         m_audioSource.PlayOneShot(tmp);
     }
     #endregion
+
 }
