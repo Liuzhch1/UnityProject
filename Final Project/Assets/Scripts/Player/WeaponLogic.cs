@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum Weapon
 {
@@ -593,22 +594,37 @@ public class WeaponLogic : MonoBehaviour
         RaycastHit rayHit;
 
         // Log which object we hit
-        if (Physics.Raycast(ray, out rayHit, 2.0f))
+        if (Physics.Raycast(ray, out rayHit, 3.0f))
         {
             string hitTag = rayHit.collider.gameObject.tag;
             Debug.Log("Knife Hit Object: " + hitTag);
-            if (hitTag == "Enemy01")
+            Vector3 tmp = new Vector3(transform.forward.x, 0, transform.forward.z);
+            tmp *= 5;
+            tmp += rayHit.collider.gameObject.transform.position;
+            Debug.Log(tmp);
+
+            switch (hitTag)
             {
-                rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(20);
                 
-            } else if(hitTag == "Enemy02") {
-                rayHit.collider.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(20);
+                case "Enemy01":
+                    rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(5);
+                    Debug.Log(transform.forward * 2.0f);
+                    
+                    rayHit.collider.gameObject.GetComponent<NavMeshAgent>().Move(tmp);
+                    disableKnife();
+                    break;
+                case "Enemy02":
+                    Debug.Log(transform.forward * 2.0f);
+                    rayHit.collider.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(5);
+                    rayHit.collider.gameObject.GetComponent<NavMeshAgent>().SetDestination(tmp);
+                    disableKnife();
+                    break;
+                case "Boss":
+                    rayHit.collider.gameObject.GetComponent<BossLogic>().TakeDamage(5);
+                    rayHit.collider.gameObject.GetComponent<NavMeshAgent>().Move(tmp);
+                    disableKnife();
+                    break;
             }
-            else if(hitTag == "Boss")
-			{
-                rayHit.collider.gameObject.GetComponent<BossLogic>().TakeDamage(50);
-            }
-            disableKnife();
         } 
     }
 
