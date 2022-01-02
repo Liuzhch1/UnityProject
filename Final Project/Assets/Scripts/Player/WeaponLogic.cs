@@ -248,12 +248,11 @@ public class WeaponLogic : MonoBehaviour
 
         if(Input.GetButtonDown("HandGrenade") && !m_isReloading)
         {
-            if (m_handGrenadeNum > 0)
-            {
-                m_animator.SetTrigger("ThrowHandGrenade");
-            }
+            ThrowHandGrenade();
+            
         }
     }
+
 
     private void FixedUpdate()
     {
@@ -332,7 +331,13 @@ public class WeaponLogic : MonoBehaviour
             // reload empty
         }
     }
-
+    public void ThrowHandGrenade() {
+        if (m_handGrenadeNum > 0)
+        {
+            m_animator.SetTrigger("ThrowHandGrenade");
+        }
+    }
+    
     public void QuitAim() {
         if (m_isAiming)
         {
@@ -594,10 +599,16 @@ public class WeaponLogic : MonoBehaviour
             Debug.Log("Knife Hit Object: " + hitTag);
             if (hitTag == "Enemy01")
             {
-                rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(5);
-                disableKnife();
+                rayHit.collider.gameObject.GetComponent<FireRobLogic>().TakeDamage(20);
+                
+            } else if(hitTag == "Enemy02") {
+                rayHit.collider.gameObject.GetComponent<CloseEnemyLogic>().TakeDamage(20);
             }
-
+            else if(hitTag == "Boss")
+			{
+                rayHit.collider.gameObject.GetComponent<BossLogic>().TakeDamage(50);
+            }
+            disableKnife();
         } 
     }
 

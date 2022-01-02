@@ -92,7 +92,7 @@ public class BossLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Time: " + invisibleTime);
+        // Debug.Log("Time: " + invisibleTime);
         if (isDead)
         {
             return;

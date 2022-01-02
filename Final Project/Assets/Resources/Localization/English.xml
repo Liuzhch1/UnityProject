@@ -19,10 +19,7 @@
     <Key>Quit</Key>
     <Value>Quit</Value>
   </Entry>
-  <Entry>
-    <Key>Help</Key>
-    <Value>How to Play</Value>
-  </Entry>
+
   <Entry>
     <Key>Move</Key>
     <Value>Move</Value>
@@ -40,8 +37,8 @@
     <Value>Aim</Value>
   </Entry>
   <Entry>
-    <Key>Attack</Key>
-    <Value>Attack</Value>
+    <Key>Knife</Key>
+    <Value>Knife</Value>
   </Entry>
   <Entry>
     <Key>Crouch</Key>
@@ -52,11 +49,32 @@
     <Value>Reload</Value>
   </Entry>
   <Entry>
-    <Key>Roll</Key>
-    <Value>Roll</Value>
+    <Key>Grenade</Key>
+    <Value>Grenade</Value>
   </Entry>
   <Entry>
-    <Key>RetryInfo</Key>
+    <Key>Weapon</Key>
+    <Value>Switch Weapon</Value>
+  </Entry>
+  <Entry>
+    <Key>Interact</Key>
+    <Value>Interact</Value>
+  </Entry>
+  <Entry>
+    <Key>Inventory</Key>
+    <Value>Inventory</Value>
+  </Entry>
+  <Entry>
+    <Key>HelpMenu</Key>
+    <Value>Help Menu</Value>
+  </Entry>
+  <Entry>
+    <Key>SkipDialogue</Key>
+    <Value>Skip Dialogue</Value>
+  </Entry>
+
+  <Entry>
+    <Key>Death</Key>
     <Value>You Died!</Value>
   </Entry>
   <Entry>
@@ -64,8 +82,8 @@
     <Value>Menu</Value>
   </Entry>
   <Entry>
-    <Key>Retry</Key>
-    <Value>Retry</Value>
+    <Key>Load</Key>
+    <Value>Load</Value>
   </Entry>
 
   <Entry>

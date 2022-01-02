@@ -69,5 +69,13 @@ public class PieMenuLogic : MonoBehaviour
         }
     }
 
+    public void ThrowHandGrenade(){
+        WeaponLogic weaponLogic = FindObjectOfType<WeaponLogic>();
+        if (weaponLogic) {
+            weaponLogic.ThrowHandGrenade();
+            setHealthPackNumber(weaponLogic.m_handGrenadeNum);
+        }
+    }
+
 
 }

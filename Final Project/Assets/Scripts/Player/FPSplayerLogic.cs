@@ -72,12 +72,6 @@ public class FPSplayerLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (UIManager.Instance.State != UIState.Game) {
-            m_horizontalMovementInput = Mathf.Lerp(m_horizontalMovementInput, 0, Time.deltaTime * 5f);
-            m_verticalMovementInput = Mathf.Lerp(m_verticalMovementInput, 0, Time.deltaTime * 5f);
-            return;
-        }
-
         if (Input.GetKeyDown(KeyCode.X)) { // for test
             Debug.Log("Test Death!");
             m_isAlive = false;
@@ -88,6 +82,12 @@ public class FPSplayerLogic : MonoBehaviour
             m_isAlive = true;
             m_health = 100;
             DisplayRespawn();
+        }
+        
+        if (UIManager.Instance.State != UIState.Game) {
+            m_horizontalMovementInput = Mathf.Lerp(m_horizontalMovementInput, 0, Time.deltaTime * 5f);
+            m_verticalMovementInput = Mathf.Lerp(m_verticalMovementInput, 0, Time.deltaTime * 5f);
+            return;
         }
 
 		if (!m_isAlive)
@@ -224,7 +224,7 @@ public class FPSplayerLogic : MonoBehaviour
         m_health -= damage;
         m_health = Mathf.Clamp(m_health, 0, 100);
         UIManager.Instance.setHealth(m_health);
-        Debug.Log(m_health);
+        // Debug.Log(m_health);
         if (m_health <= 0 && m_isAlive)
         {
             m_isAlive = false;
