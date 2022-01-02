@@ -74,6 +74,8 @@ public class BossLogic : MonoBehaviour
     GameObject tail;
     [SerializeField]
     Transform RoomCenter;
+    [SerializeField]
+    GameObject ExPrefab;
     //there will be no this type when Roar
     int noType = 1;
     #endregion
@@ -352,5 +354,10 @@ public class BossLogic : MonoBehaviour
             UIManager.Instance.displayDialogue(Speaker.Commander, "CompleteDialogue2", 3.0f);
             Destroy(gameObject, 10.0f);
         }
+    }
+    public void Expiosion()
+	{
+        Object obj = GameObject.Instantiate(ExPrefab, transform.position+transform.forward, Quaternion.FromToRotation(Vector3.up, Vector3.up));
+        Destroy(obj, 2.0f);
     }
 }
