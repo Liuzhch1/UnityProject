@@ -114,7 +114,7 @@ public class CloseEnemyLogic : MonoBehaviour
         {
             return;
         }
-        
+        EfficientDetectPlayer();
         switch (m_enemyState)
         {
             case (CloseEnemyState.Idle):
@@ -133,7 +133,6 @@ public class CloseEnemyLogic : MonoBehaviour
                 UpdateWalkState();
                 break;
         }
-        EfficientDetectPlayer();
     }
     #region Update State
     void UpdateIdleState()
@@ -278,13 +277,9 @@ public class CloseEnemyLogic : MonoBehaviour
     }
     void EfficientDetectPlayer()
     {
-        if (!m_player)
+        if (!m_player.GetComponent<FPSplayerLogic>().m_isAlive)
         {
             isAlert = false;
-            return;
-        }
-        if (isAlert)
-        {
             return;
         }
         isAlert = false;
