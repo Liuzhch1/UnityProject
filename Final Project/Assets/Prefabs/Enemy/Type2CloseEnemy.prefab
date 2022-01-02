@@ -788,7 +788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_closeEnemyType: 1
   rayCastPoint: {fileID: 1531385188060967047}
-  m_health: 100
+  m_health: 70
 --- !u!195 &1535378371246974796
 NavMeshAgent:
   m_ObjectHideFlags: 0
